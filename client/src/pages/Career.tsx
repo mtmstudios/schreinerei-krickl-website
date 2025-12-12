@@ -271,15 +271,7 @@ export default function Career() {
                 In 60 Sekunden bewerben
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                asChild
-                className="border-primary-foreground/30 text-primary-foreground bg-transparent"
-              >
-                <Link href="/kontakt">Klassisch kontaktieren</Link>
-              </Button>
-            </div>
+              </div>
           </motion.div>
         </div>
       </section>
