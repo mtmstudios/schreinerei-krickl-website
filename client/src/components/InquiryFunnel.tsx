@@ -1,0 +1,304 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Armchair,
+  ChefHat,
+  TreeDeciduous,
+  DoorOpen,
+  Wrench,
+  Sparkles,
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  X,
+} from "lucide-react";
+
+const projectTypes = [
+  { id: "moebel", label: "Möbel", icon: Armchair },
+  { id: "kueche", label: "Küche", icon: ChefHat },
+  { id: "boden", label: "Boden/Terrasse", icon: TreeDeciduous },
+  { id: "tueren", label: "Türen", icon: DoorOpen },
+  { id: "reparatur", label: "Reparatur", icon: Wrench },
+  { id: "sonder", label: "Sonderanfertigung", icon: Sparkles },
+];
+
+const timeframes = [
+  { id: "asap", label: "So schnell wie möglich" },
+  { id: "1month", label: "In den nächsten 4 Wochen" },
+  { id: "3months", label: "In den nächsten 3 Monaten" },
+  { id: "flexible", label: "Zeitlich flexibel" },
+];
+
+interface InquiryFunnelProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    projectType: "",
+    location: "",
+    timeframe: "",
+    name: "",
+    email: "",
+    phone: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = () => {
+    console.log("Inquiry submitted:", formData);
+    setSubmitted(true);
+  };
+
+  const resetAndClose = () => {
+    setStep(1);
+    setFormData({
+      projectType: "",
+      location: "",
+      timeframe: "",
+      name: "",
+      email: "",
+      phone: "",
+    });
+    setSubmitted(false);
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={resetAndClose}
+      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        className="relative bg-background rounded-xl shadow-2xl w-full max-w-lg overflow-hidden"
+      >
+        <button
+          onClick={resetAndClose}
+          className="absolute top-4 right-4 p-2 rounded-md hover-elevate z-10"
+          data-testid="button-close-funnel"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        <div className="p-6 md:p-8">
+          {!submitted ? (
+            <>
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-xl font-semibold">In 60 Sekunden zur Anfrage</h2>
+                  <span className="text-sm text-muted-foreground">Schritt {step}/4</span>
+                </div>
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-primary transition-all duration-300"
+                    style={{ width: `${(step / 4) * 100}%` }}
+                  />
+                </div>
+              </div>
+
+              <AnimatePresence mode="wait">
+                {step === 1 && (
+                  <motion.div
+                    key="step1"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="space-y-4"
+                  >
+                    <h3 className="font-medium text-lg">Was für ein Projekt planen Sie?</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {projectTypes.map((type) => {
+                        const Icon = type.icon;
+                        return (
+                          <button
+                            key={type.id}
+                            onClick={() => {
+                              setFormData({ ...formData, projectType: type.id });
+                              setStep(2);
+                            }}
+                            className={`flex flex-col items-center gap-2 p-4 rounded-lg border transition-all hover-elevate ${
+                              formData.projectType === type.id
+                                ? "border-primary bg-primary/10"
+                                : "border-border"
+                            }`}
+                            data-testid={`button-project-${type.id}`}
+                          >
+                            <Icon className="w-8 h-8 text-primary" />
+                            <span className="text-sm font-medium">{type.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+
+                {step === 2 && (
+                  <motion.div
+                    key="step2"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="space-y-4"
+                  >
+                    <h3 className="font-medium text-lg">Wo soll das Projekt umgesetzt werden?</h3>
+                    <div className="space-y-3">
+                      <Label htmlFor="location">Raum / Ort (z.B. Wohnzimmer, Küche)</Label>
+                      <Input
+                        id="location"
+                        placeholder="z.B. Wohnzimmer, Esslingen"
+                        value={formData.location}
+                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        data-testid="input-location"
+                      />
+                    </div>
+                    <div className="flex gap-3 pt-4">
+                      <Button variant="outline" onClick={() => setStep(1)} data-testid="button-step2-back">
+                        <ArrowLeft className="w-4 h-4 mr-2" />
+                        Zurück
+                      </Button>
+                      <Button
+                        className="flex-1"
+                        onClick={() => setStep(3)}
+                        disabled={!formData.location}
+                        data-testid="button-step2-next"
+                      >
+                        Weiter
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {step === 3 && (
+                  <motion.div
+                    key="step3"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="space-y-4"
+                  >
+                    <h3 className="font-medium text-lg">Wann soll es losgehen?</h3>
+                    <div className="space-y-2">
+                      {timeframes.map((tf) => (
+                        <button
+                          key={tf.id}
+                          onClick={() => {
+                            setFormData({ ...formData, timeframe: tf.id });
+                            setStep(4);
+                          }}
+                          className={`w-full text-left p-4 rounded-lg border transition-all hover-elevate ${
+                            formData.timeframe === tf.id
+                              ? "border-primary bg-primary/10"
+                              : "border-border"
+                          }`}
+                          data-testid={`button-timeframe-${tf.id}`}
+                        >
+                          <span className="font-medium">{tf.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                    <Button variant="outline" onClick={() => setStep(2)} data-testid="button-step3-back">
+                      <ArrowLeft className="w-4 h-4 mr-2" />
+                      Zurück
+                    </Button>
+                  </motion.div>
+                )}
+
+                {step === 4 && (
+                  <motion.div
+                    key="step4"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="space-y-4"
+                  >
+                    <h3 className="font-medium text-lg">Fast geschafft! Ihre Kontaktdaten</h3>
+                    <div className="space-y-3">
+                      <div>
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                          id="name"
+                          placeholder="Max Mustermann"
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          data-testid="input-name"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="email">E-Mail</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="max@beispiel.de"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          data-testid="input-email"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="phone">Telefon</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          placeholder="0711 / 123 456"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          data-testid="input-phone"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-3 pt-4">
+                      <Button variant="outline" onClick={() => setStep(3)} data-testid="button-step4-back">
+                        <ArrowLeft className="w-4 h-4 mr-2" />
+                        Zurück
+                      </Button>
+                      <Button
+                        className="flex-1"
+                        onClick={handleSubmit}
+                        disabled={!formData.name || !formData.email || !formData.phone}
+                        data-testid="button-submit-inquiry"
+                      >
+                        Anfrage absenden
+                        <Check className="w-4 h-4 ml-2" />
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground text-center">
+                      Unverbindlich und kostenlos. Wir melden uns schnellstmöglich bei Ihnen.
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center py-8"
+            >
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Check className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Vielen Dank für Ihre Anfrage!</h3>
+              <p className="text-muted-foreground mb-6">
+                Wir haben Ihre Anfrage erhalten und melden uns schnellstmöglich bei Ihnen.
+              </p>
+              <Button onClick={resetAndClose} data-testid="button-close-success">
+                Schließen
+              </Button>
+            </motion.div>
+          )}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
