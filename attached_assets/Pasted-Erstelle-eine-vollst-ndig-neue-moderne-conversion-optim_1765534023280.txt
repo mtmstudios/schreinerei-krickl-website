@@ -1,0 +1,181 @@
+Erstelle eine vollständig neue, moderne, conversion-optimierte Website für die Schreinerei Krickl, einen traditionellen Meisterbetrieb in Esslingen mit über 60 Jahren Erfahrung.
+Die Seite soll persönlich, hochwertig, vertrauenswürdig und trotzdem klar verkaufs- und bewerberorientiert sein.
+1. Technische Basis & Linkstruktur (Pflicht)
+Setze eine saubere, SEO-freundliche URL-Struktur ohne Umlaute um, mit konsistenter Navigation und Breadcrumbs.
+Seiten & URLs:
+Startseite → /
+Über uns → /ueber-uns/
+Leistungen (Übersicht) → /leistungen/
+Möbelbau → /leistungen/moebelbau/
+Schreinerküchen → /leistungen/schreinerkuechen/
+Terrassen & Bodenbeläge → /leistungen/terrassen-bodenbelaege/
+Türen → /leistungen/tueren/
+Reparaturen & Instandsetzungen → /leistungen/reparaturen-instandsetzungen/
+Sonderanfertigungen → /leistungen/sonderanfertigungen/
+Referenzen / Projekte → /referenzen/
+Karriere → /karriere/
+Optional separater Funnel-Link: „In 60 Sekunden bewerben“ → /karriere/bewerbung/
+Kontakt → /kontakt/
+Impressum → /impressum/
+Datenschutz → /datenschutz/
+Navigation (Top-Navigation):
+Startseite
+Über uns
+Leistungen (als Dropdown mit den 6 Unterseiten)
+Referenzen
+Karriere
+Kontakt
+Breadcrumbs (Pflicht):
+Auf Unterseiten unbedingt Breadcrumbs anzeigen, z. B.:
+Startseite > Leistungen > Möbelbau
+Startseite > Karriere > In 60 Sekunden bewerben
+Alle internen Links sollen logisch sein und Nutzer wie auch Google klar führen.
+2. Startseite – Conversion & Klick-Through Funnel
+Die Startseite soll sehr stark konvertierend, aber persönlich und handwerklich wirken.
+Hero-Bereich (ganz oben):
+Großes Werkstatt- oder Projektbild.
+Headline:
+„Individuelle Schreinerarbeiten aus Esslingen – Meisterbetrieb seit über 60 Jahren“
+Subline:
+„Möbelbau, Küchen, Innenausbau und Reparaturen – persönlich, zuverlässig, maßgefertigt.“
+Klick-Through Funnel (Pflicht) direkt im Hero:
+Prominenter Button: „In 60 Sekunden zur Anfrage“
+Dieser Button startet einen Schritt-für-Schritt Micro-Funnel (ohne Seitenreload, wenn möglich):
+Schritt 1: Art des Projekts (Symbole: Möbel, Küche, Boden, Türen, Reparatur, Sonderanfertigung)
+Schritt 2: Grobe Angabe Raum/Ort
+Schritt 3: Wunschtermin / Zeitrahmen
+Schritt 4: Kontaktdaten (Name, E-Mail, Telefon)
+Funnel ist klar als schneller, unverbindlicher Kontaktprozess gekennzeichnet.
+Weitere Sektionen auf der Startseite:
+Leistungskacheln mit internen Links auf:
+/leistungen/moebelbau/
+/leistungen/schreinerkuechen/
+/leistungen/terrassen-bodenbelaege/
+/leistungen/tueren/
+/leistungen/reparaturen-instandsetzungen/
+/leistungen/sonderanfertigungen/
+Teaser „Über uns“ mit kurzem Intro und Link zu /ueber-uns/.
+Teaser Zeitstrahl: „Unsere Geschichte – seit über 60 Jahren“ mit Link zu /ueber-uns/#zeitstrahl.
+Ausgewählte Referenzen mit Link zu /referenzen/.
+Kundenstimmen (Google Reviews etc.).
+Starker Abschluss-CTA: „Jetzt unverbindlich anfragen“ → Link zu /kontakt/ oder Funnel im Hero.
+3. Über-uns-Seite mit animiertem Zeitstrahl
+URL: /ueber-uns/
+Inhalte:
+Persönliche Vorstellung von Inhaber und Betrieb (mit Bild).
+Werte: Qualität, Maßarbeit, Zuverlässigkeit, Kundennähe.
+Animierter Zeitstrahl (Pflicht):
+Der Zeitstrahl soll beim Scrollen schrittweise erscheinen (Scroll-Reveal-Animation).
+Stationen: Gründung vor über 60 Jahren → Generationswechsel → Meistertitel → Weiterentwicklung → heutiger Stand mit Inhaber.
+Der Zeitstrahl soll als klarer, visueller Anker wirken.
+Interne Links:
+Link zu /leistungen/ („Das machen wir heute für unsere Kunden“).
+Link zu /karriere/ („Werde Teil unseres Teams“).
+Abschluss-CTA: Link zu /kontakt/.
+4. Leistungen – Übersicht & Unterseiten
+Übersichtsseite: /leistungen/
+Kurzbeschreibung aller Leistungsbereiche.
+Kacheln/Teaser mit Links zu den 6 Unterseiten.
+Je Kachel: Icon + Kurztext + Button „Mehr erfahren“.
+Interne Links: zurück zur Startseite, zu Referenzen & Kontakt.
+Für jede Leistungsunterseite (Pflichtstruktur):
+Beispiele:
+/leistungen/moebelbau/
+/leistungen/schreinerkuechen/
+/leistungen/terrassen-bodenbelaege/
+/leistungen/tueren/
+/leistungen/reparaturen-instandsetzungen/
+/leistungen/sonderanfertigungen/
+Aufbau:
+Hero-Bereich
+Individuelle H1, z. B.:
+Möbelbau: „Möbelbau nach Maß in Esslingen“
+Schreinerküchen: „Individuelle Schreinerküchen statt Standardlösungen“
+Kurztext mit Nutzen für den Kunden.
+CTA-Button: „Unverbindlich anfragen“ → /kontakt/ oder Anfrage-Funnel.
+Nutzen & Vorteile (Bulletpoints)
+Fokus: Platznutzung, Individualität, Qualität, Langlebigkeit, regionale Nähe.
+Leistungsdetails
+Klare Unterüberschriften (H2/H3) für Teilbereiche.
+Projekt-Beispiele (Referenz-Teaser)
+3–6 Projekte als Kacheln mit Bildern.
+Jede Kachel verlinkt auf /referenzen/ oder specific anchors.
+Ablauf / Prozess (3–5 Schritte)
+„Beratung → Aufmaß → Planung → Fertigung → Montage“.
+FAQ-Block (3–5 Fragen)
+Typische Kundenfragen.
+Abschluss-CTA
+„Projekt starten“ → /kontakt/ oder Anfrage-Funnel.
+Interne Links: zurück zu /leistungen/ und zu /referenzen/.
+5. Referenzen / Projekte
+URL: /referenzen/
+Projektgalerie mit Filtern: Möbel, Küchen, Böden, Türen, Sonderanfertigungen.
+Jede Referenz zeigt:
+Kurzbeschreibung
+Ort
+Art der Leistung
+Interne Links:
+Zur passenden Leistungsseite (z. B. Möbel-Referenz → /leistungen/moebelbau/).
+CTA: „Ähnliches Projekt anfragen“ → /kontakt/.
+6. Karriere-Seite mit Bewerbungs-Funnel
+URL: /karriere/
+Ziele: niedrigschwellige Bewerbung, persönlich, unkompliziert.
+Inhalte:
+Einleitung
+Kurzer Text: Arbeiten in einem familiären Meisterbetrieb, echtes Handwerk, langfristige Perspektive.
+Offene Stellen (basierend auf den vorhandenen Bildern/Ausschreibungen):
+Schreiner / Tischler (m/w/d)
+Schreinergeselle (m/w/d)
+Auszubildender Schreiner (m/w/d)
+Jede Stelle mit Kurzbeschreibung, Anforderungen, Link zu „In 60 Sekunden bewerben“.
+Benefit-Section mit Icons (Pflicht):
+z. B.:
+Familiärer Meisterbetrieb
+Moderne Werkstatt & Ausstattung
+Faire/überdurchschnittliche Vergütung
+Weiterbildung & Entwicklung
+Abwechslungsreiche Projekte
+Sicherer Arbeitsplatz
+Jede Leistung mit Symbol/Icon + kurzer Beschreibung.
+Klick-Through-Bewerbungs-Funnel (Pflicht):
+Deutlich hervorgehobener Button: „In 60 Sekunden bewerben – ohne Lebenslauf“.
+Funnel kann als eigene Unterseite / Overlay laufen:
+Empfehlte URL für reine Funnel-Seite: /karriere/bewerbung/
+Schritte im Funnel (Symbol-/Button-Auswahl, keine langen Texteingaben):
+Wunschstelle wählen (Icons für die 3 Stellen).
+Berufserfahrung (z. B. „Azubi“, „Berufseinsteiger“, „mit Erfahrung“).
+Wunscheintrittstermin („sofort“, „in 3 Monaten“, „zu anderem Zeitpunkt“).
+Kontaktdaten: Name, Telefon, E-Mail.
+Optional kurzes Freitextfeld („Was sollen wir über dich wissen?“).
+Nach Absenden: Danke-Text + Hinweis, dass sich die Schreinerei schnell meldet.
+Interne Links:
+Von /karriere/ auf /ueber-uns/ („Lerne uns kennen“).
+Von /karriere/ und /karriere/bewerbung/ auf /kontakt/, falls jemand konventionell Kontakt aufnehmen will.
+7. Kontaktseite
+URL: /kontakt/
+Kontaktformular (Name, E-Mail, Telefon, Nachricht).
+Telefonnummer, E-Mail, Adresse.
+Evtl. Karte (Google Maps).
+CTA: „Jetzt Anfrage senden“.
+Interne Links:
+Zur Startseite und zu den wichtigsten Leistungsseiten (z. B. kleine Textlinks).
+8. Design & Animation
+Stil: modern, klar, viel Weißraum, warme Holz-/Naturtöne, Akzente in Anthrazit.
+Hochwertige Bilder von Werkstatt und Projekten.
+Micro-Animationen:
+Scroll-Reveal für Abschnitte.
+Besonders wichtig: animierter Zeitstrahl auf /ueber-uns/, der beim Scrollen Schritt für Schritt sichtbar wird.
+Buttons deutlich und durchgängig gleich gestaltet.
+9. Tonalität & Texte
+Persönlich, bodenständig, kompetent.
+Keine übertriebenen Marketing-Floskeln.
+Klare Nutzenargumentation für Kunden und Bewerber.
+Im Text immer wieder Standort-Betonung („Esslingen und Region“).
+10. Output-Anforderung an die KI
+Erzeuge:
+Komplette Seitenstruktur gemäß oben definierter URLs.
+Fertige Texte (Deutsch) für alle Seiten.
+Vorschlag für Navigationsmenü und Breadcrumbs.
+Konkrete CTA-Texte und -Platzierungen.
+Beschreibungen für den Klick-Through-Anfrage-Funnel auf der Startseite und den 60-Sekunden-Bewerbungs-Funnel auf der Karriere-Seite.
+Die Website soll sowohl für Kunden (Leads) als auch für Bewerber hochgradig conversion-optimiert und zugleich authentisch-persönlich sein.
