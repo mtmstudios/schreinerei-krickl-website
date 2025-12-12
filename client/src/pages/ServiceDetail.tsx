@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ProcessStep from "@/components/ProcessStep";
 import FAQItem from "@/components/FAQItem";
 import InquiryFunnel from "@/components/InquiryFunnel";
@@ -262,15 +261,6 @@ export default function ServiceDetail() {
           </div>
         </div>
       </section>
-
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <Breadcrumbs
-          items={[
-            { label: "Leistungen", href: "/leistungen" },
-            { label: service.title },
-          ]}
-        />
-      </div>
 
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">

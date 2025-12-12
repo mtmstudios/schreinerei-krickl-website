@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart, Award, Users, Hammer } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import Timeline from "@/components/Timeline";
 import BenefitCard from "@/components/BenefitCard";
 
@@ -84,10 +83,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <Breadcrumbs items={[{ label: "Über uns" }]} />
-      </div>
 
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">

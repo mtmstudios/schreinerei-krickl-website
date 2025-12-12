@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ProjectGallery from "@/components/ProjectGallery";
 import InquiryFunnel from "@/components/InquiryFunnel";
 

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ApplicationFunnel from "@/components/ApplicationFunnel";
 
 import workshopImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
@@ -32,15 +31,6 @@ export default function ApplicationPage() {
           </div>
         </div>
       </section>
-
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <Breadcrumbs
-          items={[
-            { label: "Karriere", href: "/karriere" },
-            { label: "Bewerbung" },
-          ]}
-        />
-      </div>
 
       <section className="py-16 md:py-24">
         <div className="max-w-2xl mx-auto px-4 md:px-6 lg:px-8 text-center">

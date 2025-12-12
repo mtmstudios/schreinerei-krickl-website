@@ -1,14 +1,9 @@
 import Layout from "@/components/layout/Layout";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 export default function Impressum() {
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
-        <Breadcrumbs items={[{ label: "Impressum" }]} />
-      </div>
-
-      <section className="pb-16 md:pb-24">
+      <section className="py-16 md:py-24">
         <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
           <h1 className="text-4xl font-bold mb-8">Impressum</h1>
 

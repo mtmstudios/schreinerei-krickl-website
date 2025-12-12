@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Armchair, ChefHat, TreeDeciduous, DoorOpen, Wrench, Sparkles } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import ServiceCard from "@/components/ServiceCard";
 
 import furnitureImage from "@assets/generated_images/custom_furniture_piece.png";
@@ -76,10 +75,6 @@ export default function Services() {
           </div>
         </div>
       </section>
-
-      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <Breadcrumbs items={[{ label: "Leistungen" }]} />
-      </div>
 
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
