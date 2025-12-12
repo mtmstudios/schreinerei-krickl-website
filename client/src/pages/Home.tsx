@@ -7,6 +7,7 @@ import Layout from "@/components/layout/Layout";
 import ServiceCard from "@/components/ServiceCard";
 import TestimonialCard from "@/components/TestimonialCard";
 import InquiryFunnel from "@/components/InquiryFunnel";
+import InstagramFeed from "@/components/InstagramFeed";
 
 import heroImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
 import furnitureImage from "@assets/generated_images/custom_furniture_piece.png";
@@ -239,6 +240,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <InstagramFeed />
 
       <section className="py-16 md:py-24 bg-primary text-primary-foreground">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 text-center">

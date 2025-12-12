@@ -15,6 +15,7 @@ import Layout from "@/components/layout/Layout";
 import BenefitCard from "@/components/BenefitCard";
 import JobCard from "@/components/JobCard";
 import ApplicationFunnel from "@/components/ApplicationFunnel";
+import InstagramFeed from "@/components/InstagramFeed";
 
 import workshopImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
 
@@ -237,6 +238,12 @@ export default function Career() {
           </div>
         </div>
       </section>
+
+      <InstagramFeed 
+        variant="compact"
+        title="Blicken Sie hinter die Kulissen"
+        subtitle="Auf Instagram zeigen wir Ihnen unseren Arbeitsalltag, das Team und aktuelle Projekte"
+      />
 
       <section className="py-16 md:py-24 bg-primary text-primary-foreground">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 text-center">
