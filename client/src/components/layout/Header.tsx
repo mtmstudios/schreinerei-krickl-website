@@ -57,14 +57,6 @@ export default function Header() {
                     </button>
                     {dropdownOpen && (
                       <div className="absolute top-full left-0 mt-1 w-64 bg-popover border border-popover-border rounded-lg shadow-lg py-2">
-                        <Link
-                          href="/leistungen"
-                          className="block px-4 py-2 text-sm hover-elevate text-foreground"
-                          data-testid="link-services-overview"
-                        >
-                          Alle Leistungen
-                        </Link>
-                        <div className="border-t border-border my-1" />
                         {services.map((service) => (
                           <Link
                             key={service.href}
