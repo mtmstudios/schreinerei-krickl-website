@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Heart } from "lucide-react";
 import logoImage from "@assets/Logo_krickl_2022_neg.png_1765534047766.webp";
 
 const services = [
@@ -112,8 +112,11 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-border mt-12 pt-8">
-          <p className="text-sm text-muted-foreground text-center">
-            © {new Date().getFullYear()} Schreinerei Krickl. Alle Rechte vorbehalten.
+          <p className="text-sm text-muted-foreground text-center flex items-center justify-center gap-1 flex-wrap">
+            <span>© {new Date().getFullYear()} Schreinerei Krickl. Alle Rechte vorbehalten.</span>
+            <span className="flex items-center gap-1">
+              Mit <Heart className="w-4 h-4 text-red-500 fill-red-500" /> erstellt in Esslingen.
+            </span>
           </p>
         </div>
       </div>
