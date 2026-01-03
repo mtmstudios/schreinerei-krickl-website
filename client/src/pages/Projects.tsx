@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "wouter";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Armchair, ChefHat, TreeDeciduous, DoorOpen, Sparkles } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import ProjectGallery from "@/components/ProjectGallery";
-import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel";
+import { VerticalImageStack } from "@/components/ui/vertical-image-stack";
 import InquiryFunnel from "@/components/InquiryFunnel";
 
 import furnitureImage from "@assets/generated_images/custom_furniture_piece.png";
@@ -29,8 +28,33 @@ const projects = [
   { id: "9", title: "Glasinnentüren mit Eichenrahmen", category: "tueren", location: "Esslingen", image: doorImage },
 ];
 
+const categories = [
+  { id: "alle", label: "Alle", icon: null },
+  { id: "moebel", label: "Möbel", icon: Armchair },
+  { id: "kueche", label: "Küchen", icon: ChefHat },
+  { id: "boden", label: "Böden", icon: TreeDeciduous },
+  { id: "tueren", label: "Türen", icon: DoorOpen },
+  { id: "sonder", label: "Sonderanfertigungen", icon: Sparkles },
+];
+
 export default function Projects() {
   const [funnelOpen, setFunnelOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("alle");
+
+  const filteredProjects = useMemo(() => {
+    if (activeCategory === "alle") return projects;
+    return projects.filter(p => p.category === activeCategory);
+  }, [activeCategory]);
+
+  const stackImages = useMemo(() => {
+    return filteredProjects.map(p => ({
+      id: p.id,
+      src: p.image,
+      alt: p.title,
+      title: p.title,
+      location: p.location,
+    }));
+  }, [filteredProjects]);
 
   return (
     <Layout>
@@ -49,23 +73,53 @@ export default function Projects() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="py-12 md:py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-8 md:mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-semibold mb-4">
-              Alle Projekte
+              Unsere Projekte
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Filtern Sie nach Kategorie oder durchstöbern Sie alle Projekte
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+              Jedes Projekt ist einzigartig – genau wie unsere Kunden. Wählen Sie eine Kategorie.
             </p>
+            
+            <div className="flex flex-wrap justify-center gap-2 md:gap-3">
+              {categories.map((cat) => {
+                const Icon = cat.icon;
+                const isActive = activeCategory === cat.id;
+                return (
+                  <Button
+                    key={cat.id}
+                    variant={isActive ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`transition-all ${isActive ? "" : "bg-background"}`}
+                    data-testid={`filter-${cat.id}`}
+                  >
+                    {Icon && <Icon className="w-4 h-4 mr-1.5" />}
+                    {cat.label}
+                  </Button>
+                );
+              })}
+            </div>
           </motion.div>
 
-          <ProjectGallery projects={projects} />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <VerticalImageStack images={stackImages} />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
