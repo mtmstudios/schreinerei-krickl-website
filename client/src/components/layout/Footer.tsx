@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Phone, Mail, MapPin, Heart } from "lucide-react";
 import logoImage from "@assets/Logo_krickl_2022_neg.png_1765534047766.webp";
+import mlmLogo from "@assets/LOGO-1-TARANSPERNT-2_1767459234055.png";
 
 const services = [
   { name: "Möbelbau", href: "/leistungen/moebelbau" },
@@ -115,7 +116,7 @@ export default function Footer() {
           <p className="text-sm text-muted-foreground text-center flex items-center justify-center gap-1 flex-wrap">
             <span>© {new Date().getFullYear()} Schreinerei Krickl. Alle Rechte vorbehalten.</span>
             <span className="flex items-center gap-1">
-              Mit <Heart className="w-4 h-4 text-red-500 fill-red-500" /> erstellt in Esslingen.
+              Mit <Heart className="w-4 h-4 text-red-500 fill-red-500" /> erstellt von <img src={mlmLogo} alt="MLM Studios" className="h-5 w-auto inline-block" />
             </span>
           </p>
         </div>
