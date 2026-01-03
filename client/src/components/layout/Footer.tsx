@@ -116,7 +116,7 @@ export default function Footer() {
           <p className="text-sm text-muted-foreground text-center flex items-center justify-center gap-1 flex-wrap">
             <span>© {new Date().getFullYear()} Schreinerei Krickl. Alle Rechte vorbehalten.</span>
             <span className="flex items-center gap-1">
-              Mit <Heart className="w-4 h-4 text-red-500 fill-red-500" /> erstellt von <img src={mlmLogo} alt="MLM Studios" className="h-14 w-auto inline-block" />
+              Mit <Heart className="w-4 h-4 text-red-500 fill-red-500" /> erstellt von <a href="https://www.mtmstudios.de" target="_blank" rel="noopener noreferrer"><img src={mlmLogo} alt="MLM Studios" className="h-14 w-auto inline-block" /></a>
             </span>
           </p>
         </div>
