@@ -49,32 +49,6 @@ export default function Projects() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-card">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-8"
-          >
-            <h2 className="text-3xl md:text-4xl font-semibold mb-4">
-              Unsere Projekte
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Jedes Projekt ist einzigartig – genau wie unsere Kunden. Lassen Sie sich von unseren Arbeiten inspirieren.
-            </p>
-          </motion.div>
-
-          <ThreeDPhotoCarousel 
-            cards={projects.map(p => ({
-              src: p.image,
-              title: p.title,
-              description: `${p.category === 'moebel' ? 'Möbel' : p.category === 'kueche' ? 'Küche' : p.category === 'boden' ? 'Boden' : p.category === 'tueren' ? 'Türen' : 'Sonderanfertigung'} | ${p.location}`
-            }))}
-          />
-        </div>
-      </section>
-
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <motion.div
