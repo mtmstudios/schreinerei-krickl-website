@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import ProjectGallery from "@/components/ProjectGallery";
+import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel";
 import InquiryFunnel from "@/components/InquiryFunnel";
 
 import furnitureImage from "@assets/generated_images/custom_furniture_piece.png";
@@ -48,6 +49,32 @@ export default function Projects() {
         </div>
       </section>
 
+      <section className="py-16 md:py-24 bg-card">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4">
+              Unsere Projekte
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Jedes Projekt ist einzigartig – genau wie unsere Kunden. Lassen Sie sich von unseren Arbeiten inspirieren.
+            </p>
+          </motion.div>
+
+          <ThreeDPhotoCarousel 
+            cards={projects.map(p => ({
+              src: p.image,
+              title: p.title,
+              description: `${p.category === 'moebel' ? 'Möbel' : p.category === 'kueche' ? 'Küche' : p.category === 'boden' ? 'Boden' : p.category === 'tueren' ? 'Türen' : 'Sonderanfertigung'} | ${p.location}`
+            }))}
+          />
+        </div>
+      </section>
+
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <motion.div
@@ -57,10 +84,10 @@ export default function Projects() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-semibold mb-4">
-              Unsere Projekte
+              Alle Projekte
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Jedes Projekt ist einzigartig – genau wie unsere Kunden. Lassen Sie sich von unseren Arbeiten inspirieren.
+              Filtern Sie nach Kategorie oder durchstöbern Sie alle Projekte
             </p>
           </motion.div>
 
