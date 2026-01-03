@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Phone, Mail, MapPin, Heart } from "lucide-react";
 import logoImage from "@assets/Logo_krickl_2022_neg.png_1765534047766.webp";
-import mlmLogo from "@assets/LOGO_1_HIGH_RESULTION_300_PPI_1767459327963.png";
+import mlmLogo from "@assets/LOGO-2-TARANSPERNT_1767459374539.png";
 
 const services = [
   { name: "Möbelbau", href: "/leistungen/moebelbau" },
