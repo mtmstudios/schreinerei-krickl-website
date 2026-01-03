@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Armchair, ChefHat, TreeDeciduous, DoorOpen, Wrench, Sparkles } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import ServiceCard from "@/components/ServiceCard";
+import { FocusCards } from "@/components/ui/focus-cards";
 import TestimonialCard from "@/components/TestimonialCard";
 import InquiryFunnel from "@/components/InquiryFunnel";
 import InstagramFeed from "@/components/InstagramFeed";
@@ -150,19 +150,14 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.href}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <ServiceCard {...service} />
-              </motion.div>
-            ))}
-          </div>
+          <FocusCards 
+            cards={services.map(s => ({ 
+              title: s.title, 
+              src: s.image, 
+              href: s.href,
+              description: s.description 
+            }))} 
+          />
         </div>
       </section>
 
