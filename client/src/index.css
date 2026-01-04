@@ -295,10 +295,10 @@
    ============================================ */
 
 :root {
-  /* Wood grain intensity - adjust this value (0.02-0.06 recommended) */
-  --wood-grain-opacity: 0.035;
-  /* Vignette intensity - adjust this value (0.03-0.05 recommended) */
-  --vignette-opacity: 0.04;
+  /* Wood grain intensity - adjust this value (0.05-0.15 for visible effect) */
+  --wood-grain-opacity: 0.12;
+  /* Vignette intensity - adjust this value (0.03-0.08 recommended) */
+  --vignette-opacity: 0.06;
 }
 
 /* Main background layer with subtle wood grain effect */
