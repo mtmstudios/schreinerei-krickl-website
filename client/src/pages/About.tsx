@@ -12,34 +12,29 @@ import workshopImage from "@assets/generated_images/carpentry_workshop_hero_imag
 // todo: remove mock functionality
 const timelineItems = [
   {
-    year: "1962",
-    title: "Gründung der Schreinerei",
-    description: "Die Schreinerei wird in Esslingen als kleiner Familienbetrieb gegründet. Von Anfang an steht Qualität und Kundennähe im Mittelpunkt.",
-  },
-  {
-    year: "1978",
-    title: "Erste Erweiterung",
-    description: "Die steigende Nachfrage ermöglicht den Umzug in größere Räumlichkeiten und die Anschaffung moderner Maschinen.",
-  },
-  {
-    year: "1985",
-    title: "Meistertitel",
-    description: "Mit dem Erhalt des Meistertitels wird die Grundlage für die nächste Generation gelegt.",
-  },
-  {
-    year: "1998",
-    title: "Generationswechsel",
-    description: "Der Betrieb wird an die nächste Generation übergeben und modern weiterentwickelt.",
-  },
-  {
     year: "2010",
-    title: "Moderne Werkstatt",
-    description: "Investition in CNC-Technik und moderne Fertigungsmethoden bei gleichzeitiger Bewahrung traditioneller Handwerkskunst.",
+    title: "Ausbildungsbeginn",
+    description: "Yannik Tomay beginnt seine Ausbildung bei der Schreinerei Krickl und beendet diese erfolgreich im Jahr 2013.",
+  },
+  {
+    year: "2018",
+    title: "Meisterprüfung",
+    description: "Nach Jahren als Schreinergeselle entschließt sich Yannik Tomay, den Meister in Teilzeit zu absolvieren.",
+  },
+  {
+    year: "2020",
+    title: "Meister & Betriebsleiter",
+    description: "Mit erfolgreich abgelegter Meisterprüfung übernimmt Yannik Tomay die Rolle als Meister und Betriebsleiter.",
+  },
+  {
+    year: "2022",
+    title: "Neue Ära beginnt",
+    description: "Yannik Tomay übernimmt die Schreinerei Krickl. Ein Lebenstraum geht in Erfüllung – eine eigene Schreinerei zu führen.",
   },
   {
     year: "Heute",
-    title: "Meisterbetrieb Krickl",
-    description: "Über 60 Jahre Erfahrung, ein eingespieltes Team und der Anspruch, jeden Kunden individuell zu betreuen.",
+    title: "Meisterbetrieb seit über 60 Jahren",
+    description: "Ein eingespieltes Team aus 9 Mitarbeitern und der Anspruch, jeden Kunden individuell zu betreuen. Spezialisiert auf Innenausbau, Möbelbau und Baubereich.",
   },
 ];
 
@@ -93,13 +88,13 @@ export default function About() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-semibold mb-6">
-                Ihr Meisterbetrieb in Esslingen
+                Meisterbetrieb seit über 60 Jahren
               </h2>
               <p className="text-lg text-muted-foreground mb-4">
-                Seit über 60 Jahren steht die Schreinerei Krickl für erstklassiges Handwerk und individuelle Lösungen. Als Meisterbetrieb verbinden wir traditionelles Know-how mit modernsten Techniken.
+                Wir sind eine kleine Schreinerei in Esslingen, welche auf den Innenausbau spezialisiert ist. Wir decken sowohl den Möbelbaubereich, wie auch den Baubereich komplett ab.
               </p>
               <p className="text-lg text-muted-foreground mb-4">
-                Unser eingespieltes Team aus erfahrenen Schreinern und motivierten Nachwuchstalenten arbeitet mit Leidenschaft an jedem Projekt – egal ob kleiner Reparaturauftrag oder umfangreicher Innenausbau.
+                Durch unsere top-ausgebildeten Mitarbeiter haben wir für jeden Bereich den richtigen Spezialisten für Sie. Um noch besser für unsere Projekte agieren zu können, sind wir stetig auf der Suche nach neuen Mitarbeitern.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
                 Wir legen großen Wert auf persönliche Beratung und individuelle Lösungen. Bei uns sind Sie keine Nummer, sondern ein geschätzter Partner.
@@ -147,7 +142,73 @@ export default function About() {
         </div>
       </section>
 
-      <section id="zeitstrahl" className="py-16 md:py-24 lg:py-32">
+      <section className="py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-semibold mb-2">
+                Yannik Tomay
+              </h2>
+              <p className="text-lg text-primary font-medium mb-6">
+                Schreinermeister & Inhaber
+              </p>
+              <blockquote className="text-lg italic text-muted-foreground border-l-4 border-primary pl-4 mb-6">
+                „Wähle einen Beruf den du liebst, und du brauchst keinen Tag in deinem Leben mehr zu arbeiten"
+                <footer className="text-sm mt-2 not-italic">– Konfuzius</footer>
+              </blockquote>
+              <p className="text-muted-foreground mb-4">
+                Ein Zitat welches die Einstellung meines Tuns nicht besser beschreiben könnte. 2022 begann ein neues Kapitel, als ich die Schreinerei übernommen habe. Damit geht für mich ein kleiner Lebenstraum in Erfüllung.
+              </p>
+              <p className="text-muted-foreground mb-4">
+                Neben der Selbständigkeit bin ich noch ehrenamtlich im Vorstand der Schreiner Innung, dem Gesellenprüfungsausschuss sowie im Vorstand der Handwerksjunioren Esslingen-Nürtingen tätig.
+              </p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <h3 className="text-2xl font-semibold mb-6">Unser Team</h3>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
+                  <span className="font-medium">Schreinermeister (Inhaber)</span>
+                  <span className="text-muted-foreground">1</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
+                  <span className="font-medium">Vorarbeiter</span>
+                  <span className="text-muted-foreground">1</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
+                  <span className="font-medium">Schreinergesellen</span>
+                  <span className="text-muted-foreground">3</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
+                  <span className="font-medium">Auszubildende (3. Lehrjahr)</span>
+                  <span className="text-muted-foreground">2</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
+                  <span className="font-medium">Auszubildender (1. Lehrjahr)</span>
+                  <span className="text-muted-foreground">1</span>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
+                  <span className="font-medium">Bürokraft</span>
+                  <span className="text-muted-foreground">1</span>
+                </div>
+              </div>
+              <p className="mt-6 text-primary font-medium">
+                Wir stellen weiter motivierte Kolleginnen und Kollegen (m/w/d) ein!
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section id="zeitstrahl" className="py-16 md:py-24 lg:py-32 bg-card">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -156,10 +217,10 @@ export default function About() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-semibold mb-4">
-              Unsere Geschichte
+              Meine Laufbahn
             </h2>
             <p className="text-lg text-muted-foreground">
-              Über 60 Jahre Handwerkstradition in Esslingen
+              Der Weg zum eigenen Meisterbetrieb
             </p>
           </motion.div>
 

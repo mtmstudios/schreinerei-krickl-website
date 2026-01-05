@@ -170,13 +170,13 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-semibold mb-6">
-                Über 60 Jahre Handwerkstradition
+                Schön, dass Sie hier sind
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Seit mehr als sechs Jahrzehnten steht die Schreinerei Krickl für Qualität, Zuverlässigkeit und echtes Handwerk. Als Meisterbetrieb in Esslingen verbinden wir traditionelles Know-how mit modernen Techniken.
+                Wir sind eine kleine Schreinerei in Esslingen, welche auf den Innenausbau spezialisiert ist. Wir decken sowohl den Möbelbaubereich, wie auch den Baubereich komplett ab.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
-                Jedes Projekt ist für uns eine Herzensangelegenheit – von der ersten Beratung bis zur finalen Montage.
+                Durch unsere top-ausgebildeten Mitarbeiter haben wir für jeden Bereich den richtigen Spezialisten für Sie. Jedes Projekt ist für uns eine Herzensangelegenheit.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild data-testid="button-about-link">
