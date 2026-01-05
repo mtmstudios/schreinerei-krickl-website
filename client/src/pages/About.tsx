@@ -32,6 +32,11 @@ const timelineItems = [
     description: "Yannik Tomay übernimmt die Schreinerei Krickl. Ein Lebenstraum geht in Erfüllung – eine eigene Schreinerei zu führen.",
   },
   {
+    year: "2026",
+    title: "Umzug in größere Schreinerei",
+    description: "Umzug in eine größere Schreinerei innerhalb Esslingens – mehr Platz für noch größere Projekte und weiteres Wachstum.",
+  },
+  {
     year: "Heute",
     title: "Meisterbetrieb seit über 60 Jahren",
     description: "Ein eingespieltes Team aus 9 Mitarbeitern und der Anspruch, jeden Kunden individuell zu betreuen. Spezialisiert auf Innenausbau, Möbelbau und Baubereich.",
