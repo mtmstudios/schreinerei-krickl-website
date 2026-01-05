@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Armchair, ChefHat, TreeDeciduous, DoorOpen, Wrench, Sparkles } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import { FocusCards } from "@/components/ui/focus-cards";
 import { Testimonial } from "@/components/ui/clean-testimonial";
 import InquiryFunnel from "@/components/InquiryFunnel";
@@ -100,9 +101,15 @@ export default function Home() {
 
   return (
     <Layout>
+      <SEO
+        title="Schreinerei Esslingen | Schreiner Krickl - Möbelbau nach Maß"
+        description="Schreinerei Krickl in Esslingen - Ihr Meisterbetrieb für Möbelbau, Schreinerküchen, Türen & Innenausbau. Individuelle Maßanfertigungen seit über 60 Jahren. Jetzt anfragen!"
+        keywords="Schreiner Esslingen, Schreinerei Esslingen, Möbelbau Esslingen, Schreinerküche Esslingen, Türen Schreiner Esslingen, Möbel nach Maß Esslingen"
+        canonical="https://schreinerei-krickl.de/"
+      />
       <section className="relative min-h-[80vh] flex items-center">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="Schreinerei Werkstatt" className="w-full h-full object-cover" />
+          <img src={heroImage} alt="Schreinerei Krickl Esslingen - Werkstatt für Möbelbau nach Maß" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
 
@@ -114,13 +121,13 @@ export default function Home() {
             className="max-w-2xl"
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Individuelle Schreinerarbeiten aus Esslingen
+              Ihre Schreinerei in Esslingen – Möbelbau nach Maß
             </h1>
             <p className="text-xl text-white/90 mb-4">
-              Meisterbetrieb seit über 60 Jahren
+              Schreiner Krickl – Meisterbetrieb seit über 60 Jahren
             </p>
             <p className="text-lg text-white/80 mb-8">
-              Möbelbau, Küchen, Innenausbau und Reparaturen – persönlich, zuverlässig, maßgefertigt.
+              Möbelbau, Schreinerküchen, Türen & Innenausbau in Esslingen und Umgebung. Persönliche Beratung, höchste Qualität.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
@@ -154,9 +161,9 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-semibold mb-4">Unsere Leistungen</h2>
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4">Schreiner-Leistungen in Esslingen</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Von der ersten Idee bis zur fertigen Montage – wir begleiten Sie durch Ihr gesamtes Projekt.
+              Möbelbau nach Maß, Schreinerküchen, Türen & mehr – von der ersten Idee bis zur fertigen Montage in Esslingen und Umgebung.
             </p>
           </motion.div>
 
@@ -181,13 +188,13 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-semibold mb-6">
-                Schön, dass Sie hier sind
+                Ihre Schreinerei in Esslingen am Neckar
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Wir sind eine kleine Schreinerei in Esslingen, welche auf den Innenausbau spezialisiert ist. Wir decken sowohl den Möbelbaubereich, wie auch den Baubereich komplett ab.
+                Als Meisterbetrieb in Esslingen sind wir auf Innenausbau und Möbelbau nach Maß spezialisiert. Von der Schreinerküche bis zur Holzterrasse – wir decken alle Bereiche ab.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
-                Durch unsere top-ausgebildeten Mitarbeiter haben wir für jeden Bereich den richtigen Spezialisten für Sie. Jedes Projekt ist für uns eine Herzensangelegenheit.
+                Mit 9 erfahrenen Fachleuten haben wir für jedes Projekt den richtigen Spezialisten. Als Schreiner in Esslingen ist jedes Projekt für uns eine Herzensangelegenheit.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild data-testid="button-about-link">

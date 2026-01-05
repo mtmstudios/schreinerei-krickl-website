@@ -1,8 +1,14 @@
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 
 export default function Datenschutz() {
   return (
     <Layout>
+      <SEO
+        title="Datenschutz - Schreinerei Krickl Esslingen"
+        description="Datenschutzerklärung der Schreinerei Krickl. Informationen zur Datenverarbeitung auf unserer Website."
+        canonical="https://schreinerei-krickl.de/datenschutz"
+      />
       <section className="py-16 md:py-24">
         <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
           <h1 className="text-4xl font-bold mb-8">Datenschutzerklärung</h1>

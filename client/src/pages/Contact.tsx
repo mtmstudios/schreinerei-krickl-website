@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import ContactForm from "@/components/ContactForm";
 
 import workshopImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
@@ -8,16 +9,22 @@ import workshopImage from "@assets/generated_images/carpentry_workshop_hero_imag
 export default function Contact() {
   return (
     <Layout>
+      <SEO
+        title="Kontakt - Schreinerei Krickl | Schreiner Esslingen anfragen"
+        description="Kontaktieren Sie die Schreinerei Krickl in Esslingen. Kostenlose Beratung für Möbelbau, Küchen & Innenausbau. Tel: 0711/123456. Musterstraße 123, 73728 Esslingen am Neckar."
+        keywords="Schreiner Esslingen Kontakt, Schreinerei Esslingen Anfrage, Tischler Esslingen, Möbelbau Esslingen anfragen"
+        canonical="https://schreinerei-krickl.de/kontakt"
+      />
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0">
-          <img src={workshopImage} alt="Werkstatt" className="w-full h-full object-cover" />
+          <img src={workshopImage} alt="Schreinerei Krickl in Esslingen kontaktieren" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-white max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Kontakt</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Schreiner in Esslingen kontaktieren</h1>
             <p className="text-xl text-white/90">
-              Wir freuen uns auf Ihre Nachricht – persönlich, telefonisch oder per E-Mail
+              Ihr persönlicher Ansprechpartner für Möbelbau & Innenausbau in Esslingen und Umgebung
             </p>
           </div>
         </div>

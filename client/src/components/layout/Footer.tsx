@@ -34,7 +34,7 @@ export default function Footer() {
               <img src={logoImage} alt="Schreinerei Krickl" className="h-10 w-auto mb-4" />
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-              Meisterbetrieb seit über 60 Jahren. Individuelle Schreinerarbeiten aus Esslingen.
+              Ihre Schreinerei in Esslingen – Meisterbetrieb seit über 60 Jahren. Möbelbau nach Maß, Schreinerküchen & Innenausbau für Esslingen, Stuttgart und Umgebung.
             </p>
             <div className="space-y-2">
               <a
@@ -113,12 +113,17 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-border mt-12 pt-8">
-          <p className="text-sm text-muted-foreground text-center flex items-center justify-center gap-1 flex-wrap">
-            <span>© {new Date().getFullYear()} Schreinerei Krickl. Alle Rechte vorbehalten.</span>
-            <span className="flex items-center gap-1">
-              Mit <Heart className="w-4 h-4 text-red-500 fill-red-500" /> erstellt von <a href="https://www.mtmstudios.de" target="_blank" rel="noopener noreferrer"><img src={mlmLogo} alt="MLM Studios" className="h-14 w-auto inline-block" /></a>
-            </span>
-          </p>
+          <div className="text-sm text-muted-foreground text-center space-y-2">
+            <p className="flex items-center justify-center gap-1 flex-wrap">
+              <span>© {new Date().getFullYear()} Schreinerei Krickl – Schreiner Esslingen. Alle Rechte vorbehalten.</span>
+            </p>
+            <p className="text-xs">
+              Schreiner Esslingen | Schreinerei Esslingen | Möbelbau Esslingen | Tischler Esslingen
+            </p>
+            <p className="flex items-center justify-center gap-1">
+              <span>Mit</span> <Heart className="w-4 h-4 text-red-500 fill-red-500" /> <span>erstellt von</span> <a href="https://www.mtmstudios.de" target="_blank" rel="noopener noreferrer"><img src={mlmLogo} alt="MLM Studios" className="h-14 w-auto inline-block" /></a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

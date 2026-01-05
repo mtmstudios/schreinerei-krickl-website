@@ -1,8 +1,14 @@
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 
 export default function Impressum() {
   return (
     <Layout>
+      <SEO
+        title="Impressum - Schreinerei Krickl Esslingen"
+        description="Impressum der Schreinerei Krickl in Esslingen am Neckar. Kontaktdaten, Handelsregistereintrag und rechtliche Informationen."
+        canonical="https://schreinerei-krickl.de/impressum"
+      />
       <section className="py-16 md:py-24">
         <div className="max-w-3xl mx-auto px-4 md:px-6 lg:px-8">
           <h1 className="text-4xl font-bold mb-8">Impressum</h1>
@@ -23,8 +29,8 @@ export default function Impressum() {
 
             <h2 className="text-2xl font-semibold mt-8 mb-4">Vertreten durch</h2>
             <p className="text-muted-foreground mb-4">
-              Max Krickl<br />
-              Schreinermeister
+              Yannik Tomay<br />
+              Schreinermeister & Inhaber
             </p>
 
             <h2 className="text-2xl font-semibold mt-8 mb-4">Registereintrag</h2>

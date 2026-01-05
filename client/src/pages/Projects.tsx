@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Armchair, ChefHat, TreeDeciduous, DoorOpen, Sparkles } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import { VerticalImageStack } from "@/components/ui/vertical-image-stack";
 import InquiryFunnel from "@/components/InquiryFunnel";
 
@@ -58,16 +59,22 @@ export default function Projects() {
 
   return (
     <Layout>
+      <SEO
+        title="Referenzen - Schreinerei Esslingen | Projekte Möbelbau & Küchen"
+        description="Referenzen der Schreinerei Krickl in Esslingen. Entdecken Sie unsere Projekte: Maßmöbel, Schreinerküchen, Türen & Innenausbau für Esslingen, Stuttgart und Umgebung."
+        keywords="Schreiner Esslingen Referenzen, Möbelbau Esslingen Projekte, Schreinerei Esslingen Arbeiten, Schreinerküche Referenzen"
+        canonical="https://schreinerei-krickl.de/referenzen"
+      />
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0">
-          <img src={workshopImage} alt="Werkstatt" className="w-full h-full object-cover" />
+          <img src={workshopImage} alt="Schreinerei Krickl Referenzen - Projekte in Esslingen" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-white max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Referenzen</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Schreiner-Projekte aus Esslingen</h1>
             <p className="text-xl text-white/90">
-              Entdecken Sie eine Auswahl unserer realisierten Projekte
+              Entdecken Sie Möbelbau, Küchen und Innenausbau von Ihrem Schreiner in Esslingen
             </p>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Armchair, ChefHat, TreeDeciduous, DoorOpen, Wrench, Sparkles } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import ServiceCard from "@/components/ServiceCard";
 
 import furnitureImage from "@assets/generated_images/custom_furniture_piece.png";
@@ -61,16 +62,22 @@ const services = [
 export default function Services() {
   return (
     <Layout>
+      <SEO
+        title="Leistungen - Schreiner Esslingen | Möbelbau, Küchen, Türen & mehr"
+        description="Leistungen Ihrer Schreinerei in Esslingen: Möbelbau nach Maß, Schreinerküchen, Türen, Holzterrassen, Böden & Reparaturen. Meisterqualität seit über 60 Jahren."
+        keywords="Schreiner Esslingen Leistungen, Möbelbau Esslingen, Schreinerküche Esslingen, Türen Schreiner Esslingen, Holzterrasse Esslingen, Innenausbau Esslingen"
+        canonical="https://schreinerei-krickl.de/leistungen"
+      />
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0">
-          <img src={workshopImage} alt="Werkstatt" className="w-full h-full object-cover" />
+          <img src={workshopImage} alt="Schreiner Esslingen - Unsere Leistungen im Überblick" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-white max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Unsere Leistungen</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Schreiner-Leistungen in Esslingen</h1>
             <p className="text-xl text-white/90">
-              Von der ersten Idee bis zur fertigen Montage – Qualitätshandwerk für jeden Anspruch
+              Möbelbau, Küchen, Türen & mehr – Qualitätshandwerk vom Meisterbetrieb für Esslingen und Umgebung
             </p>
           </div>
         </div>

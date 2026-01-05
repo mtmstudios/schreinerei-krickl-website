@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart, Award, Users, Hammer } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import Timeline from "@/components/Timeline";
 import BenefitCard from "@/components/BenefitCard";
 
@@ -69,16 +70,22 @@ const values = [
 export default function About() {
   return (
     <Layout>
+      <SEO
+        title="Über uns - Schreinerei Krickl | Schreiner Esslingen seit 60 Jahren"
+        description="Lernen Sie die Schreinerei Krickl in Esslingen kennen. Meisterbetrieb seit über 60 Jahren. Team aus 9 Fachleuten für Möbelbau, Küchen & Innenausbau. Yannik Tomay - Schreinermeister & Inhaber."
+        keywords="Schreiner Esslingen, Schreinerei Esslingen, Meisterbetrieb Esslingen, Tischlerei Esslingen, Yannik Tomay"
+        canonical="https://schreinerei-krickl.de/ueber-uns"
+      />
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0">
-          <img src={workshopImage} alt="Werkstatt" className="w-full h-full object-cover" />
+          <img src={workshopImage} alt="Schreinerei Krickl Werkstatt in Esslingen" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-white max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Über uns</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Ihre Schreinerei in Esslingen – Über uns</h1>
             <p className="text-xl text-white/90">
-              Ein Familienbetrieb mit Tradition, Leidenschaft und Blick in die Zukunft
+              Meisterbetrieb mit Tradition, Leidenschaft und Blick in die Zukunft seit über 60 Jahren
             </p>
           </div>
         </div>

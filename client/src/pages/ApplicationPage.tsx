@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import ApplicationFunnel from "@/components/ApplicationFunnel";
 
 import workshopImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
@@ -17,9 +18,14 @@ export default function ApplicationPage() {
 
   return (
     <Layout>
+      <SEO
+        title="Jetzt bewerben - Schreinerei Krickl Esslingen"
+        description="Bewerben Sie sich in 60 Sekunden bei der Schreinerei Krickl in Esslingen. Schnell und einfach zum neuen Schreiner-Job."
+        canonical="https://schreinerei-krickl.de/bewerbung"
+      />
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0">
-          <img src={workshopImage} alt="Werkstatt" className="w-full h-full object-cover" />
+          <img src={workshopImage} alt="Bewerbung bei Schreinerei Krickl Esslingen" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">

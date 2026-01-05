@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import ProcessStep from "@/components/ProcessStep";
 import FAQItem from "@/components/FAQItem";
 import InquiryFunnel from "@/components/InquiryFunnel";
@@ -239,11 +240,56 @@ export default function ServiceDetail() {
     );
   }
 
+  const seoData: Record<string, { title: string; description: string; keywords: string }> = {
+    moebelbau: {
+      title: "Möbelbau Esslingen | Möbel nach Maß vom Schreiner",
+      description: "Möbelbau nach Maß in Esslingen. Schränke, Regale & Einbaumöbel vom Schreiner. Individuelle Fertigung, hochwertige Materialien. Schreinerei Krickl.",
+      keywords: "Möbelbau Esslingen, Möbel nach Maß Esslingen, Schreiner Möbel Esslingen, Einbauschrank Esslingen"
+    },
+    schreinerkuechen: {
+      title: "Schreinerküche Esslingen | Küchen vom Meister",
+      description: "Schreinerküchen in Esslingen - maßgefertigt statt Massenware. Individuelle Küchenplanung vom Meisterbetrieb. Hochwertige Materialien & perfekte Passform.",
+      keywords: "Schreinerküche Esslingen, Küche vom Schreiner Esslingen, Einbauküche Esslingen, Küchenbau Esslingen"
+    },
+    "terrassen-bodenbelaege": {
+      title: "Holzterrasse Esslingen | Parkett & Böden vom Schreiner",
+      description: "Holzterrassen & Böden in Esslingen. Parkett verlegen, Terrassendecks bauen - Schreinerqualität vom Meisterbetrieb Krickl. Jetzt beraten lassen.",
+      keywords: "Holzterrasse Esslingen, Parkett Esslingen, Holzboden Esslingen, Terrassenbau Esslingen"
+    },
+    tueren: {
+      title: "Türen Esslingen | Innentüren & Haustüren vom Schreiner",
+      description: "Türen vom Schreiner in Esslingen - Innentüren, Haustüren & Schiebetüren nach Maß. Handwerkliche Fertigung, individuelle Designs. Schreinerei Krickl.",
+      keywords: "Türen Schreiner Esslingen, Innentüren Esslingen, Haustür Esslingen, Türen nach Maß"
+    },
+    "reparaturen-instandsetzungen": {
+      title: "Möbel Reparatur Esslingen | Schreiner Instandsetzung",
+      description: "Möbel-Reparaturen in Esslingen vom Schreiner. Professionelle Instandsetzung, Restaurierung & Aufarbeitung. Schnell, zuverlässig, fair. Schreinerei Krickl.",
+      keywords: "Möbel Reparatur Esslingen, Schreiner Reparatur Esslingen, Möbel restaurieren Esslingen"
+    },
+    sonderanfertigungen: {
+      title: "Sonderanfertigung Esslingen | Schreiner für Spezialanfertigungen",
+      description: "Sonderanfertigungen vom Schreiner in Esslingen. Individuelle Projekte, Ladenbau, Innenausbau & mehr. Kreative Lösungen vom Meisterbetrieb Krickl.",
+      keywords: "Sonderanfertigung Schreiner Esslingen, Ladenbau Esslingen, Innenausbau Esslingen"
+    }
+  };
+
+  const currentSeo = seoData[slug || ""] || {
+    title: `${service.title} - Schreinerei Krickl Esslingen`,
+    description: service.description,
+    keywords: `${service.title} Esslingen, Schreiner Esslingen`
+  };
+
   return (
     <Layout>
+      <SEO
+        title={currentSeo.title}
+        description={currentSeo.description}
+        keywords={currentSeo.keywords}
+        canonical={`https://schreinerei-krickl.de/leistungen/${slug}`}
+      />
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0">
-          <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+          <img src={service.image} alt={`${service.title} in Esslingen - Schreinerei Krickl`} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">

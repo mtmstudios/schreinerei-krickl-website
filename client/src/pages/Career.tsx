@@ -12,6 +12,7 @@ import {
   Shield,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import BenefitCard from "@/components/BenefitCard";
 import JobCard from "@/components/JobCard";
 import ApplicationFunnel from "@/components/ApplicationFunnel";
@@ -111,14 +112,20 @@ export default function Career() {
 
   return (
     <Layout>
+      <SEO
+        title="Karriere - Schreiner Jobs Esslingen | Schreinerei Krickl"
+        description="Schreiner Jobs in Esslingen: Arbeiten Sie bei der Schreinerei Krickl. Offene Stellen für Schreiner, Gesellen & Azubis. Familiärer Meisterbetrieb mit Zukunft."
+        keywords="Schreiner Jobs Esslingen, Tischler Stellenangebote Esslingen, Ausbildung Schreiner Esslingen, Schreinerei Jobs Stuttgart"
+        canonical="https://schreinerei-krickl.de/karriere"
+      />
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0">
-          <img src={workshopImage} alt="Werkstatt" className="w-full h-full object-cover" />
+          <img src={workshopImage} alt="Karriere bei Schreinerei Krickl in Esslingen - Jobs im Schreinerhandwerk" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-white max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Karriere bei Krickl</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Schreiner Jobs in Esslingen – Karriere bei Krickl</h1>
             <p className="text-xl text-white/90 mb-8">
               Werden Sie Teil unseres Teams – echtes Handwerk, familiäre Atmosphäre, langfristige Perspektive
             </p>
