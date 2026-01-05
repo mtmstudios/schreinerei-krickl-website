@@ -7,6 +7,7 @@ import Layout from "@/components/layout/Layout";
 import { FocusCards } from "@/components/ui/focus-cards";
 import { Testimonial } from "@/components/ui/clean-testimonial";
 import InquiryFunnel from "@/components/InquiryFunnel";
+import ServiceInquiryFunnel from "@/components/ServiceInquiryFunnel";
 import InstagramFeed from "@/components/InstagramFeed";
 
 import heroImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
@@ -20,45 +21,45 @@ import craftsmanImage from "@assets/generated_images/craftsman_hands_detail.png"
 
 const services = [
   {
+    id: "moebel",
     title: "Möbelbau",
     description: "Individuelle Möbel nach Maß – perfekt auf Ihre Räume und Wünsche abgestimmt.",
     image: furnitureImage,
-    href: "/leistungen/moebelbau",
     icon: <Armchair className="w-5 h-5" />,
   },
   {
+    id: "kueche",
     title: "Schreinerküchen",
     description: "Maßgefertigte Küchen statt Standardlösungen – für höchste Ansprüche.",
     image: kitchenImage,
-    href: "/leistungen/schreinerkuechen",
     icon: <ChefHat className="w-5 h-5" />,
   },
   {
+    id: "terrasse",
     title: "Terrassen & Böden",
     description: "Hochwertige Holzböden und Terrassen für drinnen und draußen.",
     image: terraceImage,
-    href: "/leistungen/terrassen-bodenbelaege",
     icon: <TreeDeciduous className="w-5 h-5" />,
   },
   {
+    id: "tueren",
     title: "Türen",
     description: "Individuelle Innentüren und Haustüren – handwerklich gefertigt.",
     image: doorImage,
-    href: "/leistungen/tueren",
     icon: <DoorOpen className="w-5 h-5" />,
   },
   {
+    id: "reparatur",
     title: "Reparaturen",
     description: "Professionelle Reparaturen und Instandsetzungen für alle Holzarbeiten.",
     image: flooringImage,
-    href: "/leistungen/reparaturen-instandsetzungen",
     icon: <Wrench className="w-5 h-5" />,
   },
   {
+    id: "sonder",
     title: "Sonderanfertigungen",
     description: "Außergewöhnliche Projekte und individuelle Sonderlösungen.",
     image: wardrobeImage,
-    href: "/leistungen/sonderanfertigungen",
     icon: <Sparkles className="w-5 h-5" />,
   },
 ];
@@ -85,8 +86,17 @@ const oldTestimonials = [
   },
 ];
 
+type ServiceType = "moebel" | "kueche" | "terrasse" | "tueren" | "reparatur" | "sonder";
+
 export default function Home() {
   const [funnelOpen, setFunnelOpen] = useState(false);
+  const [serviceFunnelOpen, setServiceFunnelOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
+
+  const handleServiceClick = (serviceId: string) => {
+    setSelectedService(serviceId as ServiceType);
+    setServiceFunnelOpen(true);
+  };
 
   return (
     <Layout>
@@ -154,9 +164,10 @@ export default function Home() {
             cards={services.map(s => ({ 
               title: s.title, 
               src: s.image, 
-              href: s.href,
+              id: s.id,
               description: s.description 
             }))} 
+            onCardClick={handleServiceClick}
           />
         </div>
       </section>
@@ -264,6 +275,11 @@ export default function Home() {
       </section>
 
       <InquiryFunnel isOpen={funnelOpen} onClose={() => setFunnelOpen(false)} />
+      <ServiceInquiryFunnel 
+        isOpen={serviceFunnelOpen} 
+        onClose={() => setServiceFunnelOpen(false)} 
+        serviceType={selectedService}
+      />
     </Layout>
   );
 }
