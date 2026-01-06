@@ -2,24 +2,24 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { SiInstagram } from "react-icons/si";
 
-import furnitureImage from "@assets/generated_images/custom_furniture_piece.png";
-import kitchenImage from "@assets/generated_images/custom_kitchen_cabinets.png";
-import terraceImage from "@assets/generated_images/wooden_terrace_deck.png";
-import doorImage from "@assets/generated_images/custom_wooden_door.png";
-import wardrobeImage from "@assets/generated_images/custom_wardrobe_system.png";
-import craftsmanImage from "@assets/generated_images/craftsman_hands_detail.png";
-import flooringImage from "@assets/generated_images/hardwood_flooring_detail.png";
-import workshopImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
+import image1 from "@assets/PHOTO-2023-09-01-14-_1767712905635.jpg";
+import image2 from "@assets/PHOTO-2023-09-01-14_1767712905635.jpg";
+import image3 from "@assets/PHOTO-2023-09-01-15_1767712905635.jpg";
+import image4 from "@assets/PHOTO-2023-10-17-21-_1767712905635.jpg";
+import image5 from "@assets/PHOTO-2023-10-17-23_1767712905635.jpg";
+import image6 from "@assets/PHOTO-2023-10-17-24_1767712905635.jpg";
+import image7 from "@assets/PHOTO-2023-10-17-25_1767712905635.jpg";
+import image8 from "@assets/115_Tomay_1767713116539.jpg";
 
 const instagramImages = [
-  { src: furnitureImage, alt: "Möbelbau" },
-  { src: kitchenImage, alt: "Küche" },
-  { src: terraceImage, alt: "Terrasse" },
-  { src: doorImage, alt: "Türen" },
-  { src: wardrobeImage, alt: "Schrank" },
-  { src: craftsmanImage, alt: "Handwerk" },
-  { src: flooringImage, alt: "Boden" },
-  { src: workshopImage, alt: "Werkstatt" },
+  { src: image1, alt: "Epoxytisch" },
+  { src: image2, alt: "Waschtischanlage" },
+  { src: image3, alt: "Küche" },
+  { src: image4, alt: "Holzdetail" },
+  { src: image5, alt: "Schrank" },
+  { src: image6, alt: "Möbel" },
+  { src: image7, alt: "Projekt" },
+  { src: image8, alt: "Werkstatt" },
 ];
 
 interface InstagramFeedProps {
