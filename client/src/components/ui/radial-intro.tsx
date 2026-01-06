@@ -117,27 +117,29 @@ export const RadialIntro = ({
             layoutId={`arm-${item.id}`}
           >
             {item.url ? (
-              <a
+              <motion.a
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2"
+                data-arm-image
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 block"
                 data-testid={`link-partner-${item.id}`}
+                style={{
+                  opacity: i === 0 ? 1 : 0,
+                }}
+                layoutId={`arm-img-${item.id}`}
               >
-                <motion.img
-                  data-arm-image
+                <img
                   className="rounded-lg object-contain bg-white p-2 aspect-square cursor-pointer"
                   style={{
                     width: imageSize,
                     height: imageSize,
-                    opacity: i === 0 ? 1 : 0,
                   }}
                   src={item.src}
                   alt={item.name}
                   draggable={false}
-                  layoutId={`arm-img-${item.id}`}
                 />
-              </a>
+              </motion.a>
             ) : (
               <motion.img
                 data-arm-image
