@@ -8,25 +8,36 @@ import SEO from "@/components/SEO";
 import { VerticalImageStack } from "@/components/ui/vertical-image-stack";
 import InquiryFunnel from "@/components/InquiryFunnel";
 
-import furnitureImage from "@assets/generated_images/custom_furniture_piece.png";
-import kitchenImage from "@assets/generated_images/custom_kitchen_cabinets.png";
-import terraceImage from "@assets/generated_images/wooden_terrace_deck.png";
-import doorImage from "@assets/generated_images/custom_wooden_door.png";
-import flooringImage from "@assets/generated_images/hardwood_flooring_detail.png";
-import wardrobeImage from "@assets/generated_images/custom_wardrobe_system.png";
 import workshopImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
 
-// todo: remove mock functionality
+import werkstattImage from "@assets/7_Tomay_1767712905635.jpg";
+import epoxytischImage from "@assets/PHOTO-2023-09-01-14-_1767712905635.jpg";
+import dachschraegeSchrank from "@assets/PHOTO-2023-09-01-14_1767712905635.jpg";
+import schulmoebel from "@assets/PHOTO-2023-09-01-15_1767712905635.jpg";
+import treppenverkleidung from "@assets/PHOTO-2023-09-01-16_1767712905635.jpg";
+import einbauSchrankSchreibtisch from "@assets/PHOTO-2023-09-01-17_1767712905635.jpg";
+import sideboardDachschraege from "@assets/PHOTO-2023-10-17-6_1767712905635.jpg";
+import garderobenbank from "@assets/PHOTO-2023-10-17-9_1767712905635.jpg";
+import couchtischEpoxy from "@assets/PHOTO-2023-10-17-21-_1767712905635.jpg";
+import innentuerWeiss from "@assets/PHOTO-2023-10-17-23_1767712905635.jpg";
+import einbauSchrankWeiss from "@assets/PHOTO-2023-10-17-24_1767712905635.jpg";
+import medientisch from "@assets/PHOTO-2023-10-17-25_1767712905635.jpg";
+import waschtischanlage from "@assets/PHOTO-2023-10-17-29_1767712905635.jpg";
+
 const projects = [
-  { id: "1", title: "Maßgefertigtes Bücherregal", category: "moebel", location: "Esslingen", image: furnitureImage },
-  { id: "2", title: "Schreinerküche mit Eichenfronten", category: "kueche", location: "Stuttgart", image: kitchenImage },
-  { id: "3", title: "Holzterrasse mit Bangkirai", category: "boden", location: "Esslingen", image: terraceImage },
-  { id: "4", title: "Haustür in Nussbaum", category: "tueren", location: "Plochingen", image: doorImage },
-  { id: "5", title: "Begehbarer Kleiderschrank", category: "sonder", location: "Esslingen", image: wardrobeImage },
-  { id: "6", title: "Parkettboden Eiche geölt", category: "boden", location: "Stuttgart", image: flooringImage },
-  { id: "7", title: "Einbauschrank unter Dachschräge", category: "moebel", location: "Nürtingen", image: wardrobeImage },
-  { id: "8", title: "Moderne Landhausküche", category: "kueche", location: "Kirchheim", image: kitchenImage },
-  { id: "9", title: "Glasinnentüren mit Eichenrahmen", category: "tueren", location: "Esslingen", image: doorImage },
+  { id: "1", title: "Epoxidharz-Esstisch Eiche", category: "moebel", location: "Esslingen", image: epoxytischImage },
+  { id: "2", title: "Einbauschrank unter Dachschräge", category: "moebel", location: "Stuttgart", image: dachschraegeSchrank },
+  { id: "3", title: "Einbauschrank mit Schminktisch", category: "moebel", location: "Esslingen", image: einbauSchrankSchreibtisch },
+  { id: "4", title: "Sideboard Dachschräge anthrazit", category: "moebel", location: "Plochingen", image: sideboardDachschraege },
+  { id: "5", title: "Garderobenbank Eiche massiv", category: "moebel", location: "Esslingen", image: garderobenbank },
+  { id: "6", title: "Couchtisch mit Epoxidharz", category: "moebel", location: "Stuttgart", image: couchtischEpoxy },
+  { id: "7", title: "Weiße Innentür modern", category: "tueren", location: "Nürtingen", image: innentuerWeiss },
+  { id: "8", title: "Einbauschrank raumhoch weiß", category: "moebel", location: "Kirchheim", image: einbauSchrankWeiss },
+  { id: "9", title: "Medientisch Konferenzraum", category: "sonder", location: "Esslingen", image: medientisch },
+  { id: "10", title: "Waschtischanlage Sanitär", category: "sonder", location: "Stuttgart", image: waschtischanlage },
+  { id: "11", title: "Schuleinrichtung mit Tafel", category: "sonder", location: "Esslingen", image: schulmoebel },
+  { id: "12", title: "Treppenverkleidung Neubau", category: "sonder", location: "Esslingen", image: treppenverkleidung },
+  { id: "13", title: "Holzbearbeitung in der Werkstatt", category: "sonder", location: "Esslingen", image: werkstattImage },
 ];
 
 const categories = [
