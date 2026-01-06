@@ -28,7 +28,7 @@ export const Card = ({
     <img
       src={card.src}
       alt={card.title}
-      className="object-cover absolute inset-0 w-full h-full"
+      className="object-cover absolute inset-0 w-full h-full scale-110"
     />
     <div
       className={cn(
