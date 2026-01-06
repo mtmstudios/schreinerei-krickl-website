@@ -10,8 +10,17 @@ import { Testimonial } from "@/components/ui/clean-testimonial";
 import InquiryFunnel from "@/components/InquiryFunnel";
 import ServiceInquiryFunnel from "@/components/ServiceInquiryFunnel";
 import InstagramFeed from "@/components/InstagramFeed";
+import { RadialIntro } from "@/components/ui/radial-intro";
 
 import heroImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
+
+import logoZellerFrey from "@assets/3_1767713572646.png";
+import logoHolzMetzger from "@assets/6_1767713572646.png";
+import logoGlasBach from "@assets/7_1767713572646.png";
+import logoZEG from "@assets/8_1767713572646.png";
+import logoWuerth from "@assets/9_1767713572646.png";
+import logoDoktorSpanndecke from "@assets/DoktorSpanndecke_Log_1767713572646.jpg";
+import logoScharpf from "@assets/1_1767713592806.png";
 import furnitureImage from "@assets/generated_images/custom_furniture_piece.png";
 import kitchenImage from "@assets/generated_images/custom_kitchen_cabinets.png";
 import flooringImage from "@assets/generated_images/hardwood_flooring_detail.png";
@@ -63,6 +72,16 @@ const services = [
     image: wardrobeImage,
     icon: <Sparkles className="w-5 h-5" />,
   },
+];
+
+const partnerLogos = [
+  { id: 1, name: "Zeller & Frey", src: logoZellerFrey },
+  { id: 2, name: "Holz Metzger", src: logoHolzMetzger },
+  { id: 3, name: "Glas-Bach", src: logoGlasBach },
+  { id: 4, name: "ZEG", src: logoZEG },
+  { id: 5, name: "Würth", src: logoWuerth },
+  { id: 6, name: "Doktor Spanndecke", src: logoDoktorSpanndecke },
+  { id: 7, name: "E. Scharpf", src: logoScharpf },
 ];
 
 // todo: remove mock functionality
@@ -243,6 +262,32 @@ export default function Home() {
       </section>
 
       <InstagramFeed />
+
+      <section className="py-16 md:py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4">Unsere Partner</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Gemeinsam mit starken Partnern setzen wir Ihre Projekte um
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="flex justify-center"
+          >
+            <RadialIntro orbitItems={partnerLogos} stageSize={400} imageSize={80} />
+          </motion.div>
+        </div>
+      </section>
 
       <section className="py-16 md:py-24 bg-primary text-primary-foreground">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 text-center">
