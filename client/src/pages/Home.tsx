@@ -21,55 +21,55 @@ import logoZEG from "@assets/8_1767713572646.png";
 import logoWuerth from "@assets/9_1767713572646.png";
 import logoDoktorSpanndecke from "@assets/DoktorSpanndecke_Log_1767713572646.jpg";
 import logoScharpf from "@assets/1_1767713592806.png";
-import furnitureImage from "@assets/generated_images/custom_furniture_piece.png";
-import kitchenImage from "@assets/generated_images/custom_kitchen_cabinets.png";
-import flooringImage from "@assets/generated_images/hardwood_flooring_detail.png";
-import doorImage from "@assets/generated_images/custom_wooden_door.png";
-import terraceImage from "@assets/generated_images/wooden_terrace_deck.png";
-import wardrobeImage from "@assets/generated_images/custom_wardrobe_system.png";
-import craftsmanImage from "@assets/generated_images/craftsman_hands_detail.png";
+
+import epoxytischImage from "@assets/PHOTO-2023-09-01-14-_1767712905635.jpg";
+import einbauSchrankWeiss from "@assets/PHOTO-2023-10-17-24_1767712905635.jpg";
+import treppenverkleidung from "@assets/PHOTO-2023-09-01-16_1767712905635.jpg";
+import innentuerWeiss from "@assets/PHOTO-2023-10-17-23_1767712905635.jpg";
+import werkstattImage from "@assets/7_Tomay_1767712905635.jpg";
+import waschtischanlage from "@assets/PHOTO-2023-10-17-29_1767712905635.jpg";
 
 const services = [
   {
     id: "moebel",
     title: "Möbelbau",
     description: "Individuelle Möbel nach Maß – perfekt auf Ihre Räume und Wünsche abgestimmt.",
-    image: furnitureImage,
+    image: epoxytischImage,
     icon: <Armchair className="w-5 h-5" />,
   },
   {
     id: "kueche",
     title: "Schreinerküchen",
     description: "Maßgefertigte Küchen statt Standardlösungen – für höchste Ansprüche.",
-    image: kitchenImage,
+    image: einbauSchrankWeiss,
     icon: <ChefHat className="w-5 h-5" />,
   },
   {
     id: "terrasse",
     title: "Terrassen & Böden",
     description: "Hochwertige Holzböden und Terrassen für drinnen und draußen.",
-    image: terraceImage,
+    image: treppenverkleidung,
     icon: <TreeDeciduous className="w-5 h-5" />,
   },
   {
     id: "tueren",
     title: "Türen",
     description: "Individuelle Innentüren und Haustüren – handwerklich gefertigt.",
-    image: doorImage,
+    image: innentuerWeiss,
     icon: <DoorOpen className="w-5 h-5" />,
   },
   {
     id: "reparatur",
     title: "Reparaturen",
     description: "Professionelle Reparaturen und Instandsetzungen für alle Holzarbeiten.",
-    image: flooringImage,
+    image: werkstattImage,
     icon: <Wrench className="w-5 h-5" />,
   },
   {
     id: "sonder",
     title: "Sonderanfertigungen",
     description: "Außergewöhnliche Projekte und individuelle Sonderlösungen.",
-    image: wardrobeImage,
+    image: waschtischanlage,
     icon: <Sparkles className="w-5 h-5" />,
   },
 ];
@@ -234,8 +234,8 @@ export default function Home() {
               className="relative aspect-[4/3] rounded-xl overflow-hidden"
             >
               <img
-                src={craftsmanImage}
-                alt="Handwerksarbeit"
+                src={werkstattImage}
+                alt="Handwerksarbeit in der Schreinerei Krickl"
                 className="w-full h-full object-cover"
               />
             </motion.div>
