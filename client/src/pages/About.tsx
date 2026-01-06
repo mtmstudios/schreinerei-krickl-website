@@ -9,6 +9,7 @@ import BenefitCard from "@/components/BenefitCard";
 
 import craftsmanImage from "@assets/generated_images/craftsman_hands_detail.png";
 import workshopImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
+import yannikImage from "@assets/115_Tomay_1767713116539.jpg";
 
 // todo: remove mock functionality
 const timelineItems = [
@@ -156,11 +157,12 @@ export default function About() {
 
       <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              className="order-2 lg:order-1"
             >
               <h2 className="text-3xl md:text-4xl font-semibold mb-2">
                 Yannik Tomay
@@ -184,8 +186,24 @@ export default function About() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              className="order-1 lg:order-2 flex justify-center"
             >
-              <h3 className="text-2xl font-semibold mb-6">Unser Team</h3>
+              <div className="relative">
+                <img 
+                  src={yannikImage} 
+                  alt="Yannik Tomay - Schreinermeister und Inhaber der Schreinerei Krickl" 
+                  className="rounded-lg shadow-lg max-w-sm w-full object-cover"
+                />
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="text-2xl font-semibold mb-6">Unser Team</h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 bg-card rounded-lg">
                   <span className="font-medium">Schreinermeister (Inhaber)</span>
@@ -215,8 +233,7 @@ export default function About() {
               <p className="mt-6 text-primary font-medium">
                 Wir stellen weiter motivierte Kolleginnen und Kollegen (m/w/d) ein!
               </p>
-            </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
