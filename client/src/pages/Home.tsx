@@ -23,9 +23,9 @@ import logoDoktorSpanndecke from "@assets/DoktorSpanndecke_Log_1767713572646.jpg
 import logoScharpf from "@assets/1_1767713592806.png";
 
 import epoxytischImage from "@assets/PHOTO-2023-09-01-14-_1767712905635.jpg";
-import einbauSchrankWeiss from "@assets/PHOTO-2023-10-17-24_1767712905635.jpg";
-import treppenverkleidung from "@assets/PHOTO-2023-09-01-16_1767712905635.jpg";
-import innentuerWeiss from "@assets/PHOTO-2023-10-17-23_1767712905635.jpg";
+import kuecheImage from "@assets/Braun_Wei_Minimalist_1767714551820.png";
+import terrasseImage from "@assets/PHOTO-2023-09-01-14-_1767714551820.jpg";
+import tuereImage from "@assets/16_1767714551820.png";
 import werkstattImage from "@assets/7_Tomay_1767712905635.jpg";
 import waschtischanlage from "@assets/PHOTO-2023-10-17-29_1767712905635.jpg";
 
@@ -41,21 +41,21 @@ const services = [
     id: "kueche",
     title: "Schreinerküchen",
     description: "Maßgefertigte Küchen statt Standardlösungen – für höchste Ansprüche.",
-    image: einbauSchrankWeiss,
+    image: kuecheImage,
     icon: <ChefHat className="w-5 h-5" />,
   },
   {
     id: "terrasse",
     title: "Terrassen & Böden",
     description: "Hochwertige Holzböden und Terrassen für drinnen und draußen.",
-    image: treppenverkleidung,
+    image: terrasseImage,
     icon: <TreeDeciduous className="w-5 h-5" />,
   },
   {
     id: "tueren",
     title: "Türen",
     description: "Individuelle Innentüren und Haustüren – handwerklich gefertigt.",
-    image: innentuerWeiss,
+    image: tuereImage,
     icon: <DoorOpen className="w-5 h-5" />,
   },
   {
