@@ -75,13 +75,13 @@ const services = [
 ];
 
 const partnerLogos = [
-  { id: 1, name: "Zeller & Frey", src: logoZellerFrey },
-  { id: 2, name: "Holz Metzger", src: logoHolzMetzger },
-  { id: 3, name: "Glas-Bach", src: logoGlasBach },
-  { id: 4, name: "ZEG", src: logoZEG },
-  { id: 5, name: "Würth", src: logoWuerth },
-  { id: 6, name: "Doktor Spanndecke", src: logoDoktorSpanndecke },
-  { id: 7, name: "E. Scharpf", src: logoScharpf },
+  { id: 1, name: "Zeller & Frey", src: logoZellerFrey, url: "https://zeller-frey.de" },
+  { id: 2, name: "Holz Metzger", src: logoHolzMetzger, url: "https://www.holz-metzger.de" },
+  { id: 3, name: "Glas-Bach", src: logoGlasBach, url: "https://www.glas-bach.de" },
+  { id: 4, name: "ZEG", src: logoZEG, url: "https://www.zeg-holz.de" },
+  { id: 5, name: "Würth", src: logoWuerth, url: "https://eshop.wuerth.de/de/DE/EUR/" },
+  { id: 6, name: "Doktor Spanndecke", src: logoDoktorSpanndecke, url: "https://www.doktorspanndecke.de" },
+  { id: 7, name: "E. Scharpf", src: logoScharpf, url: "https://www.holzbau-scharpf.de" },
 ];
 
 // todo: remove mock functionality

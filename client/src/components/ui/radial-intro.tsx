@@ -18,6 +18,7 @@ type OrbitItem = {
   id: number;
   name: string;
   src: string;
+  url?: string;
 };
 
 const transition: Transition = {
@@ -115,19 +116,43 @@ export const RadialIntro = ({
             data-angle={i * step}
             layoutId={`arm-${item.id}`}
           >
-            <motion.img
-              data-arm-image
-              className="rounded-lg object-contain bg-white p-2 absolute left-1/2 top-1/2 aspect-square -translate-x-1/2"
-              style={{
-                width: imageSize,
-                height: imageSize,
-                opacity: i === 0 ? 1 : 0,
-              }}
-              src={item.src}
-              alt={item.name}
-              draggable={false}
-              layoutId={`arm-img-${item.id}`}
-            />
+            {item.url ? (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2"
+                data-testid={`link-partner-${item.id}`}
+              >
+                <motion.img
+                  data-arm-image
+                  className="rounded-lg object-contain bg-white p-2 aspect-square cursor-pointer"
+                  style={{
+                    width: imageSize,
+                    height: imageSize,
+                    opacity: i === 0 ? 1 : 0,
+                  }}
+                  src={item.src}
+                  alt={item.name}
+                  draggable={false}
+                  layoutId={`arm-img-${item.id}`}
+                />
+              </a>
+            ) : (
+              <motion.img
+                data-arm-image
+                className="rounded-lg object-contain bg-white p-2 absolute left-1/2 top-1/2 aspect-square -translate-x-1/2"
+                style={{
+                  width: imageSize,
+                  height: imageSize,
+                  opacity: i === 0 ? 1 : 0,
+                }}
+                src={item.src}
+                alt={item.name}
+                draggable={false}
+                layoutId={`arm-img-${item.id}`}
+              />
+            )}
           </motion.div>
         ))}
       </motion.div>
