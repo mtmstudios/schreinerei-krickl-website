@@ -12,7 +12,7 @@ import ServiceInquiryFunnel from "@/components/ServiceInquiryFunnel";
 import InstagramFeed from "@/components/InstagramFeed";
 import { RadialIntro } from "@/components/ui/radial-intro";
 
-import heroImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
+import heroImage from "@assets/130_Tomay_1767714126363.jpg";
 
 import logoZellerFrey from "@assets/3_1767713572646.png";
 import logoHolzMetzger from "@assets/6_1767713572646.png";
@@ -284,7 +284,7 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="flex justify-center"
           >
-            <RadialIntro orbitItems={partnerLogos} stageSize={400} imageSize={80} />
+            <RadialIntro orbitItems={partnerLogos} stageSize={500} imageSize={100} />
           </motion.div>
         </div>
       </section>
