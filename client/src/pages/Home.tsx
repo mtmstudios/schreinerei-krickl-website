@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -112,6 +112,14 @@ export default function Home() {
   const [funnelOpen, setFunnelOpen] = useState(false);
   const [serviceFunnelOpen, setServiceFunnelOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleServiceClick = (serviceId: string) => {
     setSelectedService(serviceId as ServiceType);
@@ -284,7 +292,7 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="flex justify-center"
           >
-            <RadialIntro orbitItems={partnerLogos} stageSize={500} imageSize={100} />
+            <RadialIntro orbitItems={partnerLogos} stageSize={isMobile ? 280 : 500} imageSize={isMobile ? 60 : 100} />
           </motion.div>
         </div>
       </section>
