@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link, useParams } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowRight, Check, Hammer } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import SEO from "@/components/SEO";
 import ProcessStep from "@/components/ProcessStep";
@@ -308,44 +309,78 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-background via-card/30 to-background">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-semibold mb-6 text-center">Ihre Vorteile</h2>
-              <ul className="space-y-3">
-                {service.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="w-4 h-4 text-primary" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4">Ihre Vorteile</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Qualität, die Sie sehen und spüren können
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-16">
+            {service.benefits.map((benefit, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group"
+              >
+                <Card className="h-full border-border/50 hover-elevate transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <Check className="w-5 h-5 text-primary" />
+                      </div>
+                      <p className="text-foreground font-medium leading-relaxed pt-2">{benefit}</p>
                     </div>
-                    <span className="text-muted-foreground">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-semibold mb-6 text-center">Was wir bieten</h2>
-              <ul className="space-y-3">
-                {service.details.map((detail, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-accent flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="w-4 h-4 text-accent-foreground" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold mb-4">Was wir bieten</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Unser umfassendes Leistungsspektrum für Ihr Projekt
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            {service.details.map((detail, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group"
+              >
+                <Card className="h-full bg-card/80 border-border/50 hover-elevate transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center flex-shrink-0 group-hover:bg-accent/80 transition-colors">
+                        <Hammer className="w-5 h-5 text-accent-foreground" />
+                      </div>
+                      <p className="text-foreground font-medium leading-relaxed pt-2">{detail}</p>
                     </div>
-                    <span className="text-muted-foreground">{detail}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
