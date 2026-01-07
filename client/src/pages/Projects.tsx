@@ -91,9 +91,6 @@ export default function Projects() {
         </div>
       </section>
 
-      <section className="py-12 md:py-20">
-      </section>
-
       <div className="sticky top-16 md:top-20 z-40 bg-background/95 backdrop-blur-md border-b border-border/50 py-3 md:py-4">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="flex md:hidden overflow-x-auto scrollbar-hide gap-2 pb-1 -mx-4 px-4">
