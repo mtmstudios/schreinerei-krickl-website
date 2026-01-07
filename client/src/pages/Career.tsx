@@ -125,7 +125,7 @@ export default function Career() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-white max-w-2xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Schreiner Jobs in Esslingen – Karriere bei Krickl</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Deine Karriere bei Krickl</h1>
             <p className="text-xl text-white/90 mb-8">
               Werden Sie Teil unseres Teams – echtes Handwerk, familiäre Atmosphäre, langfristige Perspektive
             </p>

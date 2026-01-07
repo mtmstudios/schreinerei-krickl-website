@@ -84,7 +84,7 @@ export default function About() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-white max-w-2xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Ihre Schreinerei in Esslingen – Über uns</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Über uns</h1>
             <p className="text-xl text-white/90">
               Meisterbetrieb mit Tradition, Leidenschaft und Blick in die Zukunft seit über 60 Jahren
             </p>
