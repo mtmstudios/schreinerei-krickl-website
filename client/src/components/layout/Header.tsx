@@ -14,7 +14,6 @@ const services = [
 ];
 
 const navigation = [
-  { name: "Startseite", href: "/" },
   { name: "Über uns", href: "/ueber-uns" },
   { name: "Leistungen", href: "/leistungen", hasDropdown: true },
   { name: "Referenzen", href: "/referenzen" },
