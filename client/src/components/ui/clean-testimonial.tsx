@@ -1,7 +1,9 @@
 "use client"
 
-import { useState, useCallback, useRef, useEffect } from "react"
-import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronLeft, ChevronRight, Star } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 interface TestimonialData {
   quote: string
@@ -79,221 +81,116 @@ function usePreloadImages(images: string[]) {
   }, [images])
 }
 
-function SplitText({ text }: { text: string }) {
-  const words = text.split(" ")
-
-  return (
-    <span className="inline">
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{
-            duration: 0.4,
-            delay: i * 0.03,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="inline-block mr-[0.25em]"
-        >
-          {word}
-        </motion.span>
-      ))}
-    </span>
-  )
-}
-
 export function Testimonial() {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [isHovered, setIsHovered] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
 
   usePreloadImages(testimonials.map((t) => t.avatar))
 
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-
-  const springConfig = { damping: 25, stiffness: 150 }
-  const cursorX = useSpring(mouseX, springConfig)
-  const cursorY = useSpring(mouseY, springConfig)
-
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (!containerRef.current) return
-      const rect = containerRef.current.getBoundingClientRect()
-      mouseX.set(e.clientX - rect.left)
-      mouseY.set(e.clientY - rect.top)
-    },
-    [mouseX, mouseY],
-  )
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % testimonials.length)
   }
 
+  const goToSlide = (index: number) => {
+    setActiveIndex(index)
+  }
+
   const currentTestimonial = testimonials[activeIndex]
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full max-w-xl mx-auto py-12 md:py-20 px-6 md:px-8"
-      style={{ cursor: "none" }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleNext}
-      data-testid="testimonial-container"
-    >
-      <motion.div
-        className="pointer-events-none absolute z-50 mix-blend-difference hidden md:block"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      >
-        <motion.div
-          className="rounded-full bg-foreground flex items-center justify-center"
-          animate={{
-            width: isHovered ? 80 : 0,
-            height: isHovered ? 80 : 0,
-            opacity: isHovered ? 1 : 0,
-          }}
-          transition={{ type: "spring", damping: 20, stiffness: 200 }}
-        >
-          <motion.span
-            className="text-background text-xs font-medium tracking-wider uppercase"
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ delay: 0.1 }}
-          >
-            Weiter
-          </motion.span>
-        </motion.div>
-      </motion.div>
+    <div className="relative w-full max-w-4xl mx-auto" data-testid="testimonial-container">
+      <div className="relative bg-background rounded-xl border border-border p-8 md:p-12">
+        <div className="flex gap-1 mb-6 justify-center">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Star key={i} className="w-5 h-5 text-yellow-500 fill-yellow-500" />
+          ))}
+        </div>
 
-      <motion.div
-        className="absolute top-6 md:top-8 right-6 md:right-8 flex items-baseline gap-1 font-mono text-xs"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        <motion.span
-          className="text-2xl font-light text-foreground"
-          key={activeIndex}
-          initial={{ y: 10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {String(activeIndex + 1).padStart(2, "0")}
-        </motion.span>
-        <span className="text-muted-foreground">/</span>
-        <span className="text-muted-foreground">{String(testimonials.length).padStart(2, "0")}</span>
-      </motion.div>
+        <div className="min-h-[180px] md:min-h-[150px] flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.blockquote
+              key={activeIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="text-lg md:text-xl leading-relaxed text-foreground text-center max-w-3xl"
+            >
+              "{currentTestimonial.quote}"
+            </motion.blockquote>
+          </AnimatePresence>
+        </div>
 
-      <motion.div
-        className="absolute top-6 md:top-8 left-6 md:left-8 flex -space-x-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.6 }}
-        transition={{ delay: 0.6 }}
-      >
-        {testimonials.map((t, i) => (
-          <motion.div
-            key={i}
-            className={`w-6 h-6 rounded-full border-2 border-background overflow-hidden transition-all duration-300 ${
-              i === activeIndex ? "ring-1 ring-primary ring-offset-1 ring-offset-background" : "grayscale opacity-50"
-            }`}
-            whileHover={{ scale: 1.1, opacity: 1 }}
-          >
-            <img src={t.avatar} alt={t.author} className="w-full h-full object-cover" />
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <div className="relative pt-8">
         <AnimatePresence mode="wait">
-          <motion.blockquote
+          <motion.div
             key={activeIndex}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.2 } }}
-            className="text-xl md:text-2xl font-light leading-relaxed tracking-tight text-foreground"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="mt-8 flex flex-col items-center"
           >
-            <span className="text-primary text-3xl mr-1">"</span>
-            <SplitText text={currentTestimonial.quote} />
-            <span className="text-primary text-3xl ml-1">"</span>
-          </motion.blockquote>
+            <div className="relative w-14 h-14 mb-3">
+              <div className="absolute -inset-1 rounded-full border-2 border-primary/30" />
+              <img
+                src={currentTestimonial.avatar}
+                alt={currentTestimonial.author}
+                className="w-14 h-14 rounded-full object-cover"
+              />
+            </div>
+            <p className="font-semibold text-foreground">{currentTestimonial.author}</p>
+            <p className="text-sm text-muted-foreground">{currentTestimonial.role}</p>
+          </motion.div>
         </AnimatePresence>
 
-        <motion.div className="mt-10 md:mt-12 relative" layout>
-          <div className="flex items-center gap-4">
-            <div className="relative w-12 h-12">
-              <motion.div
-                className="absolute -inset-1.5 rounded-full border border-primary/40"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              />
-              {testimonials.map((t, i) => (
-                <motion.img
-                  key={t.avatar}
-                  src={t.avatar}
-                  alt={t.author}
-                  className="absolute inset-0 w-12 h-12 rounded-full object-cover grayscale hover:grayscale-0 transition-[filter] duration-500"
-                  animate={{
-                    opacity: i === activeIndex ? 1 : 0,
-                    zIndex: i === activeIndex ? 1 : 0,
-                  }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                />
-              ))}
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                className="relative pl-4"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                transition={{ duration: 0.3 }}
-              >
-                <motion.div
-                  className="absolute left-0 top-0 bottom-0 w-px bg-primary"
-                  initial={{ scaleY: 0 }}
-                  animate={{ scaleY: 1 }}
-                  transition={{ duration: 0.4, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ originY: 0 }}
-                />
-                <span className="block text-sm font-medium text-foreground tracking-wide">
-                  {currentTestimonial.author}
-                </span>
-                <span className="block text-xs text-muted-foreground mt-0.5 font-mono uppercase tracking-widest">
-                  {currentTestimonial.role} — {currentTestimonial.company}
-                </span>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </motion.div>
-
-        <div className="mt-12 md:mt-16 h-px bg-border relative overflow-hidden">
-          <motion.div
-            className="absolute inset-y-0 left-0 bg-primary"
-            initial={{ width: "0%" }}
-            animate={{ width: `${((activeIndex + 1) / testimonials.length) * 100}%` }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          />
+        <div className="absolute left-4 top-1/2 -translate-y-1/2">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={handlePrev}
+            data-testid="button-testimonial-prev"
+            className="rounded-full"
+            aria-label="Vorherige Bewertung"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </Button>
+        </div>
+        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={handleNext}
+            data-testid="button-testimonial-next"
+            className="rounded-full"
+            aria-label="Nächste Bewertung"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </Button>
         </div>
       </div>
 
-      <motion.div
-        className="absolute bottom-4 md:bottom-8 left-6 md:left-8 flex items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 0.4 : 0.2 }}
-        transition={{ duration: 0.3 }}
-      >
-        <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-mono">Klicken zum Wechseln</span>
-      </motion.div>
+      <div className="flex justify-center gap-2 mt-6">
+        {testimonials.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            data-testid={`button-testimonial-dot-${index}`}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              index === activeIndex
+                ? "bg-primary w-8"
+                : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+            }`}
+            aria-label={`Gehe zu Bewertung ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      <p className="text-center text-sm text-muted-foreground mt-4">
+        {activeIndex + 1} von {testimonials.length} Bewertungen
+      </p>
     </div>
   )
 }
