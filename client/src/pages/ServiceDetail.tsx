@@ -39,6 +39,7 @@ const serviceData: Record<string, {
       "Hochwertige Materialien und Verarbeitung",
       "Persönliche Beratung und Planung",
       "Montage vor Ort durch unsere Fachleute",
+      "Über 60 Jahre Handwerkserfahrung",
     ],
     details: [
       "Wohnzimmermöbel und Regalsysteme",
@@ -46,6 +47,7 @@ const serviceData: Record<string, {
       "Büroeinrichtungen und Arbeitszimmer",
       "Einbauschränke nach Maß",
       "TV-Möbel und Medienwände",
+      "Garderoben und Flurmöbel",
     ],
     process: [
       { title: "Beratung", description: "Persönliches Gespräch über Ihre Wünsche und Anforderungen" },
@@ -71,6 +73,7 @@ const serviceData: Record<string, {
       "Individuelle Funktionslösungen",
       "Ergonomische Arbeitsabläufe",
       "Langlebigkeit durch beste Qualität",
+      "Persönliche Betreuung von A bis Z",
     ],
     details: [
       "Komplette Küchenplanung und -umsetzung",
@@ -78,6 +81,7 @@ const serviceData: Record<string, {
       "Integrierte Elektrogeräte",
       "Arbeitsplatten aus Naturstein oder Holz",
       "Beleuchtungskonzepte",
+      "Stauraumlösungen und Auszüge",
     ],
     process: [
       { title: "Beratung", description: "Analyse Ihrer Koch- und Lebensgewohnheiten" },
@@ -103,6 +107,7 @@ const serviceData: Record<string, {
       "Fachgerechte Verlegung",
       "Wärme und Behaglichkeit",
       "Wertsteigerung Ihrer Immobilie",
+      "Witterungsbeständige Lösungen",
     ],
     details: [
       "Parkettböden in allen Varianten",
@@ -110,6 +115,7 @@ const serviceData: Record<string, {
       "Holzterrassen und -decks",
       "Terrassenunterkonstruktionen",
       "Pflegeberatung und Wartung",
+      "Poolumrandungen und Außenbereiche",
     ],
     process: [
       { title: "Beratung", description: "Analyse der Raumsituation und Nutzung" },
@@ -135,6 +141,7 @@ const serviceData: Record<string, {
       "Hochwertige Beschläge",
       "Optimale Schalldämmung",
       "Langlebige Qualität",
+      "Einbruchschutz nach Wunsch",
     ],
     details: [
       "Innentüren in allen Varianten",
@@ -142,6 +149,7 @@ const serviceData: Record<string, {
       "Schiebetüren und Falttüren",
       "Glastüren mit Holzrahmen",
       "Altbausanierung und Austausch",
+      "Zimmertüren mit Sondermaßen",
     ],
     process: [
       { title: "Beratung", description: "Stilberatung und Funktionsanforderungen" },
@@ -167,6 +175,7 @@ const serviceData: Record<string, {
       "Werterhaltung Ihrer Möbel",
       "Umweltschonend durch Reparatur statt Neukauf",
       "Faire Preise",
+      "Transparente Kostenvoranschläge",
     ],
     details: [
       "Möbelreparaturen aller Art",
@@ -174,6 +183,7 @@ const serviceData: Record<string, {
       "Scharniere und Beschläge",
       "Strukturelle Reparaturen",
       "Antike Möbelrestaurierung",
+      "Holzfenster-Instandsetzung",
     ],
     process: [
       { title: "Anfrage", description: "Schildern Sie uns den Schaden" },
@@ -199,6 +209,7 @@ const serviceData: Record<string, {
       "Erfahrung mit komplexen Projekten",
       "Enge Zusammenarbeit mit Ihnen",
       "Einzigartige Ergebnisse",
+      "Handwerkliche Perfektion bis ins Detail",
     ],
     details: [
       "Architektonische Elemente",
@@ -206,6 +217,7 @@ const serviceData: Record<string, {
       "Spezielle Einbauten",
       "Prototypen und Einzelstücke",
       "Event- und Messeausstattung",
+      "Shopausstattung und Ladenbau",
     ],
     process: [
       { title: "Ideenfindung", description: "Gemeinsame Entwicklung Ihres Projekts" },
