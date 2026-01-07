@@ -203,36 +203,86 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-semibold mb-6 text-center">Unser Team</h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
-                  <span className="font-medium">Schreinermeister (Inhaber)</span>
-                  <span className="text-muted-foreground">1</span>
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-semibold mb-2">Unser Team</h3>
+              <p className="text-4xl md:text-5xl font-bold text-primary">9 Fachleute</p>
+              <p className="text-muted-foreground mt-2">für Ihr Projekt</p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <motion.div 
+                className="bg-card rounded-xl p-6 hover-elevate col-span-2 md:col-span-1"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl font-bold text-primary mb-2">1</span>
+                  <span className="font-medium">Schreinermeister</span>
+                  <span className="text-sm text-muted-foreground">(Inhaber)</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
+              </motion.div>
+              
+              <motion.div 
+                className="bg-card rounded-xl p-6 hover-elevate"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl font-bold text-primary mb-2">1</span>
                   <span className="font-medium">Vorarbeiter</span>
-                  <span className="text-muted-foreground">1</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
+              </motion.div>
+              
+              <motion.div 
+                className="bg-card rounded-xl p-6 hover-elevate"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl font-bold text-primary mb-2">3</span>
                   <span className="font-medium">Schreinergesellen</span>
-                  <span className="text-muted-foreground">3</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
-                  <span className="font-medium">Auszubildende (3. Lehrjahr)</span>
-                  <span className="text-muted-foreground">2</span>
+              </motion.div>
+              
+              <motion.div 
+                className="bg-card rounded-xl p-6 hover-elevate"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl font-bold text-primary mb-2">2</span>
+                  <span className="font-medium">Auszubildende</span>
+                  <span className="text-sm text-muted-foreground">3. Lehrjahr</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
-                  <span className="font-medium">Auszubildender (1. Lehrjahr)</span>
-                  <span className="text-muted-foreground">1</span>
+              </motion.div>
+              
+              <motion.div 
+                className="bg-card rounded-xl p-6 hover-elevate"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl font-bold text-primary mb-2">1</span>
+                  <span className="font-medium">Auszubildender</span>
+                  <span className="text-sm text-muted-foreground">1. Lehrjahr</span>
                 </div>
-                <div className="flex items-center justify-between p-3 bg-card rounded-lg">
+              </motion.div>
+              
+              <motion.div 
+                className="bg-card rounded-xl p-6 hover-elevate"
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <span className="text-4xl font-bold text-primary mb-2">1</span>
                   <span className="font-medium">Bürokraft</span>
-                  <span className="text-muted-foreground">1</span>
                 </div>
-              </div>
-              <p className="mt-6 text-primary font-medium text-center">
-                Wir stellen weiter motivierte Kolleginnen und Kollegen (m/w/d) ein!
-              </p>
+              </motion.div>
+            </div>
+            
+            <p className="mt-8 text-primary font-medium text-center text-lg">
+              Wir stellen weiter motivierte Kolleginnen und Kollegen (m/w/d) ein!
+            </p>
           </motion.div>
         </div>
       </section>
