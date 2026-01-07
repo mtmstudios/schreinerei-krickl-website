@@ -3,10 +3,9 @@ import { Link, useParams } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, Check, Hammer } from "lucide-react";
+import { ArrowRight, Check, Hammer, MessageSquare, Ruler, Pencil, Wrench, PackageCheck } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import SEO from "@/components/SEO";
-import ProcessStep from "@/components/ProcessStep";
 import FAQItem from "@/components/FAQItem";
 import InquiryFunnel from "@/components/InquiryFunnel";
 
@@ -403,23 +402,79 @@ export default function ServiceDetail() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl font-semibold mb-12 text-center"
+            className="text-3xl font-semibold mb-16 text-center"
           >
             So arbeiten wir
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {service.process.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <ProcessStep number={index + 1} {...step} />
-              </motion.div>
-            ))}
-          </div>
+          
+          {(() => {
+            const processIcons = [MessageSquare, Ruler, Pencil, Wrench, PackageCheck];
+            return (
+              <>
+                <div className="hidden md:block relative">
+                  <div className="absolute top-8 left-[10%] right-[10%] h-0.5 bg-border">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
+                  </div>
+                  
+                  <div className="flex justify-between relative">
+                    {service.process.map((step, index) => {
+                      const Icon = processIcons[index] || Wrench;
+                      return (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: 30 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.15 }}
+                          className="flex flex-col items-center text-center w-1/5 px-2"
+                        >
+                          <div className="relative z-10 w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-4 shadow-lg">
+                            <Icon className="w-7 h-7" />
+                          </div>
+                          <div className="bg-muted/50 rounded-full px-3 py-1 mb-3">
+                            <span className="text-xs font-semibold text-muted-foreground">Schritt {index + 1}</span>
+                          </div>
+                          <h4 className="font-semibold text-lg mb-2">{step.title}</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="md:hidden relative">
+                  <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gradient-to-b from-primary via-primary to-primary/20" />
+                  
+                  <div className="space-y-8">
+                    {service.process.map((step, index) => {
+                      const Icon = processIcons[index] || Wrench;
+                      return (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 }}
+                          className="flex gap-6"
+                        >
+                          <div className="relative z-10 flex-shrink-0 w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg">
+                            <Icon className="w-7 h-7" />
+                          </div>
+                          <div className="pt-2">
+                            <div className="bg-muted/50 rounded-full px-3 py-1 mb-2 inline-block">
+                              <span className="text-xs font-semibold text-muted-foreground">Schritt {index + 1}</span>
+                            </div>
+                            <h4 className="font-semibold text-lg mb-1">{step.title}</h4>
+                            <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </>
+            );
+          })()}
         </div>
       </section>
 
