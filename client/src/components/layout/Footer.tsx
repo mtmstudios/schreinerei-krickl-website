@@ -117,9 +117,7 @@ export default function Footer() {
             <p className="flex items-center justify-center gap-1 flex-wrap">
               <span>© {new Date().getFullYear()} Schreinerei Krickl – Schreiner Esslingen. Alle Rechte vorbehalten.</span>
             </p>
-            <p className="text-xs">
-              Schreiner Esslingen | Schreinerei Esslingen | Möbelbau Esslingen | Tischler Esslingen
-            </p>
+            
             <p className="flex items-center justify-center gap-1">
               <span>Mit</span> <Heart className="w-4 h-4 text-red-500 fill-red-500" /> <span>erstellt von</span> <a href="https://www.mtmstudios.de" target="_blank" rel="noopener noreferrer"><img src={mlmLogo} alt="MLM Studios" className="h-14 w-auto inline-block" /></a>
             </p>
