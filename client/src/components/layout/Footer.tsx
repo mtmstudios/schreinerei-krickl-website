@@ -55,7 +55,7 @@ export default function Footer() {
               </a>
               <div className="flex items-start gap-2 text-sm text-muted-foreground p-1 -ml-1">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>Musterstraße 123, 73728 Esslingen</span>
+                <span>Röntgenstraße 4-7, 73728 Esslingen</span>
               </div>
             </div>
           </div>
