@@ -21,7 +21,7 @@ export default function Contact() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="text-white max-w-2xl">
+          <div className="text-white max-w-2xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Schreiner in Esslingen kontaktieren</h1>
             <p className="text-xl text-white/90">
               Ihr persönlicher Ansprechpartner für Möbelbau & Innenausbau in Esslingen und Umgebung
@@ -38,8 +38,8 @@ export default function Contact() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-semibold mb-6">Schreiben Sie uns</h2>
-              <p className="text-lg text-muted-foreground mb-8">
+              <h2 className="text-3xl font-semibold mb-6 text-center">Schreiben Sie uns</h2>
+              <p className="text-lg text-muted-foreground mb-8 text-center">
                 Haben Sie ein Projekt im Kopf oder Fragen zu unseren Leistungen? Füllen Sie einfach das Formular aus – wir melden uns schnellstmöglich bei Ihnen.
               </p>
               <ContactForm />
@@ -50,7 +50,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-semibold mb-6">Kontaktdaten</h2>
+              <h2 className="text-3xl font-semibold mb-6 text-center">Kontaktdaten</h2>
 
               <div className="space-y-6 mb-8">
                 <div className="flex items-start gap-4">

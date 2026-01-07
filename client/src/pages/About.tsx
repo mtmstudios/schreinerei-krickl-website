@@ -83,7 +83,7 @@ export default function About() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="text-white max-w-2xl">
+          <div className="text-white max-w-2xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Ihre Schreinerei in Esslingen – Über uns</h1>
             <p className="text-xl text-white/90">
               Meisterbetrieb mit Tradition, Leidenschaft und Blick in die Zukunft seit über 60 Jahren
@@ -100,16 +100,16 @@ export default function About() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+              <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-center">
                 Meisterbetrieb seit über 60 Jahren
               </h2>
-              <p className="text-lg text-muted-foreground mb-4">
+              <p className="text-lg text-muted-foreground mb-4 text-center">
                 Wir sind eine kleine Schreinerei in Esslingen, welche auf den Innenausbau spezialisiert ist. Wir decken sowohl den Möbelbaubereich, wie auch den Baubereich komplett ab.
               </p>
-              <p className="text-lg text-muted-foreground mb-4">
+              <p className="text-lg text-muted-foreground mb-4 text-center">
                 Durch unsere top-ausgebildeten Mitarbeiter haben wir für jeden Bereich den richtigen Spezialisten für Sie. Um noch besser für unsere Projekte agieren zu können, sind wir stetig auf der Suche nach neuen Mitarbeitern.
               </p>
-              <p className="text-lg text-muted-foreground mb-8">
+              <p className="text-lg text-muted-foreground mb-8 text-center">
                 Wir legen großen Wert auf persönliche Beratung und individuelle Lösungen. Bei uns sind Sie keine Nummer, sondern ein geschätzter Partner.
               </p>
             </motion.div>
@@ -164,20 +164,20 @@ export default function About() {
               viewport={{ once: true }}
               className="order-2 lg:order-1"
             >
-              <h2 className="text-3xl md:text-4xl font-semibold mb-2">
+              <h2 className="text-3xl md:text-4xl font-semibold mb-2 text-center">
                 Yannik Tomay
               </h2>
-              <p className="text-lg text-primary font-medium mb-6">
+              <p className="text-lg text-primary font-medium mb-6 text-center">
                 Schreinermeister & Inhaber
               </p>
               <blockquote className="text-lg italic text-muted-foreground border-l-4 border-primary pl-4 mb-6">
                 „Wähle einen Beruf den du liebst, und du brauchst keinen Tag in deinem Leben mehr zu arbeiten"
                 <footer className="text-sm mt-2 not-italic">– Konfuzius</footer>
               </blockquote>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-4 text-center">
                 Ein Zitat welches die Einstellung meines Tuns nicht besser beschreiben könnte. 2022 begann ein neues Kapitel, als ich die Schreinerei übernommen habe. Damit geht für mich ein kleiner Lebenstraum in Erfüllung.
               </p>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground mb-4 text-center">
                 Neben der Selbständigkeit bin ich noch ehrenamtlich im Vorstand der Schreiner Innung, dem Gesellenprüfungsausschuss sowie im Vorstand der Handwerksjunioren Esslingen-Nürtingen tätig.
               </p>
             </motion.div>
@@ -203,7 +203,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-semibold mb-6">Unser Team</h3>
+            <h3 className="text-2xl font-semibold mb-6 text-center">Unser Team</h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 bg-card rounded-lg">
                   <span className="font-medium">Schreinermeister (Inhaber)</span>
@@ -230,7 +230,7 @@ export default function About() {
                   <span className="text-muted-foreground">1</span>
                 </div>
               </div>
-              <p className="mt-6 text-primary font-medium">
+              <p className="mt-6 text-primary font-medium text-center">
                 Wir stellen weiter motivierte Kolleginnen und Kollegen (m/w/d) ein!
               </p>
           </motion.div>
@@ -261,10 +261,10 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-semibold mb-4">
+              <h2 className="text-3xl md:text-4xl font-semibold mb-4 text-center">
                 Werden Sie Teil unseres Teams
               </h2>
-              <p className="text-lg text-primary-foreground/90 mb-6">
+              <p className="text-lg text-primary-foreground/90 mb-6 text-center">
                 Wir sind immer auf der Suche nach engagierten Handwerkern und Nachwuchstalenten, die unsere Leidenschaft für echtes Handwerk teilen.
               </p>
               <Button size="lg" variant="secondary" asChild data-testid="button-about-career">

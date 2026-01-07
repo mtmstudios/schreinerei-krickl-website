@@ -124,7 +124,7 @@ export default function Career() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="text-white max-w-2xl">
+          <div className="text-white max-w-2xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Schreiner Jobs in Esslingen – Karriere bei Krickl</h1>
             <p className="text-xl text-white/90 mb-8">
               Werden Sie Teil unseres Teams – echtes Handwerk, familiäre Atmosphäre, langfristige Perspektive
@@ -216,10 +216,10 @@ export default function Career() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+              <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-center">
                 Lernen Sie uns kennen
               </h2>
-              <p className="text-lg text-muted-foreground mb-6">
+              <p className="text-lg text-muted-foreground mb-6 text-center">
                 Über 60 Jahre Handwerkstradition, ein familiäres Team und spannende Projekte – das ist die Schreinerei Krickl. Erfahren Sie mehr über unsere Geschichte und Werte.
               </p>
               <Button asChild data-testid="button-career-about">

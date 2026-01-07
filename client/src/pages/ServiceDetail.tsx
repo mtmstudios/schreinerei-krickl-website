@@ -293,7 +293,7 @@ export default function ServiceDetail() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="text-white max-w-2xl">
+          <div className="text-white max-w-2xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">{service.headline}</h1>
             <p className="text-xl text-white/90 mb-8">{service.description}</p>
             <Button
@@ -316,7 +316,7 @@ export default function ServiceDetail() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-semibold mb-6">Ihre Vorteile</h2>
+              <h2 className="text-3xl font-semibold mb-6 text-center">Ihre Vorteile</h2>
               <ul className="space-y-3">
                 {service.benefits.map((benefit, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -334,7 +334,7 @@ export default function ServiceDetail() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-semibold mb-6">Was wir bieten</h2>
+              <h2 className="text-3xl font-semibold mb-6 text-center">Was wir bieten</h2>
               <ul className="space-y-3">
                 {service.details.map((detail, index) => (
                   <li key={index} className="flex items-start gap-3">

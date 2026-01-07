@@ -82,7 +82,7 @@ export default function Projects() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="text-white max-w-2xl">
+          <div className="text-white max-w-2xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Schreiner-Projekte aus Esslingen</h1>
             <p className="text-xl text-white/90">
               Entdecken Sie Möbelbau, Küchen und Innenausbau von Ihrem Schreiner in Esslingen
