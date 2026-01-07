@@ -92,21 +92,6 @@ export default function Projects() {
       </section>
 
       <section className="py-12 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-4"
-          >
-            <h2 className="text-3xl md:text-4xl font-semibold mb-4">
-              Unsere Projekte
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Jedes Projekt ist einzigartig – genau wie unsere Kunden. Wählen Sie eine Kategorie.
-            </p>
-          </motion.div>
-        </div>
       </section>
 
       <div className="sticky top-16 md:top-20 z-40 bg-background/95 backdrop-blur-md border-b border-border/50 py-3 md:py-4">
