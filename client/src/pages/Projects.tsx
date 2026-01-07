@@ -97,36 +97,68 @@ export default function Projects() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
+            className="text-center mb-4"
           >
             <h2 className="text-3xl md:text-4xl font-semibold mb-4">
               Unsere Projekte
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Jedes Projekt ist einzigartig – genau wie unsere Kunden. Wählen Sie eine Kategorie.
             </p>
-            
-            <div className="flex flex-wrap justify-center gap-2 md:gap-3">
-              {categories.map((cat) => {
-                const Icon = cat.icon;
-                const isActive = activeCategory === cat.id;
-                return (
-                  <Button
-                    key={cat.id}
-                    variant={isActive ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`transition-all ${isActive ? "" : "bg-background"}`}
-                    data-testid={`filter-${cat.id}`}
-                  >
-                    {Icon && <Icon className="w-4 h-4 mr-1.5" />}
-                    {cat.label}
-                  </Button>
-                );
-              })}
-            </div>
           </motion.div>
+        </div>
+      </section>
 
+      <div className="sticky top-16 md:top-20 z-40 bg-background/95 backdrop-blur-md border-b border-border/50 py-3 md:py-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="flex md:hidden overflow-x-auto scrollbar-hide gap-2 pb-1 -mx-4 px-4">
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = activeCategory === cat.id;
+              const count = cat.id === "alle" ? projects.length : projects.filter(p => p.category === cat.id).length;
+              return (
+                <Button
+                  key={cat.id}
+                  variant={isActive ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`flex-shrink-0 transition-all ${isActive ? "" : "bg-background"}`}
+                  data-testid={`filter-${cat.id}`}
+                >
+                  {Icon && <Icon className="w-4 h-4 mr-1.5" />}
+                  {cat.label}
+                  <span className="ml-1.5 text-xs opacity-70">({count})</span>
+                </Button>
+              );
+            })}
+          </div>
+          
+          <div className="hidden md:flex flex-wrap justify-center gap-3">
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = activeCategory === cat.id;
+              const count = cat.id === "alle" ? projects.length : projects.filter(p => p.category === cat.id).length;
+              return (
+                <Button
+                  key={cat.id}
+                  variant={isActive ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`transition-all ${isActive ? "" : "bg-background"}`}
+                  data-testid={`filter-${cat.id}-desktop`}
+                >
+                  {Icon && <Icon className="w-4 h-4 mr-1.5" />}
+                  {cat.label}
+                  <span className="ml-1.5 text-xs opacity-70">({count})</span>
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <section className="py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory}

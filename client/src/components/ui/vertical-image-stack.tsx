@@ -47,31 +47,48 @@ export function VerticalImageStack({ images }: VerticalImageStackProps) {
     }
   }
 
-  const handleWheel = useCallback(
-    (e: WheelEvent) => {
-      if (Math.abs(e.deltaY) > 30) {
-        if (e.deltaY > 0) {
-          navigate(1)
-        } else {
-          navigate(-1)
-        }
-      }
-    },
-    [navigate],
-  )
+  const [isHovering, setIsHovering] = useState(false)
+  const isHoveringRef = useRef(false)
+  const currentIndexRef = useRef(currentIndex)
+  
+  useEffect(() => {
+    isHoveringRef.current = isHovering
+  }, [isHovering])
+  
+  useEffect(() => {
+    currentIndexRef.current = currentIndex
+  }, [currentIndex])
 
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
     
     const handleContainerWheel = (e: WheelEvent) => {
-      e.preventDefault()
-      handleWheel(e)
+      if (!isHoveringRef.current) return
+      
+      const isAtStart = currentIndexRef.current === 0
+      const isAtEnd = currentIndexRef.current === images.length - 1
+      const scrollingUp = e.deltaY < 0
+      const scrollingDown = e.deltaY > 0
+      
+      if ((isAtStart && scrollingUp) || (isAtEnd && scrollingDown)) {
+        return
+      }
+      
+      if (Math.abs(e.deltaY) > 30) {
+        e.preventDefault()
+        e.stopPropagation()
+        if (scrollingDown) {
+          navigate(1)
+        } else {
+          navigate(-1)
+        }
+      }
     }
     
     container.addEventListener("wheel", handleContainerWheel, { passive: false })
     return () => container.removeEventListener("wheel", handleContainerWheel)
-  }, [handleWheel])
+  }, [navigate, images.length])
 
   const getCardStyle = (index: number) => {
     const total = images.length
@@ -117,6 +134,8 @@ export function VerticalImageStack({ images }: VerticalImageStackProps) {
     <div 
       ref={containerRef}
       className="relative flex h-[500px] md:h-[600px] w-full items-center justify-center overflow-hidden"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl" />
