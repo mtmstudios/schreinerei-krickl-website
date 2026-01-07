@@ -145,7 +145,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-2xl"
+            className="max-w-3xl mx-auto text-center"
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
               Ihre Schreinerei in Esslingen – Möbelbau nach Maß
@@ -156,7 +156,7 @@ export default function Home() {
             <p className="text-lg text-white/80 mb-8">
               Möbelbau, Schreinerküchen, Türen & Innenausbau in Esslingen und Umgebung. Persönliche Beratung, höchste Qualität.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
                 onClick={() => setFunnelOpen(true)}
