@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Konfiguration
-$empfaenger_email = 'anfragen@mtmstudios.de';
+$empfaenger_email = 'marketing@mtmstudios.de';
 $absender_email = 'no-reply@www.mtmstudios.de';
 
 // JSON-Daten einlesen
