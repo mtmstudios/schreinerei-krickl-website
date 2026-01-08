@@ -12,6 +12,9 @@ import {
   ArrowRight,
   Check,
   X,
+  Upload,
+  FileText,
+  Image,
 } from "lucide-react";
 
 const positions = [
@@ -53,10 +56,22 @@ export default function ApplicationFunnel({
     phone: "",
     message: "",
   });
+  const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      setFiles(prev => [...prev, ...newFiles]);
+    }
+  };
+
+  const removeFile = (index: number) => {
+    setFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = () => {
-    console.log("Application submitted:", formData);
+    console.log("Application submitted:", formData, "Files:", files);
     setSubmitted(true);
   };
 
@@ -71,6 +86,7 @@ export default function ApplicationFunnel({
       phone: "",
       message: "",
     });
+    setFiles([]);
     setSubmitted(false);
     onClose();
   };
@@ -305,6 +321,49 @@ export default function ApplicationFunnel({
                         rows={4}
                         data-testid="textarea-app-message"
                       />
+                    </div>
+                    <div>
+                      <Label>Dateien anhängen (optional)</Label>
+                      <p className="text-xs text-muted-foreground mb-2">
+                        Lebenslauf, Zeugnisse oder Arbeitsproben (PDF, JPG, PNG)
+                      </p>
+                      <div className="flex flex-col gap-2">
+                        <label className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-border rounded-lg cursor-pointer hover-elevate transition-all">
+                          <Upload className="w-5 h-5 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">Dateien auswählen</span>
+                          <input
+                            type="file"
+                            multiple
+                            accept=".pdf,.jpg,.jpeg,.png,.gif,.webp"
+                            onChange={handleFileChange}
+                            className="hidden"
+                            data-testid="input-app-file-upload"
+                          />
+                        </label>
+                        {files.length > 0 && (
+                          <div className="space-y-2">
+                            {files.map((file, index) => (
+                              <div key={index} className="flex items-center justify-between gap-2 p-2 bg-muted/50 rounded-md">
+                                <div className="flex items-center gap-2 min-w-0">
+                                  {file.type.includes('pdf') ? (
+                                    <FileText className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                  ) : (
+                                    <Image className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                  )}
+                                  <span className="text-sm truncate">{file.name}</span>
+                                </div>
+                                <button
+                                  onClick={() => removeFile(index)}
+                                  className="p-1 rounded hover-elevate"
+                                  data-testid={`button-remove-app-file-${index}`}
+                                >
+                                  <X className="w-4 h-4" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <div className="flex gap-3 pt-4">
                       <Button variant="outline" onClick={() => setStep(4)} data-testid="button-app-step5-back">

@@ -14,6 +14,9 @@ import {
   ArrowRight,
   Check,
   X,
+  Upload,
+  FileText,
+  Image,
 } from "lucide-react";
 
 const projectTypes = [
@@ -47,10 +50,22 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
     email: "",
     phone: "",
   });
+  const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      setFiles(prev => [...prev, ...newFiles]);
+    }
+  };
+
+  const removeFile = (index: number) => {
+    setFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = () => {
-    console.log("Inquiry submitted:", formData);
+    console.log("Inquiry submitted:", formData, "Files:", files);
     setSubmitted(true);
   };
 
@@ -64,6 +79,7 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
       email: "",
       phone: "",
     });
+    setFiles([]);
     setSubmitted(false);
     onClose();
   };
@@ -254,6 +270,49 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                           data-testid="input-phone"
                         />
+                      </div>
+                      <div>
+                        <Label>Dateien anhängen (optional)</Label>
+                        <p className="text-xs text-muted-foreground mb-2">
+                          Fotos, Skizzen oder Dokumente (PDF, JPG, PNG)
+                        </p>
+                        <div className="flex flex-col gap-2">
+                          <label className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-border rounded-lg cursor-pointer hover-elevate transition-all">
+                            <Upload className="w-5 h-5 text-muted-foreground" />
+                            <span className="text-sm text-muted-foreground">Dateien auswählen</span>
+                            <input
+                              type="file"
+                              multiple
+                              accept=".pdf,.jpg,.jpeg,.png,.gif,.webp"
+                              onChange={handleFileChange}
+                              className="hidden"
+                              data-testid="input-file-upload"
+                            />
+                          </label>
+                          {files.length > 0 && (
+                            <div className="space-y-2">
+                              {files.map((file, index) => (
+                                <div key={index} className="flex items-center justify-between gap-2 p-2 bg-muted/50 rounded-md">
+                                  <div className="flex items-center gap-2 min-w-0">
+                                    {file.type.includes('pdf') ? (
+                                      <FileText className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                    ) : (
+                                      <Image className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                    )}
+                                    <span className="text-sm truncate">{file.name}</span>
+                                  </div>
+                                  <button
+                                    onClick={() => removeFile(index)}
+                                    className="p-1 rounded hover-elevate"
+                                    data-testid={`button-remove-file-${index}`}
+                                  >
+                                    <X className="w-4 h-4" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                     <div className="flex gap-3 pt-4">
