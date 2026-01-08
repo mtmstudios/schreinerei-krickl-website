@@ -55,17 +55,19 @@ export default function Header() {
                       <ChevronDown className="w-4 h-4" />
                     </button>
                     {dropdownOpen && (
-                      <div className="absolute top-full left-0 mt-1 w-64 bg-popover border border-popover-border rounded-lg shadow-lg py-2">
-                        {services.map((service) => (
-                          <Link
-                            key={service.href}
-                            href={service.href}
-                            className="block px-4 py-2 text-sm hover-elevate text-muted-foreground"
-                            data-testid={`link-service-${service.href.split("/").pop()}`}
-                          >
-                            {service.name}
-                          </Link>
-                        ))}
+                      <div className="absolute top-full left-0 pt-2 w-64">
+                        <div className="bg-popover border border-popover-border rounded-lg shadow-lg py-2">
+                          {services.map((service) => (
+                            <Link
+                              key={service.href}
+                              href={service.href}
+                              className="block px-4 py-2 text-sm hover-elevate text-muted-foreground"
+                              data-testid={`link-service-${service.href.split("/").pop()}`}
+                            >
+                              {service.name}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
