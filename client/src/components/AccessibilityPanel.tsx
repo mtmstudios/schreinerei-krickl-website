@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -9,7 +10,6 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { User, RotateCcw } from "lucide-react";
 
@@ -81,105 +81,110 @@ export default function AccessibilityPanel() {
     setSettings((prev) => ({ ...prev, [key]: value }));
   };
 
+  const floatingButton = (
+    <Button
+      variant="outline"
+      size="icon"
+      className="fixed bottom-4 left-4 z-[9999] rounded-full shadow-lg bg-background border-border"
+      aria-label="Barrierefreiheit-Einstellungen öffnen"
+      data-testid="button-accessibility-open"
+      onClick={() => setOpen(true)}
+    >
+      <User className="w-5 h-5" />
+    </Button>
+  );
+
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          className="fixed bottom-4 left-4 z-50 rounded-full shadow-lg"
-          aria-label="Barrierefreiheit-Einstellungen öffnen"
-          data-testid="button-accessibility-open"
-        >
-          <User className="w-5 h-5" />
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="left" className="w-[320px] sm:w-[400px]">
-        <SheetHeader>
-          <SheetTitle>Barrierefreiheit</SheetTitle>
-          <SheetDescription>
-            Passen Sie die Darstellung nach Ihren Bedürfnissen an.
-          </SheetDescription>
-        </SheetHeader>
-        <div className="mt-6 space-y-6">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="font-size">Schriftgröße: {settings.fontSize}%</Label>
-            </div>
-            <Slider
-              id="font-size"
-              min={80}
-              max={150}
-              step={10}
-              value={[settings.fontSize]}
-              onValueChange={(value) => updateSetting("fontSize", value[0])}
-              aria-label="Schriftgröße anpassen"
-              data-testid="slider-font-size"
-            />
-            <p className="text-xs text-muted-foreground">
-              Vergrößert oder verkleinert den Text auf der gesamten Website.
-            </p>
-          </div>
-
-          <div className="flex items-center justify-between gap-4">
-            <div className="space-y-1">
-              <Label htmlFor="high-contrast">Hoher Kontrast</Label>
+    <>
+      {typeof document !== "undefined" && createPortal(floatingButton, document.body)}
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent side="left" className="w-[320px] sm:w-[400px]">
+          <SheetHeader>
+            <SheetTitle>Barrierefreiheit</SheetTitle>
+            <SheetDescription>
+              Passen Sie die Darstellung nach Ihren Bedürfnissen an.
+            </SheetDescription>
+          </SheetHeader>
+          <div className="mt-6 space-y-6">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="font-size">Schriftgröße: {settings.fontSize}%</Label>
+              </div>
+              <Slider
+                id="font-size"
+                min={80}
+                max={150}
+                step={10}
+                value={[settings.fontSize]}
+                onValueChange={(value) => updateSetting("fontSize", value[0])}
+                aria-label="Schriftgröße anpassen"
+                data-testid="slider-font-size"
+              />
               <p className="text-xs text-muted-foreground">
-                Erhöht den Farbkontrast für bessere Lesbarkeit.
+                Vergrößert oder verkleinert den Text auf der gesamten Website.
               </p>
             </div>
-            <Switch
-              id="high-contrast"
-              checked={settings.highContrast}
-              onCheckedChange={(checked) => updateSetting("highContrast", checked)}
-              aria-label="Hohen Kontrast aktivieren"
-              data-testid="switch-high-contrast"
-            />
-          </div>
 
-          <div className="flex items-center justify-between gap-4">
-            <div className="space-y-1">
-              <Label htmlFor="reduce-motion">Animationen reduzieren</Label>
-              <p className="text-xs text-muted-foreground">
-                Deaktiviert Bewegungseffekte und Animationen.
-              </p>
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="high-contrast">Hoher Kontrast</Label>
+                <p className="text-xs text-muted-foreground">
+                  Erhöht den Farbkontrast für bessere Lesbarkeit.
+                </p>
+              </div>
+              <Switch
+                id="high-contrast"
+                checked={settings.highContrast}
+                onCheckedChange={(checked) => updateSetting("highContrast", checked)}
+                aria-label="Hohen Kontrast aktivieren"
+                data-testid="switch-high-contrast"
+              />
             </div>
-            <Switch
-              id="reduce-motion"
-              checked={settings.reduceMotion}
-              onCheckedChange={(checked) => updateSetting("reduceMotion", checked)}
-              aria-label="Animationen reduzieren"
-              data-testid="switch-reduce-motion"
-            />
-          </div>
 
-          <div className="flex items-center justify-between gap-4">
-            <div className="space-y-1">
-              <Label htmlFor="focus-highlight">Fokus hervorheben</Label>
-              <p className="text-xs text-muted-foreground">
-                Zeigt einen deutlichen Rahmen um das fokussierte Element.
-              </p>
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="reduce-motion">Animationen reduzieren</Label>
+                <p className="text-xs text-muted-foreground">
+                  Deaktiviert Bewegungseffekte und Animationen.
+                </p>
+              </div>
+              <Switch
+                id="reduce-motion"
+                checked={settings.reduceMotion}
+                onCheckedChange={(checked) => updateSetting("reduceMotion", checked)}
+                aria-label="Animationen reduzieren"
+                data-testid="switch-reduce-motion"
+              />
             </div>
-            <Switch
-              id="focus-highlight"
-              checked={settings.focusHighlight}
-              onCheckedChange={(checked) => updateSetting("focusHighlight", checked)}
-              aria-label="Fokus hervorheben"
-              data-testid="switch-focus-highlight"
-            />
-          </div>
 
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={resetSettings}
-            data-testid="button-reset-accessibility"
-          >
-            <RotateCcw className="w-4 h-4 mr-2" />
-            Zurücksetzen
-          </Button>
-        </div>
-      </SheetContent>
-    </Sheet>
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-1">
+                <Label htmlFor="focus-highlight">Fokus hervorheben</Label>
+                <p className="text-xs text-muted-foreground">
+                  Zeigt einen deutlichen Rahmen um das fokussierte Element.
+                </p>
+              </div>
+              <Switch
+                id="focus-highlight"
+                checked={settings.focusHighlight}
+                onCheckedChange={(checked) => updateSetting("focusHighlight", checked)}
+                aria-label="Fokus hervorheben"
+                data-testid="switch-focus-highlight"
+              />
+            </div>
+
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={resetSettings}
+              data-testid="button-reset-accessibility"
+            >
+              <RotateCcw className="w-4 h-4 mr-2" />
+              Zurücksetzen
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 }
