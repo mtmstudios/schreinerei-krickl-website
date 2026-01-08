@@ -66,7 +66,7 @@ export default function Barrierefreiheit() {
             </p>
             <address className="not-italic text-muted-foreground mb-6">
               <strong>Schreinerei Krickl</strong><br />
-              Musterstraße 123<br />
+              Röntgenstraße 4-7<br />
               73728 Esslingen am Neckar<br />
               Telefon: <a href="tel:+4971119999999" className="text-primary hover:underline">0711 / 123 456 78</a><br />
               E-Mail: <a href="mailto:info@schreinerei-krickl.de" className="text-primary hover:underline">info@schreinerei-krickl.de</a>
@@ -84,9 +84,15 @@ export default function Barrierefreiheit() {
               E-Mail: <a href="mailto:Poststelle@bfbmb.bwl.de" className="text-primary hover:underline">Poststelle@bfbmb.bwl.de</a>
             </address>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Erstellungsdatum</h2>
+            <h2 className="text-2xl font-semibold mt-8 mb-4">Methodik und Erstellungsdatum</h2>
             <p className="text-muted-foreground mb-6">
-              Diese Erklärung wurde am 08. Januar 2026 erstellt und wird regelmäßig überprüft.
+              Diese Erklärung wurde am 08. Januar 2026 erstellt. Die Bewertung basiert auf einer 
+              Selbstbewertung gemäß den WCAG 2.1 Level AA Richtlinien. Die Website wird regelmäßig 
+              auf Barrierefreiheit überprüft und kontinuierlich verbessert.
+            </p>
+            <p className="text-muted-foreground mb-6">
+              <strong>Verantwortlich für die Barrierefreiheit:</strong><br />
+              Schreinerei Krickl, Röntgenstraße 4-7, 73728 Esslingen am Neckar
             </p>
           </div>
         </div>

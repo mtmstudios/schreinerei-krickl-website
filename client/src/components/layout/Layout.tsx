@@ -21,7 +21,7 @@ const localBusinessSchema = {
   email: "info@schreinerei-krickl.de",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Musterstraße 123",
+    streetAddress: "Röntgenstraße 4-7",
     addressLocality: "Esslingen am Neckar",
     addressRegion: "Baden-Württemberg",
     postalCode: "73728",
@@ -132,7 +132,7 @@ export default function Layout({ children }: LayoutProps) {
         Zum Hauptinhalt springen
       </a>
       <Header />
-      <main id="main-content" className="flex-1 pt-20 md:pt-24" role="main" aria-label="Hauptinhalt">
+      <main id="main-content" className="flex-1 pt-20 md:pt-24" role="main" aria-label="Hauptinhalt" tabIndex={-1}>
         {children}
       </main>
       <Footer />
