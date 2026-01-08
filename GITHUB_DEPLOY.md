@@ -1,6 +1,12 @@
 # GitHub Deployment für Mittwald
 
-## Schritt 1: GitHub Repository erstellen
+## Automatisches Deployment eingerichtet!
+
+Bei jedem Push zu GitHub wird die Website automatisch auf Mittwald aktualisiert.
+
+---
+
+## Schritt 1: GitHub Repository erstellen (bereits erledigt)
 
 1. Gehen Sie zu [github.com](https://github.com) und melden Sie sich an
 2. Klicken Sie auf **"New repository"** (grüner Button)
@@ -31,45 +37,49 @@ git remote add origin https://github.com/USERNAME/REPO-NAME.git
 git push -u origin main
 ```
 
-## Schritt 3: Mittwald mit GitHub verbinden
+## Schritt 3: GitHub Secrets einrichten (WICHTIG!)
 
-### In Mittwald:
+Das automatische Deployment braucht Ihre Mittwald-Zugangsdaten. Diese werden sicher in GitHub gespeichert.
 
-1. Melden Sie sich im [Mittwald Kundencenter](https://www.mittwald.de/kunden) an
-2. Gehen Sie zu Ihrer Domain/Projekt
-3. Navigieren Sie zu **"Deployment"** oder **"Git"**
-4. Klicken Sie auf **"Git-Repository verbinden"**
-5. Wählen Sie **GitHub** als Provider
-6. Autorisieren Sie Mittwald für Ihr GitHub-Konto
-7. Wählen Sie das Repository `schreinerei-krickl-website`
+### So richten Sie die Secrets ein:
 
-### Deployment-Pfad konfigurieren:
+1. **Öffnen Sie Ihr GitHub Repository**
+   - https://github.com/mtmstudios/schreinerei-krickl-website
 
-- **Source-Pfad im Repository:** `dist/public`
-- **Ziel-Pfad auf Mittwald:** `/` (Webroot)
-- **Branch:** `main`
+2. **Gehen Sie zu Settings → Secrets and variables → Actions**
+   - Klicken Sie oben auf "Settings"
+   - Links im Menü: "Secrets and variables" → "Actions"
+   - Klicken Sie auf **"New repository secret"**
 
-## Schritt 4: Automatisches Deployment einrichten
+3. **Fügen Sie diese 4 Secrets hinzu** (einzeln, nacheinander):
 
-In Mittwald können Sie "Auto-Deploy" aktivieren:
-- Bei jedem Push zu `main` wird die Website automatisch aktualisiert
+   | Name | Wert (von Mittwald) |
+   |------|---------------------|
+   | `MITTWALD_HOST` | SFTP-Host (z.B. `ssh123.mwcluster.io`) |
+   | `MITTWALD_USER` | SFTP-Benutzername (z.B. `p-xxxxx`) |
+   | `MITTWALD_PASSWORD` | SFTP-Passwort |
+   | `MITTWALD_PATH` | Pfad zur App (z.B. `/html/apps/php-xxxxx/`) |
 
-## Schritt 5: Nach dem ersten Deployment
+   **Wichtig:** Der MITTWALD_PATH muss mit `/` enden!
 
-### E-Mail-Adresse in PHP-Dateien anpassen:
+### Wo finden Sie die Mittwald-Zugangsdaten?
 
-Verbinden Sie sich per SFTP/SSH mit Mittwald und bearbeiten Sie die Dateien in `/api/`:
+1. Im **mStudio** einloggen
+2. Zu Ihrer **PHP App** navigieren
+3. Unter **"Zugänge"** oder **"SFTP"** finden Sie:
+   - Host
+   - Benutzername
+   - Passwort
+4. Der **Pfad** steht in den App-Details (z.B. `/html/apps/php-abc123/`)
 
-```php
-// In allen 4 PHP-Dateien ändern:
-$to = "ihre-echte@email.de";
-```
+## Schritt 4: Erstes Deployment auslösen
 
-Oder ändern Sie es direkt in Replit vor dem Push:
-- `client/public/api/contact.php`
-- `client/public/api/inquiry.php`
-- `client/public/api/service-inquiry.php`
-- `client/public/api/application.php`
+Nach dem Einrichten der Secrets:
+1. Pushen Sie nochmal zu GitHub (oder klicken Sie in GitHub unter "Actions" auf "Run workflow")
+2. Das Deployment startet automatisch
+3. Nach 1-2 Minuten ist die Website live!
+
+---
 
 ## Workflow für zukünftige Änderungen
 
