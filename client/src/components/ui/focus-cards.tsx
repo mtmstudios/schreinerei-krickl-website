@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 export const Card = ({
@@ -8,12 +8,14 @@ export const Card = ({
   hovered,
   setHovered,
   onClick,
+  isMobile,
 }: {
   card: CardType;
   index: number;
   hovered: number | null;
   setHovered: React.Dispatch<React.SetStateAction<number | null>>;
   onClick?: () => void;
+  isMobile: boolean;
 }) => (
   <div
     onClick={onClick}
@@ -32,8 +34,8 @@ export const Card = ({
     />
     <div
       className={cn(
-        "absolute inset-0 bg-black/50 flex flex-col justify-end py-6 px-4 transition-opacity duration-300",
-        hovered === index ? "opacity-100" : "opacity-0"
+        "absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end py-6 px-4 transition-opacity duration-300",
+        isMobile ? "opacity-100" : (hovered === index ? "opacity-100" : "opacity-0")
       )}
     >
       <div className="text-xl md:text-2xl font-medium text-white mb-2">
@@ -61,6 +63,14 @@ export function FocusCards({
   onCardClick?: (cardId: string) => void;
 }) {
   const [hovered, setHovered] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
@@ -72,6 +82,7 @@ export function FocusCards({
           hovered={hovered}
           setHovered={setHovered}
           onClick={() => onCardClick?.(card.id || card.title)}
+          isMobile={isMobile}
         />
       ))}
     </div>
