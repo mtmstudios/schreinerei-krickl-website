@@ -80,17 +80,16 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="relative bg-background rounded-xl shadow-2xl w-full max-w-lg overflow-hidden"
+        className="relative bg-background rounded-xl shadow-2xl w-full max-w-lg"
       >
-        <button
-          onClick={resetAndClose}
-          className="absolute top-4 right-4 p-2 rounded-md hover-elevate z-10"
-          data-testid="button-close-funnel"
-        >
-          <X className="w-5 h-5" />
-        </button>
-
         <div className="p-6 md:p-8">
+          <button
+            onClick={resetAndClose}
+            className="absolute top-4 right-4 p-2 rounded-md hover-elevate z-10"
+            data-testid="button-close-funnel"
+          >
+            <X className="w-5 h-5" />
+          </button>
           {!submitted ? (
             <>
               <div className="mb-6">
