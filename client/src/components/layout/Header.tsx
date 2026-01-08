@@ -95,8 +95,9 @@ export default function Header() {
           </div>
 
           <button
-            className="lg:hidden p-2"
+            className="lg:hidden p-3 min-w-[44px] min-h-[44px] flex items-center justify-center"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Menü schließen" : "Menü öffnen"}
             data-testid="button-mobile-menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -125,7 +126,7 @@ export default function Header() {
                       <Link
                         key={service.href}
                         href={service.href}
-                        className="block px-4 py-2 text-sm text-muted-foreground"
+                        className="block px-4 py-3 text-sm text-muted-foreground min-h-[44px] flex items-center"
                         onClick={() => setMobileMenuOpen(false)}
                         data-testid={`link-mobile-service-${service.href.split("/").pop()}`}
                       >

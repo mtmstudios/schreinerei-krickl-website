@@ -30,6 +30,7 @@ export const Card = ({
     <img
       src={card.src}
       alt={card.title}
+      loading="lazy"
       className="object-cover absolute inset-0 w-full h-full scale-125"
     />
     <div

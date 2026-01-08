@@ -48,7 +48,7 @@ export default function Datenschutz() {
             <p className="text-muted-foreground mb-4">
               Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:<br /><br />
               Schreinerei Krickl<br />
-              Musterstraße 123<br />
+              Röntgenstraße 4-7<br />
               73728 Esslingen am Neckar<br />
               Telefon: 0711 / 123 456 78<br />
               E-Mail: info@schreinerei-krickl.de

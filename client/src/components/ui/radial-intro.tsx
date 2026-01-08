@@ -137,6 +137,7 @@ export const RadialIntro = ({
                   }}
                   src={item.src}
                   alt={item.name}
+                  loading="lazy"
                   draggable={false}
                 />
               </motion.a>

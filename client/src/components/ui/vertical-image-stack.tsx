@@ -190,6 +190,7 @@ export function VerticalImageStack({ images }: VerticalImageStackProps) {
                 <img
                   src={image.src}
                   alt={image.alt}
+                  loading="lazy"
                   className="object-cover w-full h-full"
                   draggable={false}
                 />

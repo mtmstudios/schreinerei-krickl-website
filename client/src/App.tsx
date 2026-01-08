@@ -1,21 +1,53 @@
 import { Switch, Route, useLocation } from "wouter";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense, ComponentType } from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/not-found";
-import Home from "@/pages/Home";
-import About from "@/pages/About";
-import Services from "@/pages/Services";
-import ServiceDetail from "@/pages/ServiceDetail";
-import Projects from "@/pages/Projects";
-import Career from "@/pages/Career";
-import Contact from "@/pages/Contact";
-import Impressum from "@/pages/Impressum";
-import Datenschutz from "@/pages/Datenschutz";
-import Barrierefreiheit from "@/pages/Barrierefreiheit";
-import ApplicationPage from "@/pages/ApplicationPage";
+
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-pulse text-muted-foreground">Laden...</div>
+    </div>
+  );
+}
+
+const LazyHome = lazy(() => import("@/pages/Home"));
+const LazyAbout = lazy(() => import("@/pages/About"));
+const LazyServices = lazy(() => import("@/pages/Services"));
+const LazyServiceDetail = lazy(() => import("@/pages/ServiceDetail"));
+const LazyProjects = lazy(() => import("@/pages/Projects"));
+const LazyCareer = lazy(() => import("@/pages/Career"));
+const LazyContact = lazy(() => import("@/pages/Contact"));
+const LazyImpressum = lazy(() => import("@/pages/Impressum"));
+const LazyDatenschutz = lazy(() => import("@/pages/Datenschutz"));
+const LazyBarrierefreiheit = lazy(() => import("@/pages/Barrierefreiheit"));
+const LazyApplicationPage = lazy(() => import("@/pages/ApplicationPage"));
+const LazyNotFound = lazy(() => import("@/pages/not-found"));
+
+function withSuspense<P extends object>(Component: ComponentType<P>) {
+  return function SuspenseWrapper(props: P) {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <Component {...props} />
+      </Suspense>
+    );
+  };
+}
+
+const Home = withSuspense(LazyHome);
+const About = withSuspense(LazyAbout);
+const Services = withSuspense(LazyServices);
+const ServiceDetail = withSuspense(LazyServiceDetail);
+const Projects = withSuspense(LazyProjects);
+const Career = withSuspense(LazyCareer);
+const Contact = withSuspense(LazyContact);
+const Impressum = withSuspense(LazyImpressum);
+const Datenschutz = withSuspense(LazyDatenschutz);
+const Barrierefreiheit = withSuspense(LazyBarrierefreiheit);
+const ApplicationPage = withSuspense(LazyApplicationPage);
+const NotFound = withSuspense(LazyNotFound);
 
 function ScrollToTop() {
   const [location] = useLocation();
