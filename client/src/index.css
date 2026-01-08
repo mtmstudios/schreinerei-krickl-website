@@ -461,3 +461,58 @@ body::before {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ==========================================
+   ACCESSIBILITY STYLES (BFSG / WCAG 2.1)
+   ========================================== */
+
+/* High Contrast Mode */
+.high-contrast {
+  --foreground: 0 0% 0%;
+  --background: 0 0% 100%;
+  --muted-foreground: 0 0% 20%;
+  --border: 0 0% 0%;
+  --card-border: 0 0% 0%;
+}
+
+.dark.high-contrast {
+  --foreground: 0 0% 100%;
+  --background: 0 0% 0%;
+  --muted-foreground: 0 0% 85%;
+  --border: 0 0% 100%;
+  --card-border: 0 0% 100%;
+}
+
+.high-contrast *:focus-visible {
+  outline: 3px solid hsl(var(--foreground)) !important;
+  outline-offset: 2px !important;
+}
+
+/* Reduce Motion */
+.reduce-motion,
+.reduce-motion * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+.reduce-motion body::before {
+  background-image: none !important;
+}
+
+/* Enhanced Focus Highlight */
+.focus-highlight *:focus-visible {
+  outline: 4px solid hsl(28 85% 45%) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px rgba(194, 118, 26, 0.3) !important;
+}
+
+.focus-highlight button:focus-visible,
+.focus-highlight a:focus-visible,
+.focus-highlight input:focus-visible,
+.focus-highlight textarea:focus-visible,
+.focus-highlight select:focus-visible {
+  outline: 4px solid hsl(28 85% 45%) !important;
+  outline-offset: 3px !important;
+}

@@ -14,6 +14,7 @@ import Career from "@/pages/Career";
 import Contact from "@/pages/Contact";
 import Impressum from "@/pages/Impressum";
 import Datenschutz from "@/pages/Datenschutz";
+import Barrierefreiheit from "@/pages/Barrierefreiheit";
 import ApplicationPage from "@/pages/ApplicationPage";
 
 function ScrollToTop() {
@@ -39,6 +40,7 @@ function Router() {
       <Route path="/kontakt" component={Contact} />
       <Route path="/impressum" component={Impressum} />
       <Route path="/datenschutz" component={Datenschutz} />
+      <Route path="/barrierefreiheit" component={Barrierefreiheit} />
       <Route component={NotFound} />
     </Switch>
   );

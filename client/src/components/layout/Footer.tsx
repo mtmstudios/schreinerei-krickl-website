@@ -22,6 +22,7 @@ const links = [
 const legal = [
   { name: "Impressum", href: "/impressum" },
   { name: "Datenschutz", href: "/datenschutz" },
+  { name: "Barrierefreiheit", href: "/barrierefreiheit" },
 ];
 
 export default function Footer() {
