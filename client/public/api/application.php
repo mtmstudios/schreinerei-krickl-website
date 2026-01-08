@@ -5,6 +5,12 @@
  * Mit professionellem HTML-E-Mail-Template
  */
 
+// Error Logging aktivieren
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/error.log');
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -22,12 +28,22 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Konfiguration
-$empfaenger_email = 'anfragen@mtmstudios.de';
-$absender_email = 'no-reply@mtmstudios.de';
+$empfaenger_email = 'no-reply@www.mtmstudios.de';
+$absender_email = 'no-reply@www.mtmstudios.de';
 $betreff_prefix = '[Bewerbung] ';
 
 // JSON-Daten einlesen
-$input = json_decode(file_get_contents('php://input'), true);
+$raw_input = file_get_contents('php://input');
+error_log("Application Form - Raw Input: " . $raw_input);
+
+$input = json_decode($raw_input, true);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    error_log("Application Form - JSON Error: " . json_last_error_msg());
+    http_response_code(400);
+    echo json_encode(['success' => false, 'error' => 'Ungültige JSON-Daten']);
+    exit;
+}
 
 // Kontaktdaten
 $name = trim(strip_tags($input['name'] ?? ''));
@@ -52,6 +68,7 @@ if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 if (empty($telefon)) $fehler[] = 'Telefonnummer ist erforderlich';
 
 if (!empty($fehler)) {
+    error_log("Application Form - Validation Errors: " . implode(', ', $fehler));
     http_response_code(400);
     echo json_encode(['success' => false, 'errors' => $fehler]);
     exit;
@@ -205,12 +222,21 @@ $headers .= "MIME-Version: 1.0\r\n";
 $headers .= "Content-Type: text/html; charset=utf-8\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion();
 
-if (mail($empfaenger_email, $betreff, $email_inhalt, $headers)) {
+error_log("Application Form - Attempting to send email to: " . $empfaenger_email);
+error_log("Application Form - From: " . $absender_email);
+error_log("Application Form - Subject: " . $betreff);
+
+$mail_result = mail($empfaenger_email, $betreff, $email_inhalt, $headers);
+
+if ($mail_result) {
+    error_log("Application Form - Email sent successfully");
     echo json_encode([
         'success' => true, 
         'message' => 'Ihre Bewerbung wurde erfolgreich gesendet. Wir melden uns zeitnah bei Ihnen.'
     ]);
 } else {
+    $last_error = error_get_last();
+    error_log("Application Form - Email failed. Last error: " . print_r($last_error, true));
     http_response_code(500);
     echo json_encode([
         'success' => false, 
