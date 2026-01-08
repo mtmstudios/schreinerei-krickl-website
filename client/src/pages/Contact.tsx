@@ -112,15 +112,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
-                <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p>Kartenansicht</p>
-                    <p className="text-sm">(Google Maps Integration)</p>
-                  </div>
-                </div>
-              </div>
+              
             </motion.div>
           </div>
         </div>
