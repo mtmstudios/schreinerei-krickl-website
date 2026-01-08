@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Konfiguration
-$empfaenger_email = 'bewerbung@schreinerei-krickl.de';
-$absender_email = 'noreply@schreinerei-krickl.de';
+$empfaenger_email = 'anfragen@mtmstudios.de';
+$absender_email = 'no-reply@mtmstudios.de';
 $betreff_prefix = '[Bewerbung] ';
 
 // JSON-Daten einlesen
