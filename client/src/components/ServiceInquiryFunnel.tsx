@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, ArrowRight, Check, X, Upload, FileText, Image } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, X, Upload, FileText, Image, Loader2 } from "lucide-react";
+import { submitServiceInquiry } from "@/lib/formSubmit";
 
 type ServiceType = "moebel" | "kueche" | "terrasse" | "tueren" | "reparatur" | "sonder";
 
@@ -268,6 +269,8 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
   });
   const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const config = serviceType ? serviceConfigs[serviceType] : null;
   const totalSteps = config ? config.questions.length + 2 : 0;
@@ -293,9 +296,29 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = () => {
-    console.log("Service inquiry submitted:", { serviceType, answers, contactData, files });
-    setSubmitted(true);
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    setError(null);
+    
+    try {
+      const result = await submitServiceInquiry({
+        ...contactData,
+        serviceName: config?.title || "",
+        serviceType: serviceType || "",
+        ...answers,
+        timeline: answers.timeframe,
+      });
+      
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setError(result.message || result.errors?.join(", ") || "Ein Fehler ist aufgetreten.");
+      }
+    } catch (err) {
+      setError("Netzwerkfehler. Bitte versuchen Sie es später erneut.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetAndClose = () => {
@@ -542,6 +565,11 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
                         </div>
                       </div>
                     </div>
+                    {error && (
+                      <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+                        {error}
+                      </div>
+                    )}
                     <div className="flex gap-3 pt-4">
                       <Button variant="outline" onClick={() => setStep(step - 1)} data-testid="button-back">
                         <ArrowLeft className="w-4 h-4 mr-2" />
@@ -550,11 +578,20 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
                       <Button
                         className="flex-1"
                         onClick={handleSubmit}
-                        disabled={!contactData.name || !contactData.email || !contactData.phone}
+                        disabled={!contactData.name || !contactData.email || !contactData.phone || isSubmitting}
                         data-testid="button-submit"
                       >
-                        Anfrage absenden
-                        <Check className="w-4 h-4 ml-2" />
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Wird gesendet...
+                          </>
+                        ) : (
+                          <>
+                            Anfrage absenden
+                            <Check className="w-4 h-4 ml-2" />
+                          </>
+                        )}
                       </Button>
                     </div>
                     <p className="text-xs text-muted-foreground text-center">

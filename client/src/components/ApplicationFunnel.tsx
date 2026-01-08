@@ -15,7 +15,9 @@ import {
   Upload,
   FileText,
   Image,
+  Loader2,
 } from "lucide-react";
+import { submitApplication } from "@/lib/formSubmit";
 
 const positions = [
   { id: "schreiner", label: "Schreiner / Tischler (m/w/d)", icon: Hammer },
@@ -58,6 +60,8 @@ export default function ApplicationFunnel({
   });
   const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -70,9 +74,29 @@ export default function ApplicationFunnel({
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = () => {
-    console.log("Application submitted:", formData, "Files:", files);
-    setSubmitted(true);
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    setError(null);
+    
+    try {
+      const result = await submitApplication({
+        ...formData,
+        position: formData.position,
+        experience: formData.experience,
+        startDate: formData.startDate,
+        motivation: formData.message,
+      });
+      
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setError(result.message || result.errors?.join(", ") || "Ein Fehler ist aufgetreten.");
+      }
+    } catch (err) {
+      setError("Netzwerkfehler. Bitte versuchen Sie es später erneut.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetAndClose = () => {
@@ -365,14 +389,33 @@ export default function ApplicationFunnel({
                         )}
                       </div>
                     </div>
+                    {error && (
+                      <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+                        {error}
+                      </div>
+                    )}
                     <div className="flex gap-3 pt-4">
                       <Button variant="outline" onClick={() => setStep(4)} data-testid="button-app-step5-back">
                         <ArrowLeft className="w-4 h-4 mr-2" />
                         Zurück
                       </Button>
-                      <Button className="flex-1" onClick={handleSubmit} data-testid="button-submit-application">
-                        Bewerbung absenden
-                        <Check className="w-4 h-4 ml-2" />
+                      <Button 
+                        className="flex-1" 
+                        onClick={handleSubmit} 
+                        disabled={isSubmitting}
+                        data-testid="button-submit-application"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Wird gesendet...
+                          </>
+                        ) : (
+                          <>
+                            Bewerbung absenden
+                            <Check className="w-4 h-4 ml-2" />
+                          </>
+                        )}
                       </Button>
                     </div>
                     <p className="text-xs text-muted-foreground text-center">

@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Send, Check, Upload, FileText, Image, X } from "lucide-react";
+import { Send, Check, Upload, FileText, Image, X, Loader2 } from "lucide-react";
+import { submitContactForm } from "@/lib/formSubmit";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,8 @@ export default function ContactForm() {
   });
   const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -26,10 +29,24 @@ export default function ContactForm() {
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Contact form submitted:", formData, "Files:", files);
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setError(null);
+    
+    try {
+      const result = await submitContactForm(formData);
+      
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        setError(result.message || result.errors?.join(", ") || "Ein Fehler ist aufgetreten.");
+      }
+    } catch (err) {
+      setError("Netzwerkfehler. Bitte versuchen Sie es später erneut.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -140,9 +157,29 @@ export default function ContactForm() {
           )}
         </div>
       </div>
-      <Button type="submit" size="lg" className="w-full md:w-auto" data-testid="button-submit-contact">
-        Anfrage senden
-        <Send className="w-4 h-4 ml-2" />
+      {error && (
+        <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+          {error}
+        </div>
+      )}
+      <Button 
+        type="submit" 
+        size="lg" 
+        className="w-full md:w-auto" 
+        disabled={isSubmitting}
+        data-testid="button-submit-contact"
+      >
+        {isSubmitting ? (
+          <>
+            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            Wird gesendet...
+          </>
+        ) : (
+          <>
+            Anfrage senden
+            <Send className="w-4 h-4 ml-2" />
+          </>
+        )}
       </Button>
     </form>
   );
