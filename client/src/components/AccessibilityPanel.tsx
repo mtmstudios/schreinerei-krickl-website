@@ -82,16 +82,25 @@ export default function AccessibilityPanel() {
   };
 
   const floatingButton = (
-    <Button
-      variant="outline"
-      size="icon"
-      className="fixed bottom-4 left-4 z-[9999] rounded-full shadow-lg bg-background border-border"
-      aria-label="Barrierefreiheit-Einstellungen öffnen"
-      data-testid="button-accessibility-open"
-      onClick={() => setOpen(true)}
+    <div 
+      style={{
+        position: 'fixed',
+        bottom: '16px',
+        left: '16px',
+        zIndex: 99999,
+      }}
     >
-      <User className="w-5 h-5" />
-    </Button>
+      <Button
+        variant="outline"
+        size="icon"
+        className="rounded-full shadow-lg bg-background border-border"
+        aria-label="Barrierefreiheit-Einstellungen öffnen"
+        data-testid="button-accessibility-open"
+        onClick={() => setOpen(true)}
+      >
+        <User className="w-5 h-5" />
+      </Button>
+    </div>
   );
 
   return (
