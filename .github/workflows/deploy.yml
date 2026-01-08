@@ -1,0 +1,24 @@
+name: Deploy to Mittwald
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Deploy via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.MITTWALD_HOST }}
+          username: ${{ secrets.MITTWALD_USER }}
+          password: ${{ secrets.MITTWALD_PASSWORD }}
+          local-dir: ./dist/public/
+          server-dir: ${{ secrets.MITTWALD_PATH }}
+          dangerous-clean-slate: false
