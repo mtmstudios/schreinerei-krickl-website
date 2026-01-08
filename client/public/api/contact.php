@@ -2,6 +2,7 @@
 /**
  * Kontaktformular - Schreinerei Krickl
  * Für Mittwald Hosting optimiert
+ * Mit professionellem HTML-E-Mail-Template
  */
 
 header('Access-Control-Allow-Origin: *');
@@ -9,7 +10,6 @@ header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json; charset=utf-8');
 
-// Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
@@ -49,34 +49,109 @@ if (!empty($fehler)) {
     exit;
 }
 
-// E-Mail zusammenstellen
+// E-Mail-Betreff
 $betreff = $betreff_prefix . 'Neue Anfrage von ' . $name;
 
-$email_inhalt = "==============================================\n";
-$email_inhalt .= "NEUE KONTAKTANFRAGE - SCHREINEREI KRICKL\n";
-$email_inhalt .= "==============================================\n\n";
-$email_inhalt .= "KONTAKTDATEN\n";
-$email_inhalt .= "----------------------------------------------\n";
-$email_inhalt .= "Name: " . $name . "\n";
-$email_inhalt .= "E-Mail: " . $email . "\n";
-if (!empty($telefon)) {
-    $email_inhalt .= "Telefon: " . $telefon . "\n";
-}
-$email_inhalt .= "\n";
-$email_inhalt .= "NACHRICHT\n";
-$email_inhalt .= "----------------------------------------------\n";
-$email_inhalt .= $nachricht . "\n\n";
-$email_inhalt .= "----------------------------------------------\n";
-$email_inhalt .= "Gesendet am: " . date('d.m.Y H:i:s') . "\n";
-$email_inhalt .= "IP-Adresse: " . $_SERVER['REMOTE_ADDR'] . "\n";
+// HTML-E-Mail-Template
+$email_inhalt = '<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, \'Helvetica Neue\', Arial, sans-serif; background-color: #f5f5f0;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f5f5f0;">
+        <tr>
+            <td style="padding: 40px 20px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%); padding: 30px 40px; text-align: center;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 600;">Schreinerei Krickl</h1>
+                            <p style="margin: 8px 0 0 0; color: rgba(255,255,255,0.9); font-size: 14px;">Meisterbetrieb seit 1962</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Title -->
+                    <tr>
+                        <td style="padding: 30px 40px 20px 40px; border-bottom: 1px solid #eee;">
+                            <h2 style="margin: 0; color: #333; font-size: 20px; font-weight: 600;">Neue Kontaktanfrage</h2>
+                            <p style="margin: 8px 0 0 0; color: #666; font-size: 14px;">Eingegangen am ' . date('d.m.Y') . ' um ' . date('H:i') . ' Uhr</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Contact Details -->
+                    <tr>
+                        <td style="padding: 25px 40px;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                                <tr>
+                                    <td style="padding-bottom: 20px;">
+                                        <p style="margin: 0 0 5px 0; color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Name</p>
+                                        <p style="margin: 0; color: #333; font-size: 16px; font-weight: 500;">' . htmlspecialchars($name) . '</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom: 20px;">
+                                        <p style="margin: 0 0 5px 0; color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">E-Mail</p>
+                                        <p style="margin: 0;"><a href="mailto:' . htmlspecialchars($email) . '" style="color: #8B4513; font-size: 16px; text-decoration: none;">' . htmlspecialchars($email) . '</a></p>
+                                    </td>
+                                </tr>';
 
-// E-Mail-Header
+if (!empty($telefon)) {
+    $email_inhalt .= '
+                                <tr>
+                                    <td style="padding-bottom: 20px;">
+                                        <p style="margin: 0 0 5px 0; color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Telefon</p>
+                                        <p style="margin: 0;"><a href="tel:' . htmlspecialchars($telefon) . '" style="color: #8B4513; font-size: 16px; text-decoration: none;">' . htmlspecialchars($telefon) . '</a></p>
+                                    </td>
+                                </tr>';
+}
+
+$email_inhalt .= '
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Message -->
+                    <tr>
+                        <td style="padding: 0 40px 30px 40px;">
+                            <div style="background-color: #faf9f7; border-radius: 6px; padding: 20px; border-left: 4px solid #8B4513;">
+                                <p style="margin: 0 0 8px 0; color: #888; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Nachricht</p>
+                                <p style="margin: 0; color: #333; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">' . htmlspecialchars($nachricht) . '</p>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Action Button -->
+                    <tr>
+                        <td style="padding: 0 40px 30px 40px; text-align: center;">
+                            <a href="mailto:' . htmlspecialchars($email) . '?subject=Re: Ihre Anfrage bei Schreinerei Krickl" style="display: inline-block; background-color: #8B4513; color: #ffffff; padding: 14px 30px; font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 6px;">Jetzt antworten</a>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f8f7f5; padding: 25px 40px; border-top: 1px solid #eee;">
+                            <p style="margin: 0; color: #888; font-size: 12px; text-align: center;">
+                                Diese E-Mail wurde automatisch generiert.<br>
+                                Schreinerei Krickl | Esslingen am Neckar
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>';
+
+// E-Mail-Header für HTML
 $headers = "From: " . $absender_email . "\r\n";
 $headers .= "Reply-To: " . $email . "\r\n";
-$headers .= "Content-Type: text/plain; charset=utf-8\r\n";
+$headers .= "MIME-Version: 1.0\r\n";
+$headers .= "Content-Type: text/html; charset=utf-8\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion();
 
-// E-Mail senden
 if (mail($empfaenger_email, $betreff, $email_inhalt, $headers)) {
     echo json_encode([
         'success' => true, 
