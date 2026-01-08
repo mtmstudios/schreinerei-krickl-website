@@ -11,7 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Accessibility, RotateCcw } from "lucide-react";
+import { User, RotateCcw } from "lucide-react";
 
 interface AccessibilitySettings {
   fontSize: number;
@@ -91,7 +91,7 @@ export default function AccessibilityPanel() {
           aria-label="Barrierefreiheit-Einstellungen öffnen"
           data-testid="button-accessibility-open"
         >
-          <Accessibility className="w-5 h-5" />
+          <User className="w-5 h-5" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-[320px] sm:w-[400px]">
