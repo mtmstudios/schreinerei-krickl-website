@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Phone, Mail, MapPin, Heart } from "lucide-react";
-import logoImage from "@assets/Logo_krickl_2022_neg.png_1765534047766.webp";
+import logoImage from "@assets/Logo_krickl_2022_positiv_1767883446646.png";
 import mlmLogo from "@assets/Bild_1767459563117.png";
 
 const services = [

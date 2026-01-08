@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoImage from "@assets/Logo_krickl_2022_neg.png_1765534047766.webp";
+import logoImage from "@assets/Logo_krickl_2022_positiv_1767883446646.png";
 
 const services = [
   { name: "Möbelbau", href: "/leistungen/moebelbau" },
