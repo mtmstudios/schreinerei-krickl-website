@@ -1,0 +1,124 @@
+Du bist ein Senior UI/UX Designer + Frontend Developer (Conversion-optimiert) und baust eine Karriere-Landingpage für Schreinerei Krickl. Ziel: Bewerbungen über einen 60-Sekunden Bewerbungs-Funnel (Option 1) → Versand per E-Mail an info@schreinerei-krickl.de.
+Traffic kommt aus Instagram und Google. Die Seite muss mobile-first, ultraschnell und super überzeugend sein.
+1) Design-Vorgaben (sehr wichtig)
+Die Firma hat bereits eine Website. Übernimm den bestehenden Look & Feel:
+nutze ähnliche Farben, Schriftarten, Abstände, Buttons, Header-/Footer-Stil
+aber optimiere das Layout für Social Media Conversion (klarer Hero, kurze Texte, große CTAs, Trust-Sektionen).
+Baue die Landingpage als eine Seite (one-pager) mit sauberem Scroll, sticky CTA und klaren Sektionen.
+Stil: handwerklich hochwertig, modern, warm, vertrauenswürdig, nicht “Startup-techy”.
+Du-Ansprache (locker, aber professionell).
+Keine Gehaltsangabe auf der Seite.
+Umsetzungshinweis: Wenn möglich, gib im Projekt Platzhalter für “Existing Website Colors/Fonts”, damit ich sie leicht anpassen kann (z. B. CSS-Variablen --brand-primary, --brand-accent, --text, --bg).
+2) Inhaltliche Eckdaten (fix)
+Arbeitgeber: Schreinerei Krickl
+Standort Werkstatt: Röntgenstraße 5–7, 73730 Esslingen am Neckar
+Gesucht (Vollzeit, ab sofort):
+(1) Möbelschreiner (m/w/d)
+(2) Türenprofi / Monteur für Türen (m/w/d)
+Team: klein & familiär (<10 Leute), wächst gerade.
+Bewerbung: 60-Sekunden Bewerbung (Formular) → E-Mail an info@schreinerei-krickl.de
+Rückmeldung: innerhalb 48 Stunden
+Zielregion Bewerber: Esslingen / Stuttgart & Umgebung
+3) Seitenstruktur (Conversion-Blueprint)
+Baue diese Sektionen in exakt dieser Logik:
+A) Sticky Topbar (mobil & desktop)
+Links: Logo (Platzhalter) + “Karriere”
+Rechts: Sticky Button „60-Sekunden Bewerbung“ (scrollt zum Funnel)
+Optional: Mini-Info „Rückmeldung in 48h“
+B) Hero Section (oberhalb der Falz)
+Headline (stark, klar):
+„Möbelschreiner & Türenprofi (m/w/d) gesucht – Vollzeit in Esslingen“
+Subheadline: familiäres Team, gute Projekte, sicherer Job, schnelle Rückmeldung
+2 CTA Buttons:
+Primär: „Jetzt in 60 Sekunden bewerben“ (scroll)
+Sekundär: „Jobs ansehen“ (scroll zu Rollen-Karten)
+Trust-Row direkt im Hero (Icons + kurze Claims):
+„Familiäres Team (<10)“
+„Werkstatt in Esslingen“
+„Ab sofort · Vollzeit“
+„Rückmeldung in 48h“
+Bildbereich: großer Hero-Visual (Platzhalter) mit Overlay.
+(Optional: Video-Placeholder für Insta-Reel Einbettung)
+C) “Warum Krickl?” (kurz & glaubwürdig)
+3–6 Benefit-Kacheln (mit Icons, sehr kurz, kein Blabla).
+Da ich eure Benefits nicht kenne, setze editierbare Platzhalter, z. B.:
+„Moderne Werkstatt & gutes Werkzeug“ (Platzhalter)
+„Saubere Planung & klare Abläufe“ (Platzhalter)
+„Familiär & direkt – kurze Wege“ (fix)
+„Abwechslungsreiche Projekte“ (Platzhalter)
+„Wertschätzung & Zusammenhalt“ (fix)
+„Weiterentwicklung möglich“ (Platzhalter)
+Wichtig: Markiere Benefits, die noch zu bestätigen sind, im Code als TODO.
+D) Job Cards: 2 Rollen (sehr klar)
+Zwei Karten nebeneinander (mobil untereinander), jeweils:
+Titel: Möbelschreiner / Türenprofi
+Kurzprofil (2–3 Sätze)
+Bullet-Listen:
+„Deine Aufgaben“ (Platzhalter, aber realistisch formuliert)
+„Das bringst du mit“ (z. B. Ausbildung oder solide Erfahrung, sauberes Arbeiten, Teamfähigkeit; Führerschein B optional als Platzhalter)
+CTA in jeder Karte: „Für diese Rolle bewerben“ → preselect Rolle im Formular
+E) “So läuft’s ab” (reduziert Reibung)
+3 Schritte (mit Zahlen):
+60-Sekunden Bewerbung (ohne Lebenslauf möglich)
+Wir melden uns innerhalb 48h
+Kurzes Kennenlernen + Probearbeiten (als Option)
+F) Bewerbungs-Funnel (Hauptsektion)
+Baue ein sehr cleanes Formular mit Progress/Schritten (2 Steps):
+Step 1 (Basics):
+Rolle (Dropdown: Möbelschreiner / Türenprofi)
+Name (Pflicht)
+Telefon oder E-Mail (mind. eins Pflicht; ideal: Telefon Pflicht, E-Mail optional)
+Wohnort/PLZ (Pflicht)
+Step 2 (3 kurze Fragen – Radiobuttons/Dropdowns):
+Erfahrung: „Azubi / Geselle / Meister / Quereinsteiger / viele Jahre Praxis“
+Start: „ab sofort / in 1 Monat / nach Absprache“
+Schwerpunkt: „Werkstatt / Montage / beides“ (für Möbelschreiner)
+und für Türenprofi: „Innentüren / Zargen / Reparatur / alles“
+Optional (nicht Pflicht, reibungsarm):
+Upload: Lebenslauf/Portfolio (optional)
+Freitext: „Kurz was zu dir“ (optional)
+Form UX Regeln:
+Sehr große Inputs, Daumen-optimiert
+Echtzeit-Validierung, klare Fehlermeldungen
+Nach Absenden: Success Screen:
+„Danke! Wir melden uns innerhalb von 48 Stunden.“ + CTA „Nochmal ansehen“ / „Zur Website“
+Technik Versand (wichtig):
+Implementiere Backend-Handling sicher (keine Email Credentials im Frontend).
+Baue ein simples API Endpoint in Replit (Node/Express oder vergleichbar), der die Formulardaten per E-Mail an info@schreinerei-krickl.de sendet.
+Nutze Umgebungsvariablen für Mail-Provider (SMTP oder Mail API).
+Falls kein Provider konfiguriert ist, speichere die Bewerbung serverseitig als JSON-Log (Fallback) und zeige trotzdem Success an (mit Hinweis im Serverlog).
+Spam-Schutz: Honeypot-Feld + Rate limit (einfach) + serverseitige Validation.
+G) Trust / Social Proof (auch ohne echte Daten)
+Baue eine Sektion „Ein Blick in die Werkstatt / Team“ mit Bildergrid (Platzhalter)
+Optional: 2–3 Mitarbeiter-Zitate als Platzhalter („Warum ich hier gern arbeite…“)
+Optional: Mini-FAQ für Bewerber:
+„Brauche ich einen Lebenslauf?“ → nein, optional
+„Wie schnell meldet ihr euch?“ → 48h
+„Wo ist die Werkstatt?“ → Röntgenstraße 5–7, Esslingen
+„Vollzeit?“ → ja
+„Ab wann?“ → ab sofort
+H) Footer
+Kontakt: Schreinerei Krickl, Adresse, E-Mail info@schreinerei-krickl.de
+Links: Impressum/Datenschutz (als Platzhalter-URLs)
+Hinweis: „Karriere Landingpage – Bewerbungen nur über Formular oder E-Mail“
+4) Textstil (sehr wichtig)
+Kurz, konkret, handwerklich, sympathisch.
+Keine leeren Floskeln („junges dynamisches Team“) vermeiden.
+Du-Ansprache, klare Benefits, klare Erwartung.
+5) SEO & Tracking (light)
+Meta Title + Description auf Karriere ausrichten
+OpenGraph für Instagram/WhatsApp Sharing (OG title, description, image placeholder)
+Optional: Tracking Hooks als Platzhalter (Google Tag Manager ID), aber nur wenn gesetzt.
+6) Deliverables / Dateien
+Erstelle:
+index.html (oder React SPA, wenn du willst – aber performant)
+styles.css mit CSS-Variablen für Brand
+app.js (Form logic + preselect role + smooth scroll + validation)
+server.js (API endpoint zum Email-Versand)
+.env.example (welche Variablen benötigt)
+Kurze README: wie man Mail Versand konfiguriert (nur Schritte, keine langen Erklärungen)
+7) Extra Conversion-Features
+Sticky CTA Button unten auf Mobile: „Jetzt bewerben“
+“Role preselect” aus Job Card
+Mini “Jetzt bewerben” CTA nach jeder 2. Sektion
+Ladezeit optimieren: keine unnötigen Libraries, komprimierte Assets, lazyload Bilder
