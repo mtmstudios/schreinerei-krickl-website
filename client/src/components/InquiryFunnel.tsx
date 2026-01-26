@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,8 +18,8 @@ import {
   FileText,
   Image,
   Loader2,
+  AlertCircle,
 } from "lucide-react";
-import { submitInquiry } from "@/lib/formSubmit";
 
 const projectTypes = [
   { id: "moebel", label: "Möbel", icon: Armchair },
@@ -37,9 +37,38 @@ const timeframes = [
   { id: "flexible", label: "Zeitlich flexibel" },
 ];
 
+const N8N_WEBHOOK_URL = "https://mtmstudios.app.n8n.cloud/webhook/5ee4ef75-c909-4111-b837-ccedbd182a58";
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const ALLOWED_FILE_TYPES = ["application/pdf", "image/jpeg", "image/png"];
+
+interface FileAttachment {
+  filename: string;
+  data: string;
+  mimeType: string;
+}
+
 interface InquiryFunnelProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+async function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const result = reader.result as string;
+      // Remove the data URL prefix (e.g., "data:application/pdf;base64,")
+      const base64 = result.split(",")[1];
+      resolve(base64);
+    };
+    reader.onerror = (error) => reject(error);
+  });
 }
 
 export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
@@ -56,36 +85,152 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const fileInputId = "inquiry-file-upload";
+
+  useEffect(() => {
+    if (isOpen && modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        resetAndClose();
+      }
+    };
+    
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      setFiles(prev => [...prev, ...newFiles]);
+      const errors: string[] = [];
+      const validFiles: File[] = [];
+
+      newFiles.forEach((file) => {
+        // Check file type
+        if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+          errors.push(`"${file.name}" ist kein erlaubtes Format (nur PDF, JPG, PNG)`);
+          return;
+        }
+        // Check file size
+        if (file.size > MAX_FILE_SIZE) {
+          errors.push(`"${file.name}" ist zu groß (max. 10MB)`);
+          return;
+        }
+        validFiles.push(file);
+      });
+
+      if (errors.length > 0) {
+        setValidationErrors(errors);
+      } else {
+        setValidationErrors([]);
+      }
+
+      setFiles(prev => [...prev, ...validFiles]);
     }
   };
 
   const removeFile = (index: number) => {
     setFiles(prev => prev.filter((_, i) => i !== index));
+    setValidationErrors([]);
+  };
+
+  const validateForm = (): boolean => {
+    const errors: string[] = [];
+
+    if (!formData.projectType) {
+      errors.push("Bitte wählen Sie eine Projektart aus.");
+    }
+    if (!formData.location.trim()) {
+      errors.push("Bitte geben Sie einen Ort/Raum an.");
+    }
+    if (!formData.timeframe) {
+      errors.push("Bitte wählen Sie einen Zeitrahmen aus.");
+    }
+    if (!formData.name.trim()) {
+      errors.push("Bitte geben Sie Ihren Namen ein.");
+    }
+    if (!formData.email.trim()) {
+      errors.push("Bitte geben Sie Ihre E-Mail-Adresse ein.");
+    } else if (!validateEmail(formData.email)) {
+      errors.push("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
+    }
+    if (!formData.phone.trim()) {
+      errors.push("Bitte geben Sie Ihre Telefonnummer ein.");
+    }
+
+    // Check total file size
+    const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+    if (totalSize > MAX_FILE_SIZE * 3) {
+      errors.push("Die Gesamtgröße der Dateien ist zu groß (max. 30MB gesamt).");
+    }
+
+    setValidationErrors(errors);
+    return errors.length === 0;
   };
 
   const handleSubmit = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
+    setValidationErrors([]);
     
     try {
-      const result = await submitInquiry({
-        ...formData,
-        projectType: formData.projectType,
-        rooms: formData.location ? [formData.location] : [],
-        timeline: formData.timeframe,
+      // Convert files to base64
+      const attachments: FileAttachment[] = await Promise.all(
+        files.map(async (file) => ({
+          filename: file.name,
+          data: await fileToBase64(file),
+          mimeType: file.type,
+        }))
+      );
+
+      // Get human-readable labels
+      const projektartLabel = projectTypes.find(p => p.id === formData.projectType)?.label || formData.projectType;
+      const zeitrahmenLabel = timeframes.find(t => t.id === formData.timeframe)?.label || formData.timeframe;
+
+      // Build payload
+      const payload = {
+        projektart: projektartLabel,
+        ort: formData.location,
+        raum: formData.location,
+        zeitrahmen: zeitrahmenLabel,
+        name: formData.name,
+        email: formData.email,
+        telefon: formData.phone,
+        anhaenge: attachments,
+        timestamp: new Date().toISOString(),
+      };
+
+      // Send to n8n webhook
+      const response = await fetch(N8N_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
-      
-      if (result.success) {
+
+      if (response.ok) {
         setSubmitted(true);
       } else {
-        setError(result.message || result.errors?.join(", ") || "Ein Fehler ist aufgetreten.");
+        const errorText = await response.text();
+        console.error("Webhook error:", errorText);
+        setError("Fehler beim Senden. Bitte versuchen Sie es später erneut.");
       }
     } catch (err) {
+      console.error("Submit error:", err);
       setError("Netzwerkfehler. Bitte versuchen Sie es später erneut.");
     } finally {
       setIsSubmitting(false);
@@ -104,27 +249,44 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
     });
     setFiles([]);
     setSubmitted(false);
+    setError(null);
+    setValidationErrors([]);
     onClose();
   };
 
   if (!isOpen) return null;
 
+  const getFileSizeDisplay = (size: number): string => {
+    if (size < 1024) return `${size} B`;
+    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+    return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="inquiry-funnel-title"
+    >
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={resetAndClose}
+        aria-hidden="true"
       />
       <motion.div
+        ref={modalRef}
+        tabIndex={-1}
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="relative bg-background rounded-xl shadow-2xl w-full max-w-lg"
+        className="relative bg-background rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto focus:outline-none"
       >
         <div className="p-6 md:p-8">
           <button
             onClick={resetAndClose}
             className="absolute top-4 right-4 p-2 rounded-md hover-elevate z-10"
+            aria-label="Schließen"
             data-testid="button-close-funnel"
           >
             <X className="w-5 h-5" />
@@ -133,16 +295,29 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
             <>
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-2">
-                  <h2 className="text-xl font-semibold">In 60 Sekunden zur Anfrage</h2>
+                  <h2 id="inquiry-funnel-title" className="text-xl font-semibold">In 60 Sekunden zur Anfrage</h2>
                   <span className="text-sm text-muted-foreground">Schritt {step}/4</span>
                 </div>
-                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                <div className="h-2 bg-muted rounded-full overflow-hidden" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={4}>
                   <div
                     className="h-full bg-primary transition-all duration-300"
                     style={{ width: `${(step / 4) * 100}%` }}
                   />
                 </div>
               </div>
+
+              {validationErrors.length > 0 && (
+                <div className="mb-4 p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm" role="alert">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                    <ul className="list-disc list-inside space-y-1">
+                      {validationErrors.map((err, i) => (
+                        <li key={i}>{err}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
 
               <AnimatePresence mode="wait">
                 {step === 1 && (
@@ -169,9 +344,10 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
                                 ? "border-primary bg-primary/10"
                                 : "border-border"
                             }`}
+                            aria-pressed={formData.projectType === type.id}
                             data-testid={`button-project-${type.id}`}
                           >
-                            <Icon className="w-8 h-8 text-primary" />
+                            <Icon className="w-8 h-8 text-primary" aria-hidden="true" />
                             <span className="text-sm font-medium">{type.label}</span>
                           </button>
                         );
@@ -190,12 +366,13 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
                   >
                     <h3 className="font-medium text-lg">Wo soll das Projekt umgesetzt werden?</h3>
                     <div className="space-y-3">
-                      <Label htmlFor="location">Raum / Ort (z.B. Wohnzimmer, Küche)</Label>
+                      <Label htmlFor="location">Raum / Ort (z.B. Wohnzimmer, Küche) *</Label>
                       <Input
                         id="location"
                         placeholder="z.B. Wohnzimmer, Esslingen"
                         value={formData.location}
                         onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        aria-required="true"
                         data-testid="input-location"
                       />
                     </div>
@@ -239,6 +416,7 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
                               ? "border-primary bg-primary/10"
                               : "border-border"
                           }`}
+                          aria-pressed={formData.timeframe === tf.id}
                           data-testid={`button-timeframe-${tf.id}`}
                         >
                           <span className="font-medium">{tf.label}</span>
@@ -263,70 +441,79 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
                     <h3 className="font-medium text-lg">Fast geschafft! Ihre Kontaktdaten</h3>
                     <div className="space-y-3">
                       <div>
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">Name *</Label>
                         <Input
                           id="name"
                           placeholder="Max Mustermann"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          aria-required="true"
                           data-testid="input-name"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="email">E-Mail</Label>
+                        <Label htmlFor="email">E-Mail *</Label>
                         <Input
                           id="email"
                           type="email"
                           placeholder="max@beispiel.de"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          aria-required="true"
                           data-testid="input-email"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="phone">Telefon</Label>
+                        <Label htmlFor="phone">Telefon *</Label>
                         <Input
                           id="phone"
                           type="tel"
                           placeholder="0711 / 123 456"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          aria-required="true"
                           data-testid="input-phone"
                         />
                       </div>
                       <div>
-                        <Label>Dateien anhängen (optional)</Label>
+                        <Label htmlFor={fileInputId}>Dateien anhängen (optional)</Label>
                         <p className="text-xs text-muted-foreground mb-2">
-                          Fotos, Skizzen oder Dokumente (PDF, JPG, PNG)
+                          Fotos, Skizzen oder Dokumente (PDF, JPG, PNG, max. 10MB pro Datei)
                         </p>
                         <div className="flex flex-col gap-2">
-                          <label className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-border rounded-lg cursor-pointer hover-elevate transition-all">
-                            <Upload className="w-5 h-5 text-muted-foreground" />
+                          <label 
+                            htmlFor={fileInputId}
+                            className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-border rounded-lg cursor-pointer hover-elevate transition-all"
+                          >
+                            <Upload className="w-5 h-5 text-muted-foreground" aria-hidden="true" />
                             <span className="text-sm text-muted-foreground">Dateien auswählen</span>
-                            <input
-                              type="file"
-                              multiple
-                              accept=".pdf,.jpg,.jpeg,.png,.gif,.webp"
-                              onChange={handleFileChange}
-                              className="hidden"
-                              data-testid="input-file-upload"
-                            />
                           </label>
+                          <input
+                            id={fileInputId}
+                            type="file"
+                            multiple
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            onChange={handleFileChange}
+                            className="sr-only"
+                            data-testid="input-file-upload"
+                          />
                           {files.length > 0 && (
                             <div className="space-y-2">
                               {files.map((file, index) => (
                                 <div key={index} className="flex items-center justify-between gap-2 p-2 bg-muted/50 rounded-md">
                                   <div className="flex items-center gap-2 min-w-0">
                                     {file.type.includes('pdf') ? (
-                                      <FileText className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                      <FileText className="w-4 h-4 text-muted-foreground flex-shrink-0" aria-hidden="true" />
                                     ) : (
-                                      <Image className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                      <Image className="w-4 h-4 text-muted-foreground flex-shrink-0" aria-hidden="true" />
                                     )}
                                     <span className="text-sm truncate">{file.name}</span>
+                                    <span className="text-xs text-muted-foreground">({getFileSizeDisplay(file.size)})</span>
                                   </div>
                                   <button
                                     onClick={() => removeFile(index)}
                                     className="p-1 rounded hover-elevate"
+                                    aria-label={`${file.name} entfernen`}
                                     data-testid={`button-remove-file-${index}`}
                                   >
                                     <X className="w-4 h-4" />
@@ -339,8 +526,11 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
                       </div>
                     </div>
                     {error && (
-                      <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
-                        {error}
+                      <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm" role="alert">
+                        <div className="flex items-center gap-2">
+                          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                          {error}
+                        </div>
                       </div>
                     )}
                     <div className="flex gap-3 pt-4">
