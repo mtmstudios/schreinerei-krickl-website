@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Phone, Mail, MapPin, Heart } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import logoImage from "@assets/Logo_krickl_2022_positiv_1767883446646.png";
 import mlmLogo from "@assets/Bild_1767459563117.png";
 
@@ -119,9 +119,9 @@ export default function Footer() {
               <span>© {new Date().getFullYear()} Schreinerei Krickl – Schreiner Esslingen. Alle Rechte vorbehalten.</span>
             </p>
             
-            <p className="flex items-center justify-center gap-1">
-              <span>Mit</span> <Heart className="w-4 h-4 text-red-500 fill-red-500" /> <span>erstellt von</span> <a href="https://www.mtmstudios.de" target="_blank" rel="noopener noreferrer"><img src={mlmLogo} alt="MLM Studios" className="h-14 w-auto inline-block" /></a>
-            </p>
+            <a href="https://www.mtmstudios.de" target="_blank" rel="noopener noreferrer" className="inline-block">
+              <img src={mlmLogo} alt="MLM Studios" className="h-14 w-auto" />
+            </a>
           </div>
         </div>
       </div>
