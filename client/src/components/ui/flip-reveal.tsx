@@ -1,8 +1,6 @@
 "use client";
 
-import { ComponentProps, useRef } from "react";
-
-import { useGSAP } from "@gsap/react";
+import { ComponentProps, useRef, useLayoutEffect, useState } from "react";
 import gsap from "gsap";
 import Flip from "gsap/Flip";
 
@@ -18,55 +16,72 @@ export const FlipRevealItem = ({ flipKey, ...props }: FlipRevealItemProps) => {
 
 type FlipRevealProps = {
     keys: string[];
-    showClass?: string;
-    hideClass?: string;
 } & ComponentProps<"div">;
 
-export const FlipReveal = ({ keys, hideClass = "", showClass = "", ...props }: FlipRevealProps) => {
+export const FlipReveal = ({ keys, ...props }: FlipRevealProps) => {
     const wrapperRef = useRef<HTMLDivElement | null>(null);
+    const ctxRef = useRef<gsap.Context | null>(null);
+    const [isFirstRender, setIsFirstRender] = useState(true);
 
     const isShow = (key: string | null) => !!key && (keys.includes("alle") || keys.includes(key));
 
-    useGSAP(
-        () => {
-            if (!wrapperRef.current) return;
+    useLayoutEffect(() => {
+        if (!wrapperRef.current) return;
 
-            const items = gsap.utils.toArray<HTMLDivElement>(["[data-flip]"]);
-            const state = Flip.getState(items);
+        const items = gsap.utils.toArray<HTMLElement>("[data-flip]", wrapperRef.current);
 
+        if (isFirstRender) {
             items.forEach((item) => {
                 const key = item.getAttribute("data-flip");
-                if (isShow(key)) {
-                    item.classList.add(showClass);
-                    item.classList.remove(hideClass);
-                } else {
-                    item.classList.remove(showClass);
-                    item.classList.add(hideClass);
-                }
+                const shouldShow = isShow(key);
+                item.style.display = shouldShow ? "" : "none";
+                item.style.opacity = shouldShow ? "1" : "0";
             });
+            setIsFirstRender(false);
+            return;
+        }
 
+        if (ctxRef.current) {
+            ctxRef.current.revert();
+        }
+
+        const state = Flip.getState(items);
+
+        items.forEach((item) => {
+            const key = item.getAttribute("data-flip");
+            const shouldShow = isShow(key);
+            item.style.display = shouldShow ? "" : "none";
+        });
+
+        ctxRef.current = gsap.context(() => {
             Flip.from(state, {
-                duration: 0.6,
+                duration: 0.5,
                 scale: true,
                 ease: "power1.inOut",
-                stagger: 0.05,
+                stagger: 0.02,
                 absolute: true,
-                onEnter: (elements) =>
-                    gsap.fromTo(
-                        elements,
-                        { opacity: 0, scale: 0 },
-                        {
-                            opacity: 1,
-                            scale: 1,
-                            duration: 0.8,
-                        },
-                    ),
-                onLeave: (elements) => gsap.to(elements, { opacity: 0, scale: 0, duration: 0.8 }),
+                onEnter: (elements) => {
+                    return gsap.fromTo(elements,
+                        { autoAlpha: 0, scale: 0.8 },
+                        { autoAlpha: 1, scale: 1, duration: 0.4 }
+                    );
+                },
+                onLeave: (elements) => {
+                    return gsap.to(elements, { 
+                        autoAlpha: 0, 
+                        scale: 0.8, 
+                        duration: 0.3
+                    });
+                }
             });
-        },
+        }, wrapperRef);
 
-        { scope: wrapperRef, dependencies: [keys] },
-    );
+        return () => {
+            if (ctxRef.current) {
+                ctxRef.current.revert();
+            }
+        };
+    }, [keys, isFirstRender]);
 
     return <div {...props} ref={wrapperRef} />;
 };

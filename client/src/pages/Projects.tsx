@@ -1,11 +1,12 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Armchair, ChefHat, TreeDeciduous, DoorOpen, Sparkles } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import SEO from "@/components/SEO";
-import { VerticalImageStack } from "@/components/ui/vertical-image-stack";
+import { FlipReveal, FlipRevealItem } from "@/components/ui/flip-reveal";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import InquiryFunnel from "@/components/InquiryFunnel";
 
 import workshopImage from "@assets/generated_images/carpentry_workshop_hero_image.png";
@@ -53,20 +54,10 @@ export default function Projects() {
   const [funnelOpen, setFunnelOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("alle");
 
-  const filteredProjects = useMemo(() => {
-    if (activeCategory === "alle") return projects;
-    return projects.filter(p => p.category === activeCategory);
-  }, [activeCategory]);
-
-  const stackImages = useMemo(() => {
-    return filteredProjects.map(p => ({
-      id: p.id,
-      src: p.image,
-      alt: p.title,
-      title: p.title,
-      location: p.location,
-    }));
-  }, [filteredProjects]);
+  const getCategoryCount = (catId: string) => {
+    if (catId === "alle") return projects.length;
+    return projects.filter(p => p.category === catId).length;
+  };
 
   return (
     <Layout>
@@ -76,6 +67,7 @@ export default function Projects() {
         keywords="Schreiner Esslingen Referenzen, Möbelbau Esslingen Projekte, Schreinerei Esslingen Arbeiten, Schreinerküche Referenzen"
         canonical="https://schreinerei-krickl.de/referenzen"
       />
+      
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0">
           <img src={workshopImage} alt="Schreinerei Krickl Referenzen - Projekte in Esslingen" className="w-full h-full object-cover" />
@@ -91,68 +83,70 @@ export default function Projects() {
         </div>
       </section>
 
-      <section className="relative">
-        <div className="sticky top-16 md:top-20 z-40 bg-background/95 backdrop-blur-md border-b border-border/50 py-3 md:py-4">
-          <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-            <div className="flex md:hidden overflow-x-auto scrollbar-hide gap-2 pb-1 -mx-4 px-4">
+      <section className="py-12 md:py-16">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="flex flex-col items-center gap-8">
+            <ToggleGroup
+              type="single"
+              className="bg-card rounded-xl border border-border p-1.5 flex-wrap justify-center"
+              value={activeCategory}
+              onValueChange={(value) => value && setActiveCategory(value)}
+              data-testid="toggle-group-categories"
+            >
               {categories.map((cat) => {
                 const Icon = cat.icon;
-                const isActive = activeCategory === cat.id;
-                const count = cat.id === "alle" ? projects.length : projects.filter(p => p.category === cat.id).length;
+                const count = getCategoryCount(cat.id);
                 return (
-                  <Button
+                  <ToggleGroupItem
                     key={cat.id}
-                    variant={isActive ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`flex-shrink-0 transition-all ${isActive ? "" : "bg-background"}`}
-                    data-testid={`filter-${cat.id}`}
+                    value={cat.id}
+                    className="px-4 py-2 rounded-lg data-[state=on]:bg-primary data-[state=on]:text-primary-foreground gap-2"
+                    data-testid={`toggle-${cat.id}`}
                   >
-                    {Icon && <Icon className="w-4 h-4 mr-1.5" />}
-                    {cat.label}
-                    <span className="ml-1.5 text-xs opacity-70">({count})</span>
-                  </Button>
+                    {Icon && <Icon className="w-4 h-4" />}
+                    <span>{cat.label}</span>
+                    <span className="text-xs opacity-70">({count})</span>
+                  </ToggleGroupItem>
                 );
               })}
-            </div>
-            
-            <div className="hidden md:flex flex-wrap justify-center gap-3">
-              {categories.map((cat) => {
-                const Icon = cat.icon;
-                const isActive = activeCategory === cat.id;
-                const count = cat.id === "alle" ? projects.length : projects.filter(p => p.category === cat.id).length;
-                return (
-                  <Button
-                    key={cat.id}
-                    variant={isActive ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`transition-all ${isActive ? "" : "bg-background"}`}
-                    data-testid={`filter-${cat.id}-desktop`}
-                  >
-                    {Icon && <Icon className="w-4 h-4 mr-1.5" />}
-                    {cat.label}
-                    <span className="ml-1.5 text-xs opacity-70">({count})</span>
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+            </ToggleGroup>
 
-        <div className="py-8 md:py-12">
-          <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeCategory}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-              >
-                <VerticalImageStack images={stackImages} />
-              </motion.div>
-            </AnimatePresence>
+            <FlipReveal 
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full" 
+              keys={[activeCategory]}
+            >
+              {projects.map((project) => (
+                <FlipRevealItem 
+                  key={project.id} 
+                  flipKey={project.category}
+                  className="group"
+                >
+                  <div 
+                    className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer bg-muted"
+                    data-testid={`card-project-${project.id}`}
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <h3 className="text-white font-semibold text-base md:text-lg mb-1">{project.title}</h3>
+                      <p className="text-white/70 text-sm">{project.location}</p>
+                    </div>
+                  </div>
+                </FlipRevealItem>
+              ))}
+            </FlipReveal>
+
+            {activeCategory !== "alle" && getCategoryCount(activeCategory) === 0 && (
+              <div className="text-center py-12 text-muted-foreground">
+                <p className="text-lg mb-2">Keine Projekte in dieser Kategorie.</p>
+                <p className="text-sm">Bald finden Sie hier weitere Referenzen.</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
