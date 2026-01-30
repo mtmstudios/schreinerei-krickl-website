@@ -57,6 +57,12 @@ export default function ContactForm() {
     setError(null);
     setValidationErrors([]);
     
+    // Debug: Log files before submit
+    if (import.meta.env.DEV) {
+      console.log("[ContactForm] FILES LENGTH before submit:", files.length);
+      files.forEach((f, i) => console.log(`[ContactForm] File ${i}:`, f.name));
+    }
+    
     try {
       const result = await submitToWebhook(FORM_ID, {
         name: formData.name,

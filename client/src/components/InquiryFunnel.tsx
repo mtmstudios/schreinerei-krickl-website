@@ -157,6 +157,12 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
     setError(null);
     setValidationErrors([]);
     
+    // Debug: Log files before submit
+    if (import.meta.env.DEV) {
+      console.log("[InquiryFunnel] FILES LENGTH before submit:", files.length);
+      files.forEach((f, i) => console.log(`[InquiryFunnel] File ${i}:`, f.name));
+    }
+    
     try {
       // Get human-readable labels
       const projektartLabel = projectTypes.find(p => p.id === formData.projectType)?.label || formData.projectType;

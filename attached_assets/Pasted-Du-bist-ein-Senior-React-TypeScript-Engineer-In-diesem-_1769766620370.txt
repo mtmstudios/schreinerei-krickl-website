@@ -1,0 +1,38 @@
+Du bist ein Senior React/TypeScript Engineer. In diesem Replit-Projekt existieren bereits 4 Formulare (ContactForm.tsx, InquiryFunnel.tsx, ApplicationFunnel.tsx, ServiceInquiryFunnel.tsx) und eine zentrale Submit-Funktion in client/src/lib/formSubmit.ts:
+
+- submitToWebhook(formId, formValues, files?: File[])
+- fileToBase64(file) konvertiert Files zu Base64 ohne Prefix
+- POST als application/json an den n8n Webhook
+
+Problem:
+Anhänge kommen in n8n nicht an. Im n8n Webhook sieht man content-length nur ~267 Bytes, anhaenge ist leer. Das bedeutet: Die Formulare übergeben die ausgewählten Dateien NICHT korrekt an submitToWebhook (files bleibt []).
+
+Aufgabe:
+Fixe die bestehenden Formulare so, dass Datei-Uploads zuverlässig mitgesendet werden, ohne das UI/Design zu verändern.
+
+Konkrete Anforderungen:
+1) In jedem Formular, das einen File-Upload anbietet, muss ein lokaler State existieren:
+   const [files, setFiles] = useState<File[]>([]);
+2) Der vorhandene <input type="file" ...> muss ein onChange bekommen:
+   onChange={(e) => setFiles(Array.from(e.target.files || []))}
+   - multiple Upload unterstützen
+   - accept = .pdf,.jpg,.jpeg,.png
+   - optional: max 10MB pro Datei validieren und verständliche Fehlermeldung anzeigen
+3) Beim Absenden MUSS der Aufruf so aussehen:
+   await submitToWebhook("<formId>", values, files);
+   (nicht nur values!)
+4) Füge temporär Debug-Logs ein (nur in dev), um zu prüfen:
+   console.log("FILES LENGTH", files.length);
+5) Stelle außerdem sicher, dass n8n auch bei “kein Anhang” nicht kaputtgeht:
+   - in formSubmit.ts immer anhaenge als Array senden (auch leer), NICHT undefined:
+     anhaenge,
+6) Gib mir den kompletten finalen Code für:
+   - client/src/lib/formSubmit.ts (mit res.json() Rückgabe, Fehler werfen bei res.ok=false)
+   - alle betroffenen Form-Komponenten (ContactForm.tsx etc.) mit den minimalen Änderungen
+7) Wichtig: UI muss gleich bleiben, keine neuen Komponenten/Layouts.
+
+Zusatz:
+Achte darauf, dass das File-Input nicht durch ein form reset den State verliert, bevor submitToWebhook ausgeführt wurde. Falls ihr nach Success resetten wollt: erst nach erfolgreichem await resetten.
+
+Ergebnis:
+Nach dem Fix muss der Request zum Webhook deutlich größer sein (content-length >> 267) und im Webhook-Body muss anhaenge[0].data vorhanden sein.

@@ -89,6 +89,13 @@ export async function submitToWebhook(
   files: File[] = []
 ): Promise<WebhookResult> {
   try {
+    // Debug: Log files received
+    if (import.meta.env.DEV) {
+      console.log("[submitToWebhook] formId:", formId);
+      console.log("[submitToWebhook] FILES LENGTH:", files.length);
+      files.forEach((f, i) => console.log(`[submitToWebhook] File ${i}:`, f.name, f.size, f.type));
+    }
+
     // Convert files to base64
     const anhaenge: FileAttachment[] = await Promise.all(
       files.map(async (file) => ({
@@ -98,15 +105,28 @@ export async function submitToWebhook(
       }))
     );
 
-    // Build payload with all form data
+    // Debug: Log converted attachments
+    if (import.meta.env.DEV) {
+      console.log("[submitToWebhook] anhaenge count:", anhaenge.length);
+      anhaenge.forEach((a, i) => console.log(`[submitToWebhook] Anhang ${i}:`, a.filename, a.mimeType, `${a.data.length} chars base64`));
+    }
+
+    // Build payload with all form data - ALWAYS include anhaenge as array (even if empty)
     const payload = {
       formId,
       ...formValues,
-      anhaenge: anhaenge.length > 0 ? anhaenge : undefined,
+      anhaenge, // Always send as array, n8n can handle empty array
       pageUrl: typeof window !== "undefined" ? window.location.href : "",
       ...getUtmParams(),
       timestamp: new Date().toISOString(),
     };
+
+    const bodyString = JSON.stringify(payload);
+    
+    // Debug: Log payload size
+    if (import.meta.env.DEV) {
+      console.log("[submitToWebhook] Payload size:", bodyString.length, "bytes");
+    }
 
     // Send to n8n webhook
     const response = await fetch(N8N_WEBHOOK_URL, {
@@ -114,7 +134,7 @@ export async function submitToWebhook(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: bodyString,
     });
 
     if (response.ok) {
@@ -133,10 +153,7 @@ export async function submitToWebhook(
     } else {
       const errorText = await response.text();
       console.error("Webhook error:", errorText);
-      return {
-        ok: false,
-        message: "Fehler beim Senden. Bitte versuchen Sie es später erneut.",
-      };
+      throw new Error(`Webhook returned ${response.status}: ${errorText}`);
     }
   } catch (err) {
     console.error("Submit error:", err);

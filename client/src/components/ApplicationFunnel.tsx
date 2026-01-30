@@ -186,6 +186,12 @@ export default function ApplicationFunnel({
     setIsSubmitting(true);
     setError(null);
     
+    // Debug: Log files before submit
+    if (import.meta.env.DEV) {
+      console.log("[ApplicationFunnel] FILES LENGTH before submit:", files.length);
+      files.forEach((f, i) => console.log(`[ApplicationFunnel] File ${i}:`, f.name));
+    }
+    
     try {
       // Get labels for human-readable values
       const positionLabel = positions.find(p => p.id === formData.position)?.label || formData.position;

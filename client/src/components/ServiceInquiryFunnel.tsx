@@ -322,6 +322,12 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
     setError(null);
     setValidationErrors([]);
     
+    // Debug: Log files before submit
+    if (import.meta.env.DEV) {
+      console.log("[ServiceInquiryFunnel] FILES LENGTH before submit:", files.length);
+      files.forEach((f, i) => console.log(`[ServiceInquiryFunnel] File ${i}:`, f.name));
+    }
+    
     try {
       // Build human-readable answers
       const readableAnswers: Record<string, string> = {};
