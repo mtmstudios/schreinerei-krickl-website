@@ -15,8 +15,11 @@ import {
   FileText,
   Image,
   Loader2,
+  AlertCircle,
 } from "lucide-react";
-import { submitApplication } from "@/lib/formSubmit";
+import { submitToWebhook, validateFile } from "@/lib/formSubmit";
+
+const FORM_ID = "bewerbung";
 
 const positions = [
   { id: "moebelschreiner", label: "Möbelschreiner (m/w/d)", icon: Hammer },
@@ -110,7 +113,23 @@ export default function ApplicationFunnel({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      setFiles(prev => [...prev, ...newFiles]);
+      const errors: string[] = [];
+      const validFiles: File[] = [];
+
+      newFiles.forEach((file) => {
+        const validation = validateFile(file);
+        if (!validation.valid) {
+          errors.push(validation.error!);
+        } else {
+          validFiles.push(file);
+        }
+      });
+
+      if (errors.length > 0) {
+        setValidationErrors(prev => [...prev, ...errors]);
+      }
+
+      setFiles(prev => [...prev, ...validFiles]);
     }
   };
 
@@ -168,17 +187,26 @@ export default function ApplicationFunnel({
     setError(null);
     
     try {
-      const result = await submitApplication({
-        position: formData.position,
+      // Get labels for human-readable values
+      const positionLabel = positions.find(p => p.id === formData.position)?.label || formData.position;
+      const experienceLabel = experienceLevels.find(e => e.id === formData.experience)?.label || formData.experience;
+      const startDateLabel = startDates.find(s => s.id === formData.startDate)?.label || formData.startDate;
+      const focusOptions = formData.position === "moebelschreiner" ? focusMoebelschreiner : focusTuerenprofi;
+      const focusLabel = focusOptions.find(f => f.id === formData.focus)?.label || formData.focus;
+
+      const result = await submitToWebhook(FORM_ID, {
+        stelle: positionLabel,
         name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        experience: formData.experience,
-        startDate: formData.startDate,
-        motivation: formData.message,
-      });
+        telefon: formData.phone,
+        email: formData.email || undefined,
+        wohnort: formData.plz,
+        erfahrung: experienceLabel,
+        startdatum: startDateLabel,
+        schwerpunkt: focusLabel,
+        motivation: formData.message || undefined,
+      }, files);
       
-      if (result.success) {
+      if (result.ok) {
         setSubmitted(true);
       } else {
         setError(result.message || result.errors?.join(", ") || "Ein Fehler ist aufgetreten.");

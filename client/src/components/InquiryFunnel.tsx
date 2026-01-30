@@ -20,6 +20,9 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
+import { submitToWebhook, validateFile, validateEmail } from "@/lib/formSubmit";
+
+const FORM_ID = "projektanfrage";
 
 const projectTypes = [
   { id: "moebel", label: "Möbel", icon: Armchair },
@@ -37,38 +40,11 @@ const timeframes = [
   { id: "flexible", label: "Zeitlich flexibel" },
 ];
 
-const N8N_WEBHOOK_URL = "https://mtmstudios.app.n8n.cloud/webhook/5ee4ef75-c909-4111-b837-ccedbd182a58";
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-const ALLOWED_FILE_TYPES = ["application/pdf", "image/jpeg", "image/png"];
-
-interface FileAttachment {
-  filename: string;
-  data: string;
-  mimeType: string;
-}
 
 interface InquiryFunnelProps {
   isOpen: boolean;
   onClose: () => void;
-}
-
-function validateEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-async function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const result = reader.result as string;
-      // Remove the data URL prefix (e.g., "data:application/pdf;base64,")
-      const base64 = result.split(",")[1];
-      resolve(base64);
-    };
-    reader.onerror = (error) => reject(error);
-  });
 }
 
 export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
@@ -115,17 +91,12 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
       const validFiles: File[] = [];
 
       newFiles.forEach((file) => {
-        // Check file type
-        if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-          errors.push(`"${file.name}" ist kein erlaubtes Format (nur PDF, JPG, PNG)`);
-          return;
+        const validation = validateFile(file);
+        if (!validation.valid) {
+          errors.push(validation.error!);
+        } else {
+          validFiles.push(file);
         }
-        // Check file size
-        if (file.size > MAX_FILE_SIZE) {
-          errors.push(`"${file.name}" ist zu groß (max. 10MB)`);
-          return;
-        }
-        validFiles.push(file);
       });
 
       if (errors.length > 0) {
@@ -187,21 +158,11 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
     setValidationErrors([]);
     
     try {
-      // Convert files to base64
-      const attachments: FileAttachment[] = await Promise.all(
-        files.map(async (file) => ({
-          filename: file.name,
-          data: await fileToBase64(file),
-          mimeType: file.type,
-        }))
-      );
-
       // Get human-readable labels
       const projektartLabel = projectTypes.find(p => p.id === formData.projectType)?.label || formData.projectType;
       const zeitrahmenLabel = timeframes.find(t => t.id === formData.timeframe)?.label || formData.timeframe;
 
-      // Build payload
-      const payload = {
+      const result = await submitToWebhook(FORM_ID, {
         projektart: projektartLabel,
         ort: formData.location,
         raum: formData.location,
@@ -209,25 +170,12 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
         name: formData.name,
         email: formData.email,
         telefon: formData.phone,
-        anhaenge: attachments,
-        timestamp: new Date().toISOString(),
-      };
+      }, files);
 
-      // Send to n8n webhook
-      const response = await fetch(N8N_WEBHOOK_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (response.ok) {
+      if (result.ok) {
         setSubmitted(true);
       } else {
-        const errorText = await response.text();
-        console.error("Webhook error:", errorText);
-        setError("Fehler beim Senden. Bitte versuchen Sie es später erneut.");
+        setError(result.message || "Fehler beim Senden. Bitte versuchen Sie es später erneut.");
       }
     } catch (err) {
       console.error("Submit error:", err);

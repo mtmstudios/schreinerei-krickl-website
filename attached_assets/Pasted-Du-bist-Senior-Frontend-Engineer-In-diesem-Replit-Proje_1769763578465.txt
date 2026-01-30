@@ -1,0 +1,44 @@
+Du bist Senior Frontend Engineer. In diesem Replit-Projekt existieren bereits mehrere HTML/React Kontaktformulare (UI steht und soll optisch unverändert bleiben). Aufgabe: Stelle sicher, dass ALLE Formulare denselben n8n Webhook verwenden und ein einheitliches Submit-Verhalten haben.
+
+Webhook URL (fix):
+https://mtmstudios.app.n8n.cloud/webhook/5ee4ef75-c909-4111-b837-ccedbd182a58
+
+Ziele:
+1) KEIN neues Design bauen. Bestehende Formulare beibehalten.
+2) Bei Submit: POST application/json an die Webhook-URL.
+3) Jedes Formular sendet ein eindeutiges formId mit, z.B.:
+   - kontakt_main
+   - projektanfrage
+   - bewerbung
+   (formId pro Formular als Konstante oder data-Attribut)
+4) Standardfelder (falls vorhanden) in der Payload:
+   name, email, telefon, message
+5) Alle weiteren Felder eines Formulars werden automatisch ebenfalls mitsendet (dynamisch), ohne dass man sie jedes Mal einzeln mappen muss.
+6) Datei-Upload (falls vorhanden):
+   - Accept: PDF/JPG/PNG
+   - Mehrfach-Upload möglich
+   - Dateien werden clientseitig in Base64 konvertiert
+   - gesendet als: anhaenge: [{ filename, mimeType, data }]
+   - data enthält NUR Base64 (ohne 'data:...;base64,')
+7) UX:
+   - Button während Submit disabled + Loading State
+   - Success Message anzeigen (vom Webhook: { ok:true, message:"..." })
+   - Error Message anzeigen (vom Webhook: { ok:false, errors:[...] } oder HTTP Fehler)
+   - Formular nach Erfolg optional resetten
+
+Technische Anforderungen:
+- Baue eine wiederverwendbare Funktion submitToWebhook(formId, formValues, files)
+- Baue Helper fileToBase64(file) der den Prefix entfernt
+- Identifiziere alle Formulare im Projekt und ersetze deren bisherigen Submit/Action so, dass sie submitToWebhook nutzen
+- Daten sammeln:
+  - Wenn React: aus State/Refs
+  - Wenn HTML: aus FormData (form element) und dann in JSON umwandeln
+- Sende zusätzlich pageUrl: window.location.href
+- Optional UTM: utm_source, utm_campaign aus URLSearchParams übernehmen, falls vorhanden
+
+Bitte liefere:
+- Die konkrete Umsetzung im vorhandenen Projekt (Dateien anpassen, keine neuen Seiten notwendig)
+- Den finalen Code für submitToWebhook + fileToBase64 + JSON-Building
+- Beispiel, wie formId pro Formular gesetzt wird (data-form-id oder const)
+
+Wichtig: Nicht multipart/form-data senden. Immer JSON.

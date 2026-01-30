@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, ArrowRight, Check, X, Upload, FileText, Image, Loader2 } from "lucide-react";
-import { submitServiceInquiry } from "@/lib/formSubmit";
+import { ArrowLeft, ArrowRight, Check, X, Upload, FileText, Image, Loader2, AlertCircle } from "lucide-react";
+import { submitToWebhook, validateFile } from "@/lib/formSubmit";
+
+const FORM_ID = "service_anfrage";
 
 type ServiceType = "moebel" | "kueche" | "terrasse" | "tueren" | "reparatur" | "sonder";
 
@@ -271,6 +273,7 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const config = serviceType ? serviceConfigs[serviceType] : null;
   const totalSteps = config ? config.questions.length + 2 : 0;
@@ -288,7 +291,25 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      setFiles(prev => [...prev, ...newFiles]);
+      const errors: string[] = [];
+      const validFiles: File[] = [];
+
+      newFiles.forEach((file) => {
+        const validation = validateFile(file);
+        if (!validation.valid) {
+          errors.push(validation.error!);
+        } else {
+          validFiles.push(file);
+        }
+      });
+
+      if (errors.length > 0) {
+        setValidationErrors(errors);
+      } else {
+        setValidationErrors([]);
+      }
+
+      setFiles(prev => [...prev, ...validFiles]);
     }
   };
 
@@ -299,17 +320,37 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setError(null);
+    setValidationErrors([]);
     
     try {
-      const result = await submitServiceInquiry({
-        ...contactData,
-        serviceName: config?.title || "",
-        serviceType: serviceType || "",
-        ...answers,
-        timeline: answers.timeframe,
-      });
+      // Build human-readable answers
+      const readableAnswers: Record<string, string> = {};
+      if (config) {
+        config.questions.forEach(q => {
+          const answerId = answers[q.id];
+          if (answerId && q.options) {
+            const option = q.options.find(o => o.id === answerId);
+            readableAnswers[q.id] = option?.label || answerId;
+          } else if (answerId) {
+            readableAnswers[q.id] = answerId;
+          }
+        });
+      }
+
+      // Get timeframe label
+      const timeframeLabel = timeframes.find(t => t.id === answers.timeframe)?.label || answers.timeframe;
+
+      const result = await submitToWebhook(FORM_ID, {
+        leistung: config?.title || "",
+        leistungstyp: serviceType || "",
+        ...readableAnswers,
+        zeitrahmen: timeframeLabel,
+        name: contactData.name,
+        email: contactData.email,
+        telefon: contactData.phone,
+      }, files);
       
-      if (result.success) {
+      if (result.ok) {
         setSubmitted(true);
       } else {
         setError(result.message || result.errors?.join(", ") || "Ein Fehler ist aufgetreten.");
@@ -327,6 +368,7 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
     setContactData({ name: "", email: "", phone: "" });
     setFiles([]);
     setSubmitted(false);
+    setValidationErrors([]);
     onClose();
   };
 

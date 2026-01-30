@@ -1,160 +1,213 @@
 /**
- * Form Submission Utility
- * Funktioniert sowohl auf Replit (während der Entwicklung) als auch auf Mittwald (nach dem Build)
- * 
- * Auf Replit: Verwendet die Express API-Endpunkte
- * Auf Mittwald: Verwendet die PHP-Dateien im /api Ordner
+ * Unified Form Submission Utility
+ * Sends all form data to a single n8n webhook endpoint
  */
 
-// Erkennt ob wir auf Mittwald oder lokal laufen
-const isProduction = import.meta.env.PROD;
+const N8N_WEBHOOK_URL = "https://mtmstudios.app.n8n.cloud/webhook/5ee4ef75-c909-4111-b837-ccedbd182a58";
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB per file
+const ALLOWED_FILE_TYPES = ["application/pdf", "image/jpeg", "image/png"];
 
-// API-Basis-URL - auf Mittwald werden die PHP-Dateien direkt angesprochen
-const getApiUrl = (endpoint: string): string => {
-  // In Produktion (Mittwald) verwenden wir die PHP-Endpunkte
-  if (isProduction) {
-    return `/api/${endpoint}.php`;
-  }
-  // In Entwicklung (Replit) verwenden wir Express
-  return `/api/${endpoint}`;
-};
+export interface FileAttachment {
+  filename: string;
+  mimeType: string;
+  data: string; // Base64 without prefix
+}
 
-interface FormSubmitResult {
-  success: boolean;
+export interface WebhookResult {
+  ok: boolean;
   message?: string;
   errors?: string[];
 }
 
 /**
- * Sendet Kontaktformular-Daten
+ * Converts a File to Base64 string (without data URL prefix)
  */
+export async function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const result = reader.result as string;
+      // Remove the data URL prefix (e.g., "data:application/pdf;base64,")
+      const base64 = result.split(",")[1];
+      resolve(base64);
+    };
+    reader.onerror = (error) => reject(error);
+  });
+}
+
+/**
+ * Validates a file for upload
+ */
+export function validateFile(file: File): { valid: boolean; error?: string } {
+  if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+    return { valid: false, error: `"${file.name}" ist kein erlaubtes Format (nur PDF, JPG, PNG)` };
+  }
+  if (file.size > MAX_FILE_SIZE) {
+    return { valid: false, error: `"${file.name}" ist zu groß (max. 10MB)` };
+  }
+  return { valid: true };
+}
+
+/**
+ * Validates an email address
+ */
+export function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+/**
+ * Extracts UTM parameters from current URL
+ */
+function getUtmParams(): Record<string, string> {
+  const params: Record<string, string> = {};
+  if (typeof window === "undefined") return params;
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+  
+  utmKeys.forEach(key => {
+    const value = urlParams.get(key);
+    if (value) {
+      params[key] = value;
+    }
+  });
+  
+  return params;
+}
+
+/**
+ * Unified webhook submission function
+ * @param formId - Unique identifier for the form (e.g., 'kontakt_main', 'projektanfrage', 'bewerbung')
+ * @param formValues - Object containing all form field values
+ * @param files - Optional array of File objects to attach
+ */
+export async function submitToWebhook(
+  formId: string,
+  formValues: Record<string, unknown>,
+  files: File[] = []
+): Promise<WebhookResult> {
+  try {
+    // Convert files to base64
+    const anhaenge: FileAttachment[] = await Promise.all(
+      files.map(async (file) => ({
+        filename: file.name,
+        mimeType: file.type,
+        data: await fileToBase64(file),
+      }))
+    );
+
+    // Build payload with all form data
+    const payload = {
+      formId,
+      ...formValues,
+      anhaenge: anhaenge.length > 0 ? anhaenge : undefined,
+      pageUrl: typeof window !== "undefined" ? window.location.href : "",
+      ...getUtmParams(),
+      timestamp: new Date().toISOString(),
+    };
+
+    // Send to n8n webhook
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      // Try to parse JSON response from webhook
+      try {
+        const data = await response.json();
+        return {
+          ok: data.ok !== false,
+          message: data.message || "Erfolgreich gesendet",
+          errors: data.errors,
+        };
+      } catch {
+        // If no JSON response, assume success
+        return { ok: true, message: "Erfolgreich gesendet" };
+      }
+    } else {
+      const errorText = await response.text();
+      console.error("Webhook error:", errorText);
+      return {
+        ok: false,
+        message: "Fehler beim Senden. Bitte versuchen Sie es später erneut.",
+      };
+    }
+  } catch (err) {
+    console.error("Submit error:", err);
+    return {
+      ok: false,
+      message: "Netzwerkfehler. Bitte versuchen Sie es später erneut.",
+    };
+  }
+}
+
+// Form-specific submission functions (wrappers for backwards compatibility)
+
 export async function submitContactForm(data: {
   name: string;
   email: string;
   phone?: string;
   message: string;
-}): Promise<FormSubmitResult> {
-  try {
-    const response = await fetch(getApiUrl('contact'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Contact form submission error:', error);
-    return {
-      success: false,
-      message: 'Netzwerkfehler. Bitte versuchen Sie es später erneut.',
-    };
-  }
+}, files: File[] = []): Promise<{ success: boolean; message?: string; errors?: string[] }> {
+  const result = await submitToWebhook("kontakt_main", data, files);
+  return { success: result.ok, message: result.message, errors: result.errors };
 }
 
-/**
- * Sendet Projektanfrage-Daten (InquiryFunnel)
- */
 export async function submitInquiry(data: {
+  projektart: string;
+  ort: string;
+  raum?: string;
+  zeitrahmen: string;
   name: string;
   email: string;
-  phone?: string;
-  projectType?: string;
-  rooms?: string[];
-  services?: string[];
-  budget?: string;
-  timeline?: string;
-  style?: string;
-  materials?: string[];
-  specialRequirements?: string;
-  message?: string;
-}): Promise<FormSubmitResult> {
-  try {
-    const response = await fetch(getApiUrl('inquiry'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Inquiry submission error:', error);
-    return {
-      success: false,
-      message: 'Netzwerkfehler. Bitte versuchen Sie es später erneut.',
-    };
-  }
+  telefon: string;
+}, files: File[] = []): Promise<{ success: boolean; message?: string; errors?: string[] }> {
+  const result = await submitToWebhook("projektanfrage", data, files);
+  return { success: result.ok, message: result.message, errors: result.errors };
 }
 
-/**
- * Sendet Service-spezifische Anfrage-Daten
- */
 export async function submitServiceInquiry(data: {
-  name: string;
-  email: string;
-  phone?: string;
   serviceName: string;
-  serviceType?: string;
-  projectType?: string;
-  rooms?: string[];
-  dimensions?: string;
-  style?: string;
-  materials?: string[];
-  colors?: string[];
-  features?: string[];
-  budget?: string;
-  timeline?: string;
-  specialRequirements?: string;
-  message?: string;
-}): Promise<FormSubmitResult> {
-  try {
-    const response = await fetch(getApiUrl('service-inquiry'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Service inquiry submission error:', error);
-    return {
-      success: false,
-      message: 'Netzwerkfehler. Bitte versuchen Sie es später erneut.',
-    };
-  }
-}
-
-/**
- * Sendet Bewerbungs-Daten
- */
-export async function submitApplication(data: {
+  serviceType: string;
   name: string;
   email: string;
   phone: string;
-  position?: string;
-  experience?: string;
-  qualifications?: string[];
-  availability?: string;
-  salary?: string;
+  [key: string]: unknown;
+}, files: File[] = []): Promise<{ success: boolean; message?: string; errors?: string[] }> {
+  const result = await submitToWebhook("service_anfrage", {
+    ...data,
+    telefon: data.phone,
+  }, files);
+  return { success: result.ok, message: result.message, errors: result.errors };
+}
+
+export async function submitApplication(data: {
+  position: string;
+  name: string;
+  phone: string;
+  email?: string;
+  plz?: string;
+  experience: string;
+  startDate: string;
+  focus?: string;
   motivation?: string;
-  startDate?: string;
-}): Promise<FormSubmitResult> {
-  try {
-    const response = await fetch(getApiUrl('application'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Application submission error:', error);
-    return {
-      success: false,
-      message: 'Netzwerkfehler. Bitte versuchen Sie es später erneut.',
-    };
-  }
+}, files: File[] = []): Promise<{ success: boolean; message?: string; errors?: string[] }> {
+  const result = await submitToWebhook("bewerbung", {
+    stelle: data.position,
+    name: data.name,
+    telefon: data.phone,
+    email: data.email,
+    wohnort: data.plz,
+    erfahrung: data.experience,
+    startdatum: data.startDate,
+    schwerpunkt: data.focus,
+    motivation: data.motivation,
+  }, files);
+  return { success: result.ok, message: result.message, errors: result.errors };
 }

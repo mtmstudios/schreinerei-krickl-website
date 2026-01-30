@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Send, Check, Upload, FileText, Image, X, Loader2 } from "lucide-react";
-import { submitContactForm } from "@/lib/formSubmit";
+import { Send, Check, Upload, FileText, Image, X, Loader2, AlertCircle } from "lucide-react";
+import { submitToWebhook, validateFile } from "@/lib/formSubmit";
+
+const FORM_ID = "kontakt_main";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -17,27 +19,53 @@ export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      setFiles(prev => [...prev, ...newFiles]);
+      const errors: string[] = [];
+      const validFiles: File[] = [];
+
+      newFiles.forEach((file) => {
+        const validation = validateFile(file);
+        if (!validation.valid) {
+          errors.push(validation.error!);
+        } else {
+          validFiles.push(file);
+        }
+      });
+
+      if (errors.length > 0) {
+        setValidationErrors(errors);
+      } else {
+        setValidationErrors([]);
+      }
+
+      setFiles(prev => [...prev, ...validFiles]);
     }
   };
 
   const removeFile = (index: number) => {
     setFiles(prev => prev.filter((_, i) => i !== index));
+    setValidationErrors([]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+    setValidationErrors([]);
     
     try {
-      const result = await submitContactForm(formData);
+      const result = await submitToWebhook(FORM_ID, {
+        name: formData.name,
+        email: formData.email,
+        telefon: formData.phone,
+        nachricht: formData.message,
+      }, files);
       
-      if (result.success) {
+      if (result.ok) {
         setSubmitted(true);
       } else {
         setError(result.message || result.errors?.join(", ") || "Ein Fehler ist aufgetreten.");
@@ -157,6 +185,18 @@ export default function ContactForm() {
           )}
         </div>
       </div>
+      {validationErrors.length > 0 && (
+        <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm" role="alert">
+          <div className="flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+            <ul className="list-disc list-inside space-y-1">
+              {validationErrors.map((err, i) => (
+                <li key={i}>{err}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
       {error && (
         <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
           {error}
