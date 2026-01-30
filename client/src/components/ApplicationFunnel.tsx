@@ -111,25 +111,16 @@ export default function ApplicationFunnel({
   }, [isOpen]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
-      const errors: string[] = [];
-      const validFiles: File[] = [];
-
-      newFiles.forEach((file) => {
-        const validation = validateFile(file);
-        if (!validation.valid) {
-          errors.push(validation.error!);
-        } else {
-          validFiles.push(file);
-        }
-      });
-
-      if (errors.length > 0) {
-        setValidationErrors(prev => [...prev, ...errors]);
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      const validation = validateFile(file);
+      
+      if (!validation.valid) {
+        setValidationErrors([validation.error!]);
+      } else {
+        setValidationErrors([]);
+        setFiles([file]); // Single file only
       }
-
-      setFiles(prev => [...prev, ...validFiles]);
     }
   };
 
@@ -506,13 +497,12 @@ export default function ApplicationFunnel({
                           className="flex items-center justify-center gap-2 p-3 border-2 border-dashed border-border rounded-lg cursor-pointer hover-elevate transition-all"
                         >
                           <Upload className="w-5 h-5 text-muted-foreground" />
-                          <span className="text-sm text-muted-foreground">Dateien auswählen</span>
+                          <span className="text-sm text-muted-foreground">Datei auswählen</span>
                         </label>
                         <input
                           id={fileInputId}
                           type="file"
-                          multiple
-                          accept=".pdf,.jpg,.jpeg,.png,.gif,.webp"
+                          accept=".pdf,.jpg,.jpeg,.png"
                           onChange={handleFileChange}
                           className="sr-only"
                           data-testid="input-app-file-upload"

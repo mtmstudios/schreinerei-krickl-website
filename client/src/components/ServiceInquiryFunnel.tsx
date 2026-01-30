@@ -289,27 +289,16 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
   }, [isOpen, serviceType]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
-      const errors: string[] = [];
-      const validFiles: File[] = [];
-
-      newFiles.forEach((file) => {
-        const validation = validateFile(file);
-        if (!validation.valid) {
-          errors.push(validation.error!);
-        } else {
-          validFiles.push(file);
-        }
-      });
-
-      if (errors.length > 0) {
-        setValidationErrors(errors);
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      const validation = validateFile(file);
+      
+      if (!validation.valid) {
+        setValidationErrors([validation.error!]);
       } else {
         setValidationErrors([]);
+        setFiles([file]); // Single file only
       }
-
-      setFiles(prev => [...prev, ...validFiles]);
     }
   };
 
@@ -570,18 +559,17 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
                         />
                       </div>
                       <div>
-                        <Label>Dateien anhängen (optional)</Label>
+                        <Label>Datei anhängen (optional)</Label>
                         <p className="text-xs text-muted-foreground mb-2">
-                          Fotos, Skizzen oder Dokumente (PDF, JPG, PNG)
+                          Foto, Skizze oder Dokument (PDF, JPG, PNG)
                         </p>
                         <div className="flex flex-col gap-2">
                           <label className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-border rounded-lg cursor-pointer hover-elevate transition-all">
                             <Upload className="w-5 h-5 text-muted-foreground" />
-                            <span className="text-sm text-muted-foreground">Dateien auswählen</span>
+                            <span className="text-sm text-muted-foreground">Datei auswählen</span>
                             <input
                               type="file"
-                              multiple
-                              accept=".pdf,.jpg,.jpeg,.png,.gif,.webp"
+                              accept=".pdf,.jpg,.jpeg,.png"
                               onChange={handleFileChange}
                               className="hidden"
                               data-testid="input-service-file-upload"
