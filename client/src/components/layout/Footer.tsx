@@ -39,12 +39,12 @@ export default function Footer() {
             </p>
             <div className="space-y-2">
               <a
-                href="tel:+4971119999999"
+                href="tel:+497113222360"
                 className="flex items-center gap-2 text-sm text-muted-foreground hover-elevate rounded-md p-1 -ml-1"
                 data-testid="link-footer-phone"
               >
                 <Phone className="w-4 h-4" />
-                <span>0711 / 123 456 78</span>
+                <span>07 11 / 32 23 60</span>
               </a>
               <a
                 href="mailto:info@schreinerei-krickl.de"

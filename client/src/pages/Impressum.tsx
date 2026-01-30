@@ -23,7 +23,8 @@ export default function Impressum() {
 
             <h2 className="text-2xl font-semibold mt-8 mb-4">Kontakt</h2>
             <p className="text-muted-foreground mb-4">
-              Telefon: 0711 / 123 456 78<br />
+              Telefon: 07 11 / 32 23 60<br />
+              Fax: 07 11 / 32 39 08<br />
               E-Mail: info@schreinerei-krickl.de
             </p>
 

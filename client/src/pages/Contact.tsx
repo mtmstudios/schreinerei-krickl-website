@@ -60,11 +60,11 @@ export default function Contact() {
                   <div>
                     <h3 className="font-semibold mb-1">Telefon</h3>
                     <a
-                      href="tel:+4971119999999"
+                      href="tel:+497113222360"
                       className="text-muted-foreground hover-elevate rounded-md p-1 -ml-1 inline-block"
                       data-testid="link-contact-phone"
                     >
-                      0711 / 123 456 78
+                      07 11 / 32 23 60
                     </a>
                   </div>
                 </div>

@@ -50,7 +50,8 @@ export default function Datenschutz() {
               Schreinerei Krickl<br />
               Röntgenstraße 4-7<br />
               73728 Esslingen am Neckar<br />
-              Telefon: 0711 / 123 456 78<br />
+              Telefon: 07 11 / 32 23 60<br />
+              Fax: 07 11 / 32 39 08<br />
               E-Mail: info@schreinerei-krickl.de
             </p>
 
