@@ -1,7 +1,6 @@
 import { Link } from "wouter";
 import { Phone, Mail, MapPin } from "lucide-react";
 import logoImage from "@assets/Logo_krickl_2022_positiv_1767883446646.png";
-import mlmLogo from "@assets/Bild_1767459563117.png";
 
 const services = [
   { name: "Möbelbau", href: "/leistungen/moebelbau" },
@@ -118,10 +117,6 @@ export default function Footer() {
             <p className="flex items-center justify-center gap-1 flex-wrap">
               <span>© {new Date().getFullYear()} Schreinerei Krickl – Schreiner Esslingen. Alle Rechte vorbehalten.</span>
             </p>
-            
-            <a href="https://www.mtmstudios.de" target="_blank" rel="noopener noreferrer" className="inline-block">
-              <img src={mlmLogo} alt="MLM Studios" className="h-14 w-auto" />
-            </a>
           </div>
         </div>
       </div>
