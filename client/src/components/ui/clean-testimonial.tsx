@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -10,7 +10,6 @@ interface TestimonialData {
   author: string
   role: string
   company: string
-  avatar: string
 }
 
 const testimonials: TestimonialData[] = [
@@ -19,72 +18,61 @@ const testimonials: TestimonialData[] = [
     author: "Sonia Schrödel",
     role: "Google Rezension",
     company: "Local Guide",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
   },
   {
     quote: "Ich bin äußerst zufrieden mit dem Service! Die Schreinerei Krickl konnte uns noch kurzfristig am 23. Dezember helfen, um eine wichtige Tür in unseren Geschäftsräumen zu reparieren. Absolut empfehlenswert!",
     author: "Manuel Kraus",
     role: "Google Rezension",
     company: "Local Guide",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
   },
   {
     quote: "Für unsere erste Wohnung hat sich die Schreinerei Krickl um unseren Esszimmertisch aus einer Wildeicheplatte und um einen Kücheneinbauschrank auf Maß gekümmert. Sauber gearbeitet und auf jeden Wunsch eingegangen.",
     author: "Natalia Tsitou",
     role: "Google Rezension",
     company: "Esszimmertisch & Einbauschrank",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
   },
   {
     quote: "Hervorragende handwerkliche Arbeit! Herr Tomay hat unser Projekt mit großer Sorgfalt und Präzision umgesetzt. Die Qualität der Arbeit ist beeindruckend, und die termingerechte Lieferung war ein weiterer Pluspunkt.",
     author: "Chrubi Hailom",
     role: "Google Rezension",
     company: "5 Sterne",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
   },
   {
     quote: "Die Schreinerei Krickl hat uns bei der Neugestaltung unseres Eingangsbereichs unterstützt. Kurze Antwortzeiten, freundlicher Vorort-Termin, ein nach individuellen Wünschen gestalteter Entwurf und perfekter Einbau.",
     author: "Anne Dröge",
     role: "Google Rezension",
     company: "Eingangsbereich",
-    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
   },
   {
     quote: "Für unsere neue Küche benötigten wir eine Arbeitsplatte. Herr Tomay kam prompt mit Farbmustern vorbei. Nur zwei Wochen später war die neue Arbeitsplatte installiert. Das Preis-Leistungs-Verhältnis ist ausgezeichnet.",
     author: "Andreas Wagner",
     role: "Google Rezension",
     company: "Local Guide",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
   },
   {
     quote: "Traumhafte Arbeit! Yannik Tomay hat mir einen in jeder Hinsicht perfekten Tisch gezaubert. Die Verarbeitung und Präzision zeugen von absolutem handwerklichen Können. Absolut zu empfehlen!",
     author: "Andreas Rösch",
     role: "Google Rezension",
     company: "Maßanfertigung Tisch",
-    avatar: "https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop&crop=face",
   },
   {
     quote: "Tolle Handwerkskunst, super schnell und auf dem Punkt. Wir sind sehr zufrieden und können Yannik Tomay und sein Team nur weiterempfehlen. Vielen Dank.",
     author: "Alexandra",
     role: "Google Rezension",
     company: "5 Sterne",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
   },
 ]
 
-function usePreloadImages(images: string[]) {
-  useEffect(() => {
-    images.forEach((src) => {
-      const img = new Image()
-      img.src = src
-    })
-  }, [images])
+function getInitials(name: string): string {
+  const parts = name.split(" ")
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+  }
+  return name.slice(0, 2).toUpperCase()
 }
 
 export function Testimonial() {
   const [activeIndex, setActiveIndex] = useState(0)
-
-  usePreloadImages(testimonials.map((t) => t.avatar))
 
   const handlePrev = () => {
     setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
@@ -135,11 +123,11 @@ export function Testimonial() {
           >
             <div className="relative w-14 h-14 mb-3">
               <div className="absolute -inset-1 rounded-full border-2 border-primary/30" />
-              <img
-                src={currentTestimonial.avatar}
-                alt={currentTestimonial.author}
-                className="w-14 h-14 rounded-full object-cover"
-              />
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-lg font-semibold text-primary">
+                  {getInitials(currentTestimonial.author)}
+                </span>
+              </div>
             </div>
             <p className="font-semibold text-foreground">{currentTestimonial.author}</p>
             <p className="text-sm text-muted-foreground">{currentTestimonial.role}</p>
