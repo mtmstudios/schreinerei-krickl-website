@@ -31,7 +31,7 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 md:h-24">
           <Link href="/" className="flex-shrink-0" data-testid="link-logo">
-            <img src={logoImage} alt="Schreinerei Krickl" className="h-12 md:h-14 w-auto" />
+            <img src={logoImage} alt="Schreinerei Krickl" className="h-16 md:h-20 w-auto" />
           </Link>
 
           <div className="hidden lg:flex items-center gap-1">
