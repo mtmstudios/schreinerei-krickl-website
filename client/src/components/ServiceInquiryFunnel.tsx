@@ -268,6 +268,7 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
     name: "",
     email: "",
     phone: "",
+    address: "",
   });
   const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
@@ -282,7 +283,7 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
     if (isOpen) {
       setStep(0);
       setAnswers({});
-      setContactData({ name: "", email: "", phone: "" });
+      setContactData({ name: "", email: "", phone: "", address: "" });
       setFiles([]);
       setSubmitted(false);
     }
@@ -343,6 +344,7 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
         name: contactData.name,
         email: contactData.email,
         telefon: contactData.phone,
+        adresse: contactData.address,
       }, files);
       
       if (result.ok) {
@@ -360,7 +362,7 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
   const resetAndClose = () => {
     setStep(0);
     setAnswers({});
-    setContactData({ name: "", email: "", phone: "" });
+    setContactData({ name: "", email: "", phone: "", address: "" });
     setFiles([]);
     setSubmitted(false);
     setValidationErrors([]);
@@ -548,14 +550,26 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
                         />
                       </div>
                       <div>
-                        <Label htmlFor="phone">Telefon</Label>
+                        <Label htmlFor="phone">Telefon *</Label>
                         <Input
                           id="phone"
                           type="tel"
                           placeholder="0711 / 123 456"
                           value={contactData.phone}
                           onChange={(e) => setContactData({ ...contactData, phone: e.target.value })}
+                          required
                           data-testid="input-phone"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="service-address">Adresse *</Label>
+                        <Input
+                          id="service-address"
+                          placeholder="Musterstraße 1, 73730 Esslingen"
+                          value={contactData.address}
+                          onChange={(e) => setContactData({ ...contactData, address: e.target.value })}
+                          required
+                          data-testid="input-service-address"
                         />
                       </div>
                       <div>
@@ -614,7 +628,7 @@ export default function ServiceInquiryFunnel({ isOpen, onClose, serviceType }: S
                       <Button
                         className="flex-1"
                         onClick={handleSubmit}
-                        disabled={!contactData.name || !contactData.email || !contactData.phone || isSubmitting}
+                        disabled={!contactData.name || !contactData.email || !contactData.phone || !contactData.address || isSubmitting}
                         data-testid="button-submit"
                       >
                         {isSubmitting ? (

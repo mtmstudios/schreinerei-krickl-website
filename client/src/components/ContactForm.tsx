@@ -13,6 +13,7 @@ export default function ContactForm() {
     name: "",
     email: "",
     phone: "",
+    address: "",
     message: "",
   });
   const [files, setFiles] = useState<File[]>([]);
@@ -57,6 +58,7 @@ export default function ContactForm() {
         name: formData.name,
         email: formData.email,
         telefon: formData.phone,
+        adresse: formData.address,
         nachricht: formData.message,
       }, files);
       
@@ -122,6 +124,17 @@ export default function ContactForm() {
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
           data-testid="input-contact-phone"
+        />
+      </div>
+      <div>
+        <Label htmlFor="contact-address">Adresse *</Label>
+        <Input
+          id="contact-address"
+          placeholder="Musterstraße 1, 73730 Esslingen"
+          value={formData.address}
+          onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+          required
+          data-testid="input-contact-address"
         />
       </div>
       <div>
@@ -200,7 +213,7 @@ export default function ContactForm() {
         type="submit" 
         size="lg" 
         className="w-full md:w-auto" 
-        disabled={isSubmitting}
+        disabled={!formData.name || !formData.email || !formData.address || !formData.message || isSubmitting}
         data-testid="button-submit-contact"
       >
         {isSubmitting ? (

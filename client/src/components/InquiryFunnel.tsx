@@ -56,6 +56,7 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
     name: "",
     email: "",
     phone: "",
+    address: "",
   });
   const [files, setFiles] = useState<File[]>([]);
   const [submitted, setSubmitted] = useState(false);
@@ -126,6 +127,9 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
     if (!formData.phone.trim()) {
       errors.push("Bitte geben Sie Ihre Telefonnummer ein.");
     }
+    if (!formData.address.trim()) {
+      errors.push("Bitte geben Sie Ihre Adresse ein.");
+    }
 
     // Check total file size
     const totalSize = files.reduce((sum, file) => sum + file.size, 0);
@@ -165,6 +169,7 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
         name: formData.name,
         email: formData.email,
         telefon: formData.phone,
+        adresse: formData.address,
       }, files);
 
       if (result.ok) {
@@ -189,6 +194,7 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
       name: "",
       email: "",
       phone: "",
+      address: "",
     });
     setFiles([]);
     setSubmitted(false);
@@ -419,6 +425,17 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
                         />
                       </div>
                       <div>
+                        <Label htmlFor="address">Adresse *</Label>
+                        <Input
+                          id="address"
+                          placeholder="Musterstraße 1, 73730 Esslingen"
+                          value={formData.address}
+                          onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                          aria-required="true"
+                          data-testid="input-address"
+                        />
+                      </div>
+                      <div>
                         <Label htmlFor={fileInputId}>Datei anhängen (optional)</Label>
                         <p className="text-xs text-muted-foreground mb-2">
                           Foto, Skizze oder Dokument (PDF, JPG, PNG, max. 10MB)
@@ -483,7 +500,7 @@ export default function InquiryFunnel({ isOpen, onClose }: InquiryFunnelProps) {
                       <Button
                         className="flex-1"
                         onClick={handleSubmit}
-                        disabled={!formData.name || !formData.email || !formData.phone || isSubmitting}
+                        disabled={!formData.name || !formData.email || !formData.phone || !formData.address || isSubmitting}
                         data-testid="button-submit-inquiry"
                       >
                         {isSubmitting ? (
