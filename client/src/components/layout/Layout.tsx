@@ -21,10 +21,10 @@ const localBusinessSchema = {
   email: "info@schreinerei-krickl.de",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Röntgenstraße 4-7",
+    streetAddress: "Röntgenstraße 5-7",
     addressLocality: "Esslingen am Neckar",
     addressRegion: "Baden-Württemberg",
-    postalCode: "73728",
+    postalCode: "73730",
     addressCountry: "DE"
   },
   geo: {

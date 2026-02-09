@@ -17,8 +17,8 @@ export default function Impressum() {
             <h2 className="text-2xl font-semibold mt-8 mb-4">Angaben gemäß § 5 TMG</h2>
             <p className="text-muted-foreground mb-4">
               Schreinerei Krickl<br />
-              Röntgenstraße 4-7<br />
-              73728 Esslingen am Neckar
+              Röntgenstraße 5-7<br />
+              73730 Esslingen am Neckar
             </p>
 
             <h2 className="text-2xl font-semibold mt-8 mb-4">Kontakt</h2>

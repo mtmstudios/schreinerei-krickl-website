@@ -102,8 +102,8 @@ export default function Datenschutz() {
               Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:<br /><br />
               Schreinerei Krickl<br />
               Inh. Yannik Tomay<br />
-              Röntgenstraße 4-7<br />
-              73728 Esslingen am Neckar<br /><br />
+              Röntgenstraße 5-7<br />
+              73730 Esslingen am Neckar<br /><br />
               Telefon: 07 11 / 32 23 60<br />
               Fax: 07 11 / 32 39 08<br />
               E-Mail: info@schreinerei-krickl.de
