@@ -1,5 +1,4 @@
 node_modules
-dist
 .DS_Store
 server/public
 vite.config.ts.*
@@ -7,5 +6,3 @@ vite.config.ts.*
 
 # Interne Dokumentation (nicht deployen)
 .internal-docs/
-
-# public_html wird NICHT ignoriert - das ist der Deploy-Ordner fuer Mittwald
