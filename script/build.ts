@@ -1,6 +1,6 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile, cp, readdir, stat } from "fs/promises";
+import { rm, readFile, cp, readdir, mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 
 // server deps to bundle to reduce openat(2) syscalls
@@ -78,6 +78,37 @@ async function buildAll() {
       }
     }
   }
+
+  console.log("creating route directories for SPA subpages...");
+  const indexHtml = await readFile(join(buildDir, "index.html"), "utf-8");
+
+  const routes = [
+    "ueber-uns",
+    "leistungen",
+    "leistungen/innenausbau",
+    "leistungen/moebel-nach-mass",
+    "leistungen/tueren-und-fenster",
+    "leistungen/reparatur-und-service",
+    "leistungen/kuechenbau",
+    "leistungen/badmoebel",
+    "leistungen/treppen",
+    "leistungen/objekteinrichtung",
+    "referenzen",
+    "karriere",
+    "karriere/bewerbung",
+    "kontakt",
+    "impressum",
+    "datenschutz",
+    "barrierefreiheit",
+  ];
+
+  for (const route of routes) {
+    const routeDir = join(".", route);
+    await mkdir(routeDir, { recursive: true });
+    await writeFile(join(routeDir, "index.html"), indexHtml);
+  }
+  console.log(`created ${routes.length} route directories with index.html`);
+
   console.log("done! Files ready for Mittwald deployment.");
 }
 
