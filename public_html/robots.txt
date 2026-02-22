@@ -1,0 +1,19 @@
+# robots.txt für Schreinerei Krickl
+# Erlaubt allen Suchmaschinen das Crawlen aller Seiten
+
+User-agent: *
+Allow: /
+
+# Sitemap-Verweis
+Sitemap: https://schreinerei-krickl.de/sitemap.xml
+
+# Spezifische Erlaubnisse für wichtige Crawler
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Keine Einschränkungen für Bildersuche
+User-agent: Googlebot-Image
+Allow: /
