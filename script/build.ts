@@ -1,6 +1,7 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile } from "fs/promises";
+import { rm, readFile, cp, readdir, stat } from "fs/promises";
+import { join } from "path";
 
 // server deps to bundle to reduce openat(2) syscalls
 // which helps cold start times
@@ -59,6 +60,25 @@ async function buildAll() {
     external: externals,
     logLevel: "info",
   });
+
+  console.log("copying build output to project root for Mittwald deployment...");
+  const buildDir = "dist/public";
+  const entries = await readdir(buildDir, { withFileTypes: true });
+  for (const entry of entries) {
+    const src = join(buildDir, entry.name);
+    const dest = join(".", entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === "assets" || entry.name === "api") {
+        await rm(dest, { recursive: true, force: true });
+        await cp(src, dest, { recursive: true });
+      }
+    } else {
+      if (["index.html", "favicon.png", "robots.txt", "logo.webp", ".htaccess", ".user.ini"].includes(entry.name)) {
+        await cp(src, dest);
+      }
+    }
+  }
+  console.log("done! Files ready for Mittwald deployment.");
 }
 
 buildAll().catch((err) => {
