@@ -1,6 +1,6 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile, cp, readdir, mkdir, writeFile } from "fs/promises";
+import { rm, readFile, cp, readdir } from "fs/promises";
 import { join } from "path";
 
 // server deps to bundle to reduce openat(2) syscalls
@@ -63,51 +63,27 @@ async function buildAll() {
 
   console.log("copying build output to project root for Mittwald deployment...");
   const buildDir = "dist/public";
+
+  const skipDirs = new Set(["node_modules", ".git", "dist", "client", "server", "shared", "script", "attached_assets", ".internal-docs", "references", ".local"]);
+  const copyFiles = new Set(["index.html", "favicon.png", "robots.txt", "logo.webp", ".htaccess", ".user.ini"]);
+
   const entries = await readdir(buildDir, { withFileTypes: true });
   for (const entry of entries) {
     const src = join(buildDir, entry.name);
     const dest = join(".", entry.name);
     if (entry.isDirectory()) {
-      if (entry.name === "assets" || entry.name === "api") {
+      if (!skipDirs.has(entry.name)) {
         await rm(dest, { recursive: true, force: true });
         await cp(src, dest, { recursive: true });
+        console.log(`  copied directory: ${entry.name}/`);
       }
     } else {
-      if (["index.html", "favicon.png", "robots.txt", "logo.webp", ".htaccess", ".user.ini"].includes(entry.name)) {
+      if (copyFiles.has(entry.name)) {
         await cp(src, dest);
+        console.log(`  copied file: ${entry.name}`);
       }
     }
   }
-
-  console.log("creating route directories for SPA subpages...");
-  const indexHtml = await readFile(join(buildDir, "index.html"), "utf-8");
-
-  const routes = [
-    "ueber-uns",
-    "leistungen",
-    "leistungen/innenausbau",
-    "leistungen/moebel-nach-mass",
-    "leistungen/tueren-und-fenster",
-    "leistungen/reparatur-und-service",
-    "leistungen/kuechenbau",
-    "leistungen/badmoebel",
-    "leistungen/treppen",
-    "leistungen/objekteinrichtung",
-    "referenzen",
-    "karriere",
-    "karriere/bewerbung",
-    "kontakt",
-    "impressum",
-    "datenschutz",
-    "barrierefreiheit",
-  ];
-
-  for (const route of routes) {
-    const routeDir = join(".", route);
-    await mkdir(routeDir, { recursive: true });
-    await writeFile(join(routeDir, "index.html"), indexHtml);
-  }
-  console.log(`created ${routes.length} route directories with index.html`);
 
   console.log("done! Files ready for Mittwald deployment.");
 }
