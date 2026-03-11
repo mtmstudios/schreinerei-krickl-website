@@ -36,9 +36,9 @@ export default function Impressum() {
 
             <h2 className="text-2xl font-semibold mt-8 mb-4">Registereintrag</h2>
             <p className="text-muted-foreground mb-4">
-              Handelsregister: HRA 12345<br />
-              Registergericht: Amtsgericht Stuttgart<br />
-              Umsatzsteuer-ID: DE123456789
+              Handelsregister: HRA 211 909<br />
+              Registergericht: Stuttgart<br />
+              Umsatzsteuer-ID: DE 349 869 148
             </p>
 
             <h2 className="text-2xl font-semibold mt-8 mb-4">Berufsbezeichnung</h2>
