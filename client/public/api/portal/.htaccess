@@ -1,0 +1,13 @@
+DirectoryIndex router.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /api/portal/
+
+  # Protect data directory
+  RewriteRule ^data/ - [F,L]
+
+  # Route all requests to PHP router
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ router.php [QSA,L]
+</IfModule>
