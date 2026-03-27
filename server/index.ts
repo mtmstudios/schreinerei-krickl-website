@@ -1,4 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
+import session from "express-session";
+import MemoryStore from "memorystore";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
@@ -21,6 +23,21 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+
+const MStore = MemoryStore(session);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "krickl-portal-secret-2024",
+    resave: false,
+    saveUninitialized: false,
+    store: new MStore({ checkPeriod: 86400000 }),
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    },
+  }),
+);
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {

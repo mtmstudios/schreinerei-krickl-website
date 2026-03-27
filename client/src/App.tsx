@@ -4,6 +4,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import ChatWidget from "@/components/ChatWidget";
 
 function PageLoader() {
   return (
@@ -25,6 +26,8 @@ const LazyDatenschutz = lazy(() => import("@/pages/Datenschutz"));
 const LazyBarrierefreiheit = lazy(() => import("@/pages/Barrierefreiheit"));
 const LazyApplicationPage = lazy(() => import("@/pages/ApplicationPage"));
 const LazyNotFound = lazy(() => import("@/pages/not-found"));
+const LazyPortalLogin = lazy(() => import("@/pages/PortalLogin"));
+const LazyPortal = lazy(() => import("@/pages/Portal"));
 
 function withSuspense<P extends object>(Component: ComponentType<P>) {
   return function SuspenseWrapper(props: P) {
@@ -48,6 +51,8 @@ const Datenschutz = withSuspense(LazyDatenschutz);
 const Barrierefreiheit = withSuspense(LazyBarrierefreiheit);
 const ApplicationPage = withSuspense(LazyApplicationPage);
 const NotFound = withSuspense(LazyNotFound);
+const PortalLogin = withSuspense(LazyPortalLogin);
+const Portal = withSuspense(LazyPortal);
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -60,21 +65,29 @@ function ScrollToTop() {
 }
 
 function Router() {
+  const [location] = useLocation();
+  const isPortal = location.startsWith("/portal");
+
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/ueber-uns" component={About} />
-      <Route path="/leistungen" component={Services} />
-      <Route path="/leistungen/:slug" component={ServiceDetail} />
-      <Route path="/referenzen" component={Projects} />
-      <Route path="/karriere" component={Career} />
-      <Route path="/karriere/bewerbung" component={ApplicationPage} />
-      <Route path="/kontakt" component={Contact} />
-      <Route path="/impressum" component={Impressum} />
-      <Route path="/datenschutz" component={Datenschutz} />
-      <Route path="/barrierefreiheit" component={Barrierefreiheit} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <Switch>
+        <Route path="/portal/login" component={PortalLogin} />
+        <Route path="/portal" component={Portal} />
+        <Route path="/" component={Home} />
+        <Route path="/ueber-uns" component={About} />
+        <Route path="/leistungen" component={Services} />
+        <Route path="/leistungen/:slug" component={ServiceDetail} />
+        <Route path="/referenzen" component={Projects} />
+        <Route path="/karriere" component={Career} />
+        <Route path="/karriere/bewerbung" component={ApplicationPage} />
+        <Route path="/kontakt" component={Contact} />
+        <Route path="/impressum" component={Impressum} />
+        <Route path="/datenschutz" component={Datenschutz} />
+        <Route path="/barrierefreiheit" component={Barrierefreiheit} />
+        <Route component={NotFound} />
+      </Switch>
+      {!isPortal && <ChatWidget />}
+    </>
   );
 }
 
