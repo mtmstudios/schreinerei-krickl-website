@@ -77,13 +77,13 @@ function StatCard({
   color: string;
 }) {
   return (
-    <div className="bg-[#0E0E0E] border border-white/8 rounded-xl p-5 flex items-center gap-4">
-      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${color}`}>
-        <Icon size={18} />
+    <div className="bg-[#0E0E0E] border border-white/8 rounded-xl p-4 flex items-center gap-3">
+      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${color}`}>
+        <Icon size={16} />
       </div>
-      <div>
-        <p className="text-2xl font-semibold text-white">{value}</p>
-        <p className="text-xs text-[#9CA3AF] mt-0.5">{label}</p>
+      <div className="min-w-0">
+        <p className="text-xl font-semibold text-white">{value}</p>
+        <p className="text-xs text-[#9CA3AF] mt-0.5 truncate">{label}</p>
       </div>
     </div>
   );
@@ -145,12 +145,17 @@ function InquiryModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-black/80 z-50 flex items-end sm:items-center justify-center sm:p-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-[#0E0E0E] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-[#0E0E0E] border border-white/10 rounded-t-2xl sm:rounded-2xl w-full sm:max-w-2xl max-h-[92vh] overflow-y-auto">
+        {/* Mobile drag handle */}
+        <div className="sm:hidden flex justify-center pt-3 pb-0">
+          <div className="w-10 h-1 rounded-full bg-white/20" />
+        </div>
+
         {/* Header */}
-        <div className="flex items-start justify-between p-6 border-b border-white/8">
+        <div className="flex items-start justify-between p-5 sm:p-6 border-b border-white/8">
           <div className="flex-1 pr-4">
             <div className="flex items-center gap-2 mb-1">
               {inquiry.source === "phone" ? (
@@ -174,9 +179,9 @@ function InquiryModal({
           </button>
         </div>
 
-        <div className="p-6 space-y-5">
+        <div className="p-5 sm:p-6 space-y-5">
           {/* Meta */}
-          <div className="grid grid-cols-2 gap-3 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
             {inquiry.callerPhone && (
               <div>
                 <span className="text-[#4B5563] text-xs uppercase tracking-wide block mb-0.5">Telefon</span>
@@ -289,23 +294,23 @@ function InquiryRow({
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1.5">
+          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
             {inquiry.source === "phone" ? (
               <Phone size={13} className="text-[#8B6F4E] shrink-0" />
             ) : (
               <MessageSquare size={13} className="text-[#8B6F4E] shrink-0" />
             )}
-            <span className="text-xs text-[#4B5563]">{formatDate(inquiry.createdAt)}</span>
+            <span className="text-xs text-[#4B5563] shrink-0">{formatDate(inquiry.createdAt)}</span>
             {inquiry.callerPhone && (
               <>
-                <span className="text-[#4B5563]">·</span>
-                <span className="text-xs text-[#9CA3AF]">{inquiry.callerPhone}</span>
+                <span className="text-[#4B5563] shrink-0">·</span>
+                <span className="text-xs text-[#9CA3AF] shrink-0">{inquiry.callerPhone}</span>
               </>
             )}
             {inquiry.callerName && (
               <>
-                <span className="text-[#4B5563]">·</span>
-                <span className="text-xs text-[#9CA3AF]">{inquiry.callerName}</span>
+                <span className="text-[#4B5563] shrink-0">·</span>
+                <span className="text-xs text-[#9CA3AF] shrink-0">{inquiry.callerName}</span>
               </>
             )}
           </div>
@@ -417,12 +422,12 @@ export default function Portal() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <header className="border-b border-white/8 px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-white/8 px-4 sm:px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-[#8B6F4E]" />
           <span className="text-sm font-medium text-white">Schreinerei Krickl</span>
-          <span className="text-[#4B5563]">·</span>
-          <span className="text-sm text-[#9CA3AF]">Anfragen-Portal</span>
+          <span className="hidden sm:inline text-[#4B5563]">·</span>
+          <span className="hidden sm:inline text-sm text-[#9CA3AF]">Anfragen-Portal</span>
         </div>
         <button
           onClick={handleLogout}
@@ -433,7 +438,7 @@ export default function Portal() {
         </button>
       </header>
 
-      <div className="max-w-5xl mx-auto px-6 py-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Stats */}
         {stats && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
@@ -474,12 +479,12 @@ export default function Portal() {
         {view === "list" && (
           <>
             {/* Tabs */}
-            <div className="flex items-center gap-1 mb-5 bg-[#0E0E0E] border border-white/8 rounded-xl p-1 w-fit">
+            <div className="flex items-center gap-1 mb-5 bg-[#0E0E0E] border border-white/8 rounded-xl p-1 overflow-x-auto scrollbar-none">
               {TABS.map((tab) => (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`px-4 py-1.5 rounded-lg text-sm transition-colors ${
+                  className={`px-3 sm:px-4 py-1.5 rounded-lg text-sm transition-colors whitespace-nowrap shrink-0 ${
                     activeTab === tab.key
                       ? "bg-[#8B6F4E] text-white"
                       : "text-[#9CA3AF] hover:text-white"
@@ -563,8 +568,8 @@ export default function Portal() {
                     <YAxis
                       type="category"
                       dataKey="name"
-                      width={180}
-                      tick={{ fill: "#9CA3AF", fontSize: 12 }}
+                      width={140}
+                      tick={{ fill: "#9CA3AF", fontSize: 11 }}
                       axisLine={false}
                       tickLine={false}
                     />
