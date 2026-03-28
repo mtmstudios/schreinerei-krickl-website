@@ -16,6 +16,8 @@ externalPort = 80
 
 [env]
 PORT = "5000"
+N8N_CHAT_AI_URL = "https://mtmstudios.app.n8n.cloud/webhook/krickl-chat-ki"
+N8N_CHAT_NOTIFY_URL = "https://mtmstudios.app.n8n.cloud/webhook/krickl-chat-notify"
 
 [workflows]
 runButton = "Project"
