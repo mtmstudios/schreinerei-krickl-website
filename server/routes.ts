@@ -257,26 +257,83 @@ export async function registerRoutes(
 
   // ── PORTAL: Chat-Widget Submission ────────────────────────────────────────
 
+  // ── PORTAL: Chat-AI (n8n + GPT-4o) ──────────────────────────────────────
+
+  app.post("/api/portal/chat-ai", async (req, res) => {
+    const { question, category, detail, budget } = req.body;
+    const n8nUrl = process.env.N8N_CHAT_AI_URL;
+
+    if (!n8nUrl) {
+      // Fallback wenn kein n8n-Webhook konfiguriert
+      return res.json({
+        reply:
+          "Das ist eine interessante Frage! Für eine präzise Beratung meldet sich unser Team persönlich bei Ihnen.",
+      });
+    }
+
+    try {
+      const response = await fetch(n8nUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question, category, detail, budget }),
+        signal: AbortSignal.timeout(12000),
+      });
+      const data = await response.json() as Record<string, unknown>;
+      const reply =
+        (data.reply as string) ||
+        (data.output as string) ||
+        (data.message as string) ||
+        "Gute Frage! Wir beraten Sie gerne persönlich dazu.";
+      res.json({ reply });
+    } catch {
+      res.json({
+        reply:
+          "Danke für Ihre Frage! Für eine detaillierte Beratung melden wir uns persönlich bei Ihnen.",
+      });
+    }
+  });
+
+  // ── PORTAL: Chat-Widget Submission ────────────────────────────────────────
+
   app.post("/api/portal/chat", async (req, res) => {
     try {
-      const { name, email, phone, message } = req.body;
+      const { name, email, phone, message, subject, intent } = req.body;
       if (!name || !message) {
         return res.status(400).json({ success: false, message: "Name und Nachricht sind erforderlich" });
       }
 
-      await storage.createInquiry({
+      const inquiry = await storage.createInquiry({
         source: "chat",
         callerPhone: phone || null,
         callerName: name,
         callerEmail: email || null,
-        subject: `Chat: ${message.slice(0, 60)}${message.length > 60 ? "…" : ""}`,
+        subject: subject || `Chat: ${message.slice(0, 60)}${message.length > 60 ? "…" : ""}`,
         summary: message,
-        intent: null,
+        intent: intent || null,
         sentiment: null,
         emailBody: null,
         status: "new",
         internalNotes: null,
       });
+
+      // n8n async notification (fire & forget)
+      const n8nNotifyUrl = process.env.N8N_CHAT_NOTIFY_URL;
+      if (n8nNotifyUrl) {
+        fetch(n8nNotifyUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            inquiryId: inquiry.id,
+            name,
+            phone: phone || null,
+            email: email || null,
+            subject: inquiry.subject,
+            intent,
+            message,
+            source: "chat",
+          }),
+        }).catch(() => {});
+      }
 
       res.json({ success: true, message: "Nachricht gesendet. Wir melden uns bald." });
     } catch (error) {
