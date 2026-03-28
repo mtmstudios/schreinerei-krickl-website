@@ -34,6 +34,7 @@ interface Collected {
   category?: string;
   detail?: string;
   budget?: string;
+  aiQuestion?: string;
   name?: string;
   contact?: string;
 }
@@ -229,6 +230,9 @@ export default function ChatWidget() {
       return;
     }
 
+    // Frage in collected speichern
+    setCollected((prev) => ({ ...prev, aiQuestion: question }));
+
     setMessages((prev) => [...prev, { id: uid(), role: "user", text: question }]);
     setInputVal("");
     setActiveStep(null);
@@ -301,12 +305,14 @@ export default function ChatWidget() {
       try {
         const emailContact = isEmail(next.contact || "");
         const subject =
-          [next.category, next.detail, next.budget].filter(Boolean).join(" – ") ||
-          "Chat-Anfrage";
+          next.aiQuestion
+            ? `${next.category || "Anfrage"}: ${next.aiQuestion.slice(0, 60)}${next.aiQuestion.length > 60 ? "…" : ""}`
+            : [next.category, next.detail, next.budget].filter(Boolean).join(" – ") || "Chat-Anfrage";
         const summary = [
           next.category && `Kategorie: ${next.category}`,
           next.detail && `Detail: ${next.detail}`,
           next.budget && `Budget: ${next.budget}`,
+          next.aiQuestion && `Frage: ${next.aiQuestion}`,
           `Kontakt: ${next.contact}`,
         ]
           .filter(Boolean)
