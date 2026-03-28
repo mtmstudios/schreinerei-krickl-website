@@ -204,6 +204,40 @@ export default function ChatWidget() {
 
   const handleClose = () => setOpen(false);
 
+  // ── Submit (shared) ──────────────────────────────────────────────────────
+
+  const submitChat = useCallback(async (data: Collected) => {
+    setTyping(true);
+    try {
+      const emailContact = isEmail(data.contact || "");
+      const subject = data.aiQuestion
+        ? `${data.category || "Anfrage"}: ${data.aiQuestion.slice(0, 60)}${data.aiQuestion.length > 60 ? "…" : ""}`
+        : [data.category, data.detail, data.budget].filter(Boolean).join(" – ") || "Chat-Anfrage";
+      const summary = [
+        data.category && `Kategorie: ${data.category}`,
+        data.detail && `Detail: ${data.detail}`,
+        data.budget && `Budget: ${data.budget}`,
+        data.aiQuestion && `Frage: ${data.aiQuestion}`,
+        `Kontakt: ${data.contact}`,
+      ].filter(Boolean).join("\n");
+
+      await fetch("/api/portal/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          phone: !emailContact ? data.contact : undefined,
+          email: emailContact ? data.contact : undefined,
+          subject,
+          intent: data.category,
+          message: summary,
+        }),
+      });
+    } catch { /* Fail silently */ }
+    setDone(true);
+    runStep("done", 200);
+  }, [runStep]);
+
   // ── Quick reply ──────────────────────────────────────────────────────────
 
   const handleQuickReply = (opt: QuickOption) => {
@@ -250,25 +284,37 @@ export default function ChatWidget() {
         }),
       });
       const data = await res.json();
-      const reply: string =
-        data.reply ||
-        "Das ist eine gute Frage! Für eine detaillierte Antwort beraten wir Sie gerne persönlich.";
+      const reply: string = data.reply || "Das ist eine gute Frage! Für eine detaillierte Antwort beraten wir Sie gerne persönlich.";
+      const extractedName: string | null = data.extractedName || null;
+      const extractedContact: string | null = data.extractedContact || null;
+
+      // Extrahierte Daten in collected übernehmen
+      setCollected((prev) => ({
+        ...prev,
+        aiQuestion: question,
+        ...(extractedName ? { name: extractedName } : {}),
+        ...(extractedContact ? { contact: extractedContact } : {}),
+      }));
 
       setTimeout(() => {
         setMessages((prev) => [...prev, { id: uid(), role: "bot", text: reply }]);
         setTyping(false);
-        runStep("get_name", 800);
+
+        // Intelligentes Routing: überspringe Steps die bereits befüllt sind
+        if (extractedName && extractedContact) {
+          // Alles da → direkt submit
+          const final = { ...collected, aiQuestion: question, name: extractedName, contact: extractedContact };
+          setCollected(final);
+          submitChat(final);
+        } else if (extractedName) {
+          runStep("get_contact", 800); // Name da, noch Kontakt fehlt
+        } else {
+          runStep("get_name", 800); // Nichts extrahiert → normaler Flow
+        }
       }, 400);
     } catch {
       setTimeout(() => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: uid(),
-            role: "bot",
-            text: "Gute Frage! Für eine detaillierte Beratung melden wir uns persönlich bei Ihnen.",
-          },
-        ]);
+        setMessages((prev) => [...prev, { id: uid(), role: "bot", text: "Gute Frage! Für eine detaillierte Beratung melden wir uns persönlich bei Ihnen." }]);
         setTyping(false);
         runStep("get_name", 800);
       }, 400);
@@ -301,40 +347,7 @@ export default function ChatWidget() {
     setCollected(next);
 
     if (step.next === "submit") {
-      setTyping(true);
-      try {
-        const emailContact = isEmail(next.contact || "");
-        const subject =
-          next.aiQuestion
-            ? `${next.category || "Anfrage"}: ${next.aiQuestion.slice(0, 60)}${next.aiQuestion.length > 60 ? "…" : ""}`
-            : [next.category, next.detail, next.budget].filter(Boolean).join(" – ") || "Chat-Anfrage";
-        const summary = [
-          next.category && `Kategorie: ${next.category}`,
-          next.detail && `Detail: ${next.detail}`,
-          next.budget && `Budget: ${next.budget}`,
-          next.aiQuestion && `Frage: ${next.aiQuestion}`,
-          `Kontakt: ${next.contact}`,
-        ]
-          .filter(Boolean)
-          .join("\n");
-
-        await fetch("/api/portal/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: next.name,
-            phone: !emailContact ? next.contact : undefined,
-            email: emailContact ? next.contact : undefined,
-            subject,
-            intent: next.category,
-            message: summary,
-          }),
-        });
-      } catch {
-        // Fail silently
-      }
-      setDone(true);
-      runStep("done", 200);
+      await submitChat(next);
     } else if (step.next) {
       runStep(step.next);
     }
