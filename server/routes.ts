@@ -255,80 +255,30 @@ export async function registerRoutes(
     }
   });
 
-  // ── PORTAL: Chat-Widget Submission ────────────────────────────────────────
-
-  // ── PORTAL: Chat-AI (n8n + GPT-4o) ──────────────────────────────────────
+  // ── PORTAL: Chat-AI (ausschließlich n8n) ─────────────────────────────────
 
   app.post("/api/portal/chat-ai", async (req, res) => {
     const { question, category, detail, budget } = req.body;
 
-    // Direktes OpenAI-Call mit Extraction — kein n8n-Umweg nötig
-    const openAiKey = process.env.OPENAI_API_KEY;
-    const n8nUrl = process.env.N8N_CHAT_AI_URL;
+    const n8nUrl = process.env.N8N_CHAT_AI_URL || "https://mtmstudios.app.n8n.cloud/webhook/5ee4ef75-c909-4111-b837-ccedbd182a58";
 
-    const systemPrompt = `Du bist der Chat-Assistent der Schreinerei Krickl in Esslingen (Inhaber: Herr Tomay Krickl). Leistungen: Einbauküchen, Möbel nach Maß, Reparaturen, Türen & Fenster, Badmöbel, Büromöbel.
-
-Deine Aufgaben:
-1. Beantworte die Nachricht kurz und freundlich (max. 2 Sätze, kein Marketingsprech).
-2. Extrahiere aus der Nachricht falls vorhanden: Name und Kontakt (Telefon oder E-Mail).
-
-Antworte IMMER als valides JSON (kein Markdown, kein Text außen):
-{"reply":"Deine Antwort hier","extractedName":"Name oder null","extractedContact":"Telefon/Email oder null"}
-
-Regeln: Keine Preisnennung. Bei Terminwunsch: Herr Tomay meldet sich persönlich.`;
-
-    const context = [category, detail, budget].filter(Boolean).join(", ");
-    const userMsg = context ? `[Anfrage: ${context}] ${question}` : question;
-
-    // Versuche erst direkten OpenAI-Call, dann n8n-Fallback, dann statischen Fallback
-    if (openAiKey) {
-      try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${openAiKey}` },
-          body: JSON.stringify({
-            model: "gpt-4o-mini",
-            messages: [{ role: "system", content: systemPrompt }, { role: "user", content: userMsg }],
-            temperature: 0.7,
-            max_tokens: 250,
-          }),
-          signal: AbortSignal.timeout(12000),
-        });
-        const data = await response.json() as Record<string, unknown>;
-        const raw = ((data as any).choices?.[0]?.message?.content || "").trim();
-        try {
-          const parsed = JSON.parse(raw);
-          return res.json({
-            reply: parsed.reply || "Danke! Wir melden uns persönlich bei Ihnen.",
-            extractedName: parsed.extractedName !== "null" ? parsed.extractedName : null,
-            extractedContact: parsed.extractedContact !== "null" ? parsed.extractedContact : null,
-          });
-        } catch {
-          return res.json({ reply: raw.slice(0, 300) });
-        }
-      } catch { /* fall through */ }
+    try {
+      const response = await fetch(n8nUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question, category, detail, budget }),
+        signal: AbortSignal.timeout(15000),
+      });
+      const data = await response.json() as Record<string, unknown>;
+      return res.json({
+        reply: (data.reply as string) || "Wir beraten Sie gerne persönlich.",
+        extractedName: (data.extractedName as string) || null,
+        extractedContact: (data.extractedContact as string) || null,
+      });
+    } catch {
+      // Statischer Fallback nur wenn n8n nicht erreichbar
+      res.json({ reply: "Das klingt interessant! Für eine präzise Beratung meldet sich Herr Tomay persönlich bei Ihnen.", extractedName: null, extractedContact: null });
     }
-
-    // n8n-Fallback (falls OpenAI-Key fehlt)
-    if (n8nUrl) {
-      try {
-        const response = await fetch(n8nUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question, category, detail, budget }),
-          signal: AbortSignal.timeout(12000),
-        });
-        const data = await response.json() as Record<string, unknown>;
-        return res.json({
-          reply: (data.reply as string) || "Wir beraten Sie gerne persönlich.",
-          extractedName: (data.extractedName as string) || null,
-          extractedContact: (data.extractedContact as string) || null,
-        });
-      } catch { /* fall through */ }
-    }
-
-    // Statischer Fallback
-    res.json({ reply: "Das klingt interessant! Für eine präzise Beratung meldet sich Herr Tomay persönlich bei Ihnen.", extractedName: null, extractedContact: null });
   });
 
   // ── PORTAL: Chat-Widget Submission ────────────────────────────────────────
