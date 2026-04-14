@@ -25,6 +25,7 @@ const LazyImpressum = lazy(() => import("@/pages/Impressum"));
 const LazyDatenschutz = lazy(() => import("@/pages/Datenschutz"));
 const LazyBarrierefreiheit = lazy(() => import("@/pages/Barrierefreiheit"));
 const LazyApplicationPage = lazy(() => import("@/pages/ApplicationPage"));
+const LazyRegionalLanding = lazy(() => import("@/pages/RegionalLanding"));
 const LazyNotFound = lazy(() => import("@/pages/not-found"));
 const LazyPortalLogin = lazy(() => import("@/pages/PortalLogin"));
 const LazyPortal = lazy(() => import("@/pages/Portal"));
@@ -50,6 +51,7 @@ const Impressum = withSuspense(LazyImpressum);
 const Datenschutz = withSuspense(LazyDatenschutz);
 const Barrierefreiheit = withSuspense(LazyBarrierefreiheit);
 const ApplicationPage = withSuspense(LazyApplicationPage);
+const RegionalLanding = withSuspense(LazyRegionalLanding);
 const NotFound = withSuspense(LazyNotFound);
 const PortalLogin = withSuspense(LazyPortalLogin);
 const Portal = withSuspense(LazyPortal);
@@ -84,6 +86,7 @@ function Router() {
         <Route path="/impressum" component={Impressum} />
         <Route path="/datenschutz" component={Datenschutz} />
         <Route path="/barrierefreiheit" component={Barrierefreiheit} />
+        <Route path="/schreiner-:stadt" component={RegionalLanding} />
         <Route component={NotFound} />
       </Switch>
       {!isPortal && <ChatWidget />}

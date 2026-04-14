@@ -1,5 +1,15 @@
 import { useEffect } from "react";
 
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
 interface SEOProps {
   title: string;
   description: string;
@@ -7,23 +17,27 @@ interface SEOProps {
   canonical?: string;
   ogImage?: string;
   ogType?: string;
+  faqs?: FAQItem[];
+  breadcrumbs?: BreadcrumbItem[];
 }
 
-const DEFAULT_OG_IMAGE = "https://schreinerei-krickl.de/og-image.jpg";
+const DEFAULT_OG_IMAGE = "https://schreinerei-krickl.de/logo.webp";
 const SITE_NAME = "Schreinerei Krickl";
 const TWITTER_HANDLE = "@schreinereikrickl";
 
-export default function SEO({ 
-  title, 
-  description, 
-  keywords, 
+export default function SEO({
+  title,
+  description,
+  keywords,
   canonical,
   ogImage = DEFAULT_OG_IMAGE,
-  ogType = "website"
+  ogType = "website",
+  faqs,
+  breadcrumbs,
 }: SEOProps) {
   useEffect(() => {
     document.title = title;
-    
+
     const updateOrCreateMeta = (selector: string, content: string, isProperty = false) => {
       let meta = document.querySelector(selector);
       if (meta) {
@@ -43,14 +57,14 @@ export default function SEO({
     };
 
     updateOrCreateMeta('meta[name="description"]', description);
-    
+
     updateOrCreateMeta('meta[property="og:title"]', title, true);
     updateOrCreateMeta('meta[property="og:description"]', description, true);
     updateOrCreateMeta('meta[property="og:type"]', ogType, true);
     updateOrCreateMeta('meta[property="og:site_name"]', SITE_NAME, true);
     updateOrCreateMeta('meta[property="og:image"]', ogImage, true);
     updateOrCreateMeta('meta[property="og:locale"]', "de_DE", true);
-    
+
     if (canonical) {
       updateOrCreateMeta('meta[property="og:url"]', canonical, true);
     }
@@ -82,10 +96,58 @@ export default function SEO({
       }
     }
 
+    // FAQ-Schema (FAQPage) für Rich Snippets
+    const existingFaqSchema = document.getElementById("faq-schema");
+    if (existingFaqSchema) existingFaqSchema.remove();
+    if (faqs && faqs.length > 0) {
+      const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      };
+      const script = document.createElement("script");
+      script.id = "faq-schema";
+      script.type = "application/ld+json";
+      script.textContent = JSON.stringify(faqSchema);
+      document.head.appendChild(script);
+    }
+
+    // Breadcrumb-Schema für bessere SERP-Darstellung
+    const existingBreadcrumbSchema = document.getElementById("breadcrumb-schema");
+    if (existingBreadcrumbSchema) existingBreadcrumbSchema.remove();
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbs.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          item: item.url,
+        })),
+      };
+      const script = document.createElement("script");
+      script.id = "breadcrumb-schema";
+      script.type = "application/ld+json";
+      script.textContent = JSON.stringify(breadcrumbSchema);
+      document.head.appendChild(script);
+    }
+
     return () => {
       document.title = "Schreinerei Esslingen | Schreiner Krickl - Möbelbau nach Maß";
+      const faqScript = document.getElementById("faq-schema");
+      if (faqScript) faqScript.remove();
+      const breadcrumbScript = document.getElementById("breadcrumb-schema");
+      if (breadcrumbScript) breadcrumbScript.remove();
     };
-  }, [title, description, keywords, canonical, ogImage, ogType]);
+  }, [title, description, keywords, canonical, ogImage, ogType, faqs, breadcrumbs]);
 
   return null;
 }

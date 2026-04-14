@@ -231,6 +231,188 @@ const serviceData: Record<string, {
       { question: "Was kosten Sonderanfertigungen?", answer: "Jedes Projekt ist einzigartig. Wir erstellen Ihnen ein individuelles Angebot." },
     ],
   },
+
+  // ===== QUICK-SERVICE-SEITEN (Schnellaufträge) =====
+
+  "tuer-reparatur": {
+    title: "Tür-Reparatur",
+    headline: "Tür klemmt? Schreiner in 48h vor Ort",
+    description: "Ihre Tür klemmt, schleift oder schließt nicht richtig? Unser Schreiner-Meisterbetrieb repariert Türen schnell und zuverlässig — in Esslingen, Stuttgart und Umgebung. Ab 150 €.",
+    image: doorImage,
+    benefits: [
+      "Termin innerhalb von 48 Stunden",
+      "Faire Festpreise ab 150 €",
+      "Reparatur direkt vor Ort bei Ihnen",
+      "Alle Türarten: Holz, Glas, Schiebetüren",
+      "Kostenloser Kostenvoranschlag",
+      "Meisterbetrieb mit 60+ Jahren Erfahrung",
+    ],
+    details: [
+      "Türen einstellen und justieren",
+      "Scharniere und Bänder austauschen",
+      "Schlösser und Beschläge erneuern",
+      "Türrahmen und Zargen reparieren",
+      "Schleifende Türen korrigieren",
+      "Altbau-Türen fachgerecht instandsetzen",
+    ],
+    process: [
+      { title: "Anfrage", description: "Rufen Sie an oder schreiben Sie uns — Problembeschreibung genügt" },
+      { title: "Termin", description: "Wir kommen innerhalb von 48h zu Ihnen" },
+      { title: "Diagnose", description: "Kostenlose Begutachtung vor Ort" },
+      { title: "Reparatur", description: "Sofortige Reparatur — meist in 1–2 Stunden erledigt" },
+      { title: "Fertig", description: "Tür funktioniert wieder einwandfrei" },
+    ],
+    faqs: [
+      { question: "Was kostet eine Tür-Reparatur?", answer: "Einfache Reparaturen wie Türen einstellen kosten ab 150 €. Bei Beschlag- oder Zargentausch ab 250 €. Sie erhalten vorab einen kostenlosen Kostenvoranschlag." },
+      { question: "Wie schnell können Sie kommen?", answer: "In der Regel sind wir innerhalb von 48 Stunden bei Ihnen. Bei dringenden Fällen oft sogar am selben oder nächsten Tag." },
+      { question: "Reparieren Sie auch alte Altbau-Türen?", answer: "Ja, wir sind spezialisiert auf Altbau-Türen und -Zargen. Wir erhalten den Charakter Ihrer Türen und machen sie wieder voll funktionsfähig." },
+      { question: "Kommen Sie auch nach Stuttgart?", answer: "Ja, wir sind in Esslingen, Stuttgart, Ostfildern, Plochingen, Filderstadt und der gesamten Region Neckar-Fils im Einsatz." },
+    ],
+  },
+
+  "moebel-reparatur": {
+    title: "Möbelreparatur",
+    headline: "Möbelreparatur vom Schreiner — schnell & professionell",
+    description: "Kratzer, Dellen, lose Verbindungen oder kaputte Scharniere? Wir reparieren Ihre Möbel fachgerecht statt wegwerfen. Schreiner-Meisterbetrieb in Esslingen. Ab 200 €.",
+    image: furnitureImage,
+    benefits: [
+      "Reparatur statt Neukauf — gut für Geldbeutel und Umwelt",
+      "Faire Preise ab 200 €",
+      "Abholung und Lieferung möglich",
+      "Alle Holzarten und Oberflächen",
+      "Auch Polstermöbel und Antiquitäten",
+      "Transparenter Kostenvoranschlag vorab",
+    ],
+    details: [
+      "Kratzer und Dellen ausbessern",
+      "Lose Verbindungen und Leimstellen reparieren",
+      "Scharniere, Schubladenführungen und Beschläge tauschen",
+      "Oberflächen aufarbeiten (schleifen, ölen, lackieren)",
+      "Antike Möbel restaurieren",
+      "Furnier-Reparaturen und Furnierung erneuern",
+    ],
+    process: [
+      { title: "Foto schicken", description: "Schicken Sie uns ein Foto des Schadens per WhatsApp oder E-Mail" },
+      { title: "Angebot", description: "Sie erhalten einen kostenlosen Kostenvoranschlag" },
+      { title: "Abholung", description: "Wir holen das Möbelstück ab oder kommen zu Ihnen" },
+      { title: "Reparatur", description: "Fachgerechte Reparatur in unserer Werkstatt" },
+      { title: "Lieferung", description: "Ihr Möbelstück kommt wie neu zurück" },
+    ],
+    faqs: [
+      { question: "Lohnt sich eine Möbelreparatur?", answer: "In den meisten Fällen ja. Eine Reparatur kostet oft nur einen Bruchteil eines Neukaufs und ist nachhaltiger. Wir beraten Sie ehrlich, ob sich die Reparatur lohnt." },
+      { question: "Können Sie auch IKEA-Möbel reparieren?", answer: "Ja, wir reparieren Möbel aller Hersteller — von IKEA bis zum Designerstück. Bei günstigen Möbeln beraten wir Sie ehrlich, ob Reparatur oder Neukauf sinnvoller ist." },
+      { question: "Wie lange dauert eine Möbelreparatur?", answer: "Kleine Reparaturen sind in 1–3 Tagen erledigt. Aufwändigere Restaurierungen können 1–2 Wochen dauern." },
+      { question: "Reparieren Sie auch Küchenmöbel?", answer: "Ja, wir reparieren Küchenfronten, Scharniere, Schubladenführungen und Arbeitsplatten. Auch einzelne Fronten können wir erneuern." },
+    ],
+  },
+
+  "holzboden-aufarbeiten": {
+    title: "Holzboden aufarbeiten",
+    headline: "Holzboden schleifen & versiegeln — neuer Glanz für Ihren Boden",
+    description: "Parkett abgenutzt? Dielen zerkratzt? Wir schleifen, ölen und versiegeln Ihren Holzboden — staubarm und professionell. Schreiner in Esslingen. Ab 30 €/m².",
+    image: terraceImage,
+    benefits: [
+      "Staubarmes Schleifen mit modernen Maschinen",
+      "Faire Preise ab 30 €/m²",
+      "Alle Holzböden: Parkett, Dielen, Landhausdielen",
+      "Ölen, Wachsen oder Versiegeln nach Wunsch",
+      "Farbliche Anpassung möglich (Beizen)",
+      "Bewohnbar meist nach 24–48 Stunden",
+    ],
+    details: [
+      "Parkett schleifen und versiegeln",
+      "Massivholzdielen aufarbeiten",
+      "Kratzer und tiefe Gebrauchsspuren entfernen",
+      "Holzboden ölen oder wachsen",
+      "Farbveränderung durch Beizen",
+      "Einzelne beschädigte Bretter austauschen",
+    ],
+    process: [
+      { title: "Besichtigung", description: "Wir begutachten Ihren Boden kostenlos vor Ort" },
+      { title: "Angebot", description: "Festpreis pro m² — keine versteckten Kosten" },
+      { title: "Vorbereitung", description: "Möbel werden abgedeckt oder beiseite geräumt" },
+      { title: "Schleifen", description: "Staubarmes Schleifen in mehreren Durchgängen" },
+      { title: "Versiegeln", description: "Ölen, wachsen oder versiegeln — Ihr Boden glänzt wieder" },
+    ],
+    faqs: [
+      { question: "Was kostet Parkett schleifen und versiegeln?", answer: "Ab 30 €/m² für Schleifen und Versiegeln. Der genaue Preis hängt von Zustand, Fläche und gewünschter Oberfläche ab. Besichtigung und Angebot sind kostenlos." },
+      { question: "Wie lange dauert das Schleifen?", answer: "Ein durchschnittliches Zimmer (20 m²) ist in einem Tag geschliffen und versiegelt. Eine Wohnung mit 80 m² benötigt 2–3 Tage." },
+      { question: "Ist das Schleifen sehr staubig?", answer: "Nein, wir arbeiten mit modernen, staubarmen Schleifmaschinen mit Absaugung. Die Belastung ist minimal." },
+      { question: "Kann ich während der Arbeit in der Wohnung bleiben?", answer: "Während des Schleifens sollten Sie den Raum meiden. Nach dem Versiegeln ist der Boden je nach Produkt nach 24–48 Stunden wieder begehbar." },
+    ],
+  },
+
+  "einbauschrank-nach-mass": {
+    title: "Einbauschrank nach Maß",
+    headline: "Einbauschrank nach Maß — ab 800 € vom Schreiner",
+    description: "Mehr Stauraum, perfekt eingepasst: Einbauschränke vom Schreiner in Esslingen. Dachschrägen, Nischen, begehbare Kleiderschränke — wir nutzen jeden Zentimeter. Ab 800 €.",
+    image: wardrobeImage,
+    benefits: [
+      "Perfekte Raumnutzung — auch unter Dachschrägen",
+      "Faire Preise ab 800 € (inkl. Montage)",
+      "Individuelle Aufteilung nach Ihren Wünschen",
+      "Hochwertige Materialien und Beschläge",
+      "Lieferzeit ab 3 Wochen",
+      "Montage an einem Tag — sauber und schnell",
+    ],
+    details: [
+      "Einbauschränke für Schlafzimmer und Flur",
+      "Begehbare Kleiderschränke",
+      "Dachschrägen-Schränke (jede Schräge, jeder Winkel)",
+      "Nischen-Schränke und Unterbau-Lösungen",
+      "Garderoben mit Schuhfächern und Ablagen",
+      "Hauswirtschafts- und Abstellraum-Systeme",
+    ],
+    process: [
+      { title: "Beratung", description: "Kostenlose Erstberatung bei Ihnen zu Hause" },
+      { title: "Aufmaß", description: "Präzises Aufmaß — millimetergenau" },
+      { title: "Planung", description: "Aufteilung, Material und Design nach Ihren Wünschen" },
+      { title: "Fertigung", description: "Herstellung in unserer Werkstatt in Esslingen" },
+      { title: "Montage", description: "Einbau vor Ort — meist an einem Tag" },
+    ],
+    faqs: [
+      { question: "Was kostet ein Einbauschrank nach Maß?", answer: "Ein einfacher Einbauschrank beginnt ab 800 €. Begehbare Kleiderschränke ab 2.500 €. Der Preis hängt von Größe, Material und Ausstattung ab. Wir erstellen Ihnen ein unverbindliches Angebot." },
+      { question: "Wie lange dauert es vom Aufmaß bis zur Montage?", answer: "In der Regel 3–5 Wochen. Bei einfachen Projekten auch schneller." },
+      { question: "Passt ein Einbauschrank auch unter meine Dachschräge?", answer: "Genau dafür sind wir Spezialisten! Wir nutzen jeden Winkel und jede Schräge optimal aus — das kann kein Möbelhaus." },
+      { question: "Welche Materialien verwenden Sie?", answer: "Wir arbeiten mit Massivholz, Multiplex, MDF und hochwertigen Dekorplatten. Fronten gibt es in Holz, Lack oder mit Spiegel — ganz nach Ihrem Geschmack." },
+    ],
+  },
+
+  "kueche-erneuern": {
+    title: "Küche erneuern",
+    headline: "Küchenfronten erneuern statt neu kaufen — ab 1.500 €",
+    description: "Neue Küche zu teuer? Wir erneuern Ihre Küchenfronten, Arbeitsplatten und Griffe — für einen Bruchteil des Neupreises. Schreiner in Esslingen. Ab 1.500 €.",
+    image: kitchenImage,
+    benefits: [
+      "Bis zu 70 % günstiger als eine neue Küche",
+      "Neue Fronten ab 1.500 € (Material + Montage)",
+      "Neue Arbeitsplatten ab 800 €",
+      "Fertig in 2–5 Tagen (keine wochenlange Baustelle)",
+      "Kein Aus- und Einbau der Elektrogeräte nötig",
+      "Nachhaltig: Korpus bleibt, nur Oberflächen werden erneuert",
+    ],
+    details: [
+      "Küchenfronten komplett erneuern oder folieren",
+      "Arbeitsplatten aus Massivholz, Stein oder Keramik",
+      "Griffe und Beschläge modernisieren",
+      "Schubladenführungen (Soft-Close) nachrüsten",
+      "Einzelne beschädigte Fronten ersetzen",
+      "Beleuchtung (LED-Unterschrankleuchten) ergänzen",
+    ],
+    process: [
+      { title: "Besichtigung", description: "Kostenlose Begutachtung Ihrer bestehenden Küche" },
+      { title: "Beratung", description: "Material, Farbe und Design gemeinsam auswählen" },
+      { title: "Aufmaß", description: "Exakte Vermessung aller Fronten und Platten" },
+      { title: "Fertigung", description: "Neue Fronten werden passgenau gefertigt" },
+      { title: "Montage", description: "Austausch vor Ort — meist in 1–3 Tagen" },
+    ],
+    faqs: [
+      { question: "Kann man nur die Küchenfronten austauschen?", answer: "Ja, das ist sogar der häufigste Auftrag! Wenn der Korpus noch gut ist (und das ist er meistens), tauschen wir nur die Fronten. Das spart 50–70 % gegenüber einer neuen Küche." },
+      { question: "Welche Materialien gibt es für neue Fronten?", answer: "Massivholz, Lack, Folie, Furnier oder Schichtstoff — in nahezu jeder Farbe. Wir beraten Sie, was zu Ihrer Küche und Ihrem Budget passt." },
+      { question: "Wie lange dauert die Küchenerneuerung?", answer: "Die Fronten werden in 2–4 Wochen gefertigt. Der Einbau vor Ort dauert dann nur 1–3 Tage — Ihre Küche ist während der Fertigung normal nutzbar." },
+      { question: "Funktioniert das auch bei IKEA/Nobilia-Küchen?", answer: "Ja! Wir fertigen passende Fronten für alle gängigen Küchensysteme — auch IKEA, Nobilia, Nolte und andere." },
+    ],
+  },
 };
 
 export default function ServiceDetail() {
@@ -282,6 +464,31 @@ export default function ServiceDetail() {
       title: "Sonderanfertigung Esslingen | Schreiner für Spezialanfertigungen",
       description: "Sonderanfertigungen vom Schreiner in Esslingen. Individuelle Projekte, Ladenbau, Innenausbau & mehr. Kreative Lösungen vom Meisterbetrieb Krickl.",
       keywords: "Sonderanfertigung Schreiner Esslingen, Ladenbau Esslingen, Innenausbau Esslingen"
+    },
+    "tuer-reparatur": {
+      title: "Tür-Reparatur Esslingen & Stuttgart | Schreiner in 48h vor Ort",
+      description: "Tür klemmt oder schließt nicht? Tür-Reparatur vom Schreiner ab 150 €. Innerhalb 48h vor Ort in Esslingen, Stuttgart & Umgebung. Schreinerei Krickl.",
+      keywords: "Tür klemmt, Tür Reparatur Esslingen, Tür einstellen Schreiner, Tür reparieren Stuttgart, Türen Reparatur Esslingen"
+    },
+    "moebel-reparatur": {
+      title: "Möbelreparatur Esslingen | Schreiner repariert ab 200 €",
+      description: "Möbel kaputt? Professionelle Möbelreparatur vom Schreiner ab 200 €. Kratzer, Scharniere, Oberflächen — wir reparieren statt wegwerfen. Esslingen & Stuttgart.",
+      keywords: "Möbel reparieren Esslingen, Möbelreparatur Stuttgart, Schreiner Reparatur, Möbel aufarbeiten Esslingen"
+    },
+    "holzboden-aufarbeiten": {
+      title: "Holzboden schleifen Esslingen | Parkett aufarbeiten ab 30 €/m²",
+      description: "Parkett schleifen & versiegeln ab 30 €/m². Staubarmes Schleifen, Ölen, Wachsen. Schreiner-Meisterbetrieb in Esslingen. Kostenlose Besichtigung.",
+      keywords: "Parkett schleifen Esslingen, Holzboden aufarbeiten Stuttgart, Parkett versiegeln, Dielen schleifen Esslingen"
+    },
+    "einbauschrank-nach-mass": {
+      title: "Einbauschrank nach Maß Esslingen | Schreiner ab 800 €",
+      description: "Einbauschrank nach Maß ab 800 € vom Schreiner. Dachschrägen, Nischen, begehbare Kleiderschränke. Schreinerei Krickl in Esslingen — Aufmaß kostenlos.",
+      keywords: "Einbauschrank nach Maß Esslingen, Schrank Dachschräge, begehbarer Kleiderschrank Schreiner, Einbauschrank Stuttgart"
+    },
+    "kueche-erneuern": {
+      title: "Küchenfronten erneuern Esslingen | Küche aufwerten ab 1.500 €",
+      description: "Küchenfronten erneuern statt neue Küche kaufen — ab 1.500 €. Bis 70 % günstiger. Neue Fronten, Arbeitsplatten & Griffe. Schreiner in Esslingen & Stuttgart.",
+      keywords: "Küchenfronten erneuern Esslingen, Küche renovieren Stuttgart, Küchenfronten austauschen, Arbeitsplatte tauschen Esslingen"
     }
   };
 
@@ -298,6 +505,12 @@ export default function ServiceDetail() {
         description={currentSeo.description}
         keywords={currentSeo.keywords}
         canonical={`https://schreinerei-krickl.de/leistungen/${slug}`}
+        faqs={service.faqs}
+        breadcrumbs={[
+          { name: "Startseite", url: "https://schreinerei-krickl.de/" },
+          { name: "Leistungen", url: "https://schreinerei-krickl.de/leistungen" },
+          { name: service.title, url: `https://schreinerei-krickl.de/leistungen/${slug}` },
+        ]}
       />
       <section className="relative py-20 md:py-32">
         <div className="absolute inset-0">

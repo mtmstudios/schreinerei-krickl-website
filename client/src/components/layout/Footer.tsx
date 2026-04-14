@@ -5,10 +5,21 @@ import logoImage from "@assets/Logo_krickl_2022_positiv_1767883446646.png";
 const services = [
   { name: "Möbelbau", href: "/leistungen/moebelbau" },
   { name: "Schreinerküchen", href: "/leistungen/schreinerkuechen" },
-  { name: "Terrassen & Bodenbeläge", href: "/leistungen/terrassen-bodenbelaege" },
   { name: "Türen", href: "/leistungen/tueren" },
-  { name: "Reparaturen", href: "/leistungen/reparaturen-instandsetzungen" },
-  { name: "Sonderanfertigungen", href: "/leistungen/sonderanfertigungen" },
+  { name: "Tür-Reparatur", href: "/leistungen/tuer-reparatur" },
+  { name: "Möbelreparatur", href: "/leistungen/moebel-reparatur" },
+  { name: "Einbauschrank nach Maß", href: "/leistungen/einbauschrank-nach-mass" },
+  { name: "Holzboden aufarbeiten", href: "/leistungen/holzboden-aufarbeiten" },
+  { name: "Küche erneuern", href: "/leistungen/kueche-erneuern" },
+];
+
+const regions = [
+  { name: "Schreiner Stuttgart", href: "/schreiner-stuttgart" },
+  { name: "Schreiner Esslingen", href: "/schreiner-esslingen" },
+  { name: "Schreiner Ostfildern", href: "/schreiner-ostfildern" },
+  { name: "Schreiner Filderstadt", href: "/schreiner-filderstadt" },
+  { name: "Schreiner Plochingen", href: "/schreiner-plochingen" },
+  { name: "Schreiner Nürtingen", href: "/schreiner-nuertingen" },
 ];
 
 const links = [
@@ -28,7 +39,7 @@ export default function Footer() {
   return (
     <footer className="bg-card border-t border-border">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-8">
           <div className="lg:col-span-1">
             <Link href="/" data-testid="link-footer-logo">
               <img src={logoImage} alt="Schreinerei Krickl" className="h-10 w-auto mb-4" />
@@ -71,6 +82,22 @@ export default function Footer() {
                     data-testid={`link-footer-${service.href.split("/").pop()}`}
                   >
                     {service.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground mb-4">Regionen</h3>
+            <ul className="space-y-2">
+              {regions.map((region) => (
+                <li key={region.href}>
+                  <Link
+                    href={region.href}
+                    className="text-sm text-muted-foreground hover-elevate rounded-md p-1 -ml-1 block"
+                  >
+                    {region.name}
                   </Link>
                 </li>
               ))}

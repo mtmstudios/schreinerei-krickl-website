@@ -11,7 +11,7 @@ export default function Contact() {
     <Layout>
       <SEO
         title="Kontakt - Schreinerei Krickl | Schreiner Esslingen anfragen"
-        description="Kontaktieren Sie die Schreinerei Krickl in Esslingen. Kostenlose Beratung für Möbelbau, Küchen & Innenausbau. Tel: 0711/123456. Röntgenstraße 5-7, 73730 Esslingen am Neckar."
+        description="Kontaktieren Sie die Schreinerei Krickl in Esslingen. Kostenlose Beratung für Möbelbau, Küchen & Innenausbau. Tel: 0711/322360. Röntgenstraße 5-7, 73730 Esslingen am Neckar."
         keywords="Schreiner Esslingen Kontakt, Schreinerei Esslingen Anfrage, Tischler Esslingen, Möbelbau Esslingen anfragen"
         canonical="https://schreinerei-krickl.de/kontakt"
       />
